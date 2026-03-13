@@ -13,7 +13,7 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://marko-sarafijanovic.space.z.ai/sitemap.xml
+Sitemap: https://marko-sarafijanovic.com/sitemap.xml
 
 # IndexNow key for instant search engine indexing
 IndexNow: 5c5e58a9f4d85d2aefef4c600532c8c539f9238084720ebaa53ef8e7558adeb7
