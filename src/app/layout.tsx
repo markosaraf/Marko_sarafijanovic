@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// YOUR ACTUAL WEBSITE URL - change this to your real domain
-const SITE_URL = "https://marko-sarafijanovic.space.z.ai";
+// YOUR ACTUAL PRIMARY DOMAIN
+const SITE_URL = "https://marko-sarafijanovic.com";
 
 export const metadata: Metadata = {
   // ADDED: Canonical URL to prevent duplicate content issues
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
     description: "Substitute teacher in primary school passionate about teaching maths and languages. Tesla enthusiast and Full Self-Driving advocate studying at PHZH Zurich.",
-    // FIXED: Changed from Twitter URL to your actual website URL
+    // FIXED: Now points to your actual website
     url: SITE_URL,
     siteName: "Marko Sarafijanovic",
     type: "website",
@@ -65,7 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* ADDED: Explicit canonical link tag as backup */}
+        {/* ADDED: Explicit canonical link tag */}
         <link rel="canonical" href={SITE_URL} />
       </head>
       <body
