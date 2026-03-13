@@ -13,7 +13,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// YOUR ACTUAL WEBSITE URL - change this to your real domain
+const SITE_URL = "https://marko-sarafijanovic.space.z.ai";
+
 export const metadata: Metadata = {
+  // ADDED: Canonical URL to prevent duplicate content issues
+  alternates: {
+    canonical: SITE_URL,
+  },
   title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
   description: "Substitute teacher in primary school passionate about teaching maths and languages. Tesla enthusiast and Full Self-Driving advocate studying at PHZH Zurich.",
   keywords: ["Marko Sarafijanovic", "Marko Adliswil", "Marko Zurich", "Marko Zürich", "Marko PHZH", "Marko Pädagogische Hochschule Zürich", "Marko Tesla", "Marko Tennis", "Marko TCA", "Marko Tennis Club Adliswil", "Primary School Teacher", "Substitute Teacher", "Tesla", "FSD", "Full Self-Driving", "Electric Vehicles", "Technology", "Innovation", "Zurich", "Adliswil", "PHZH"],
@@ -30,7 +37,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
     description: "Substitute teacher in primary school passionate about teaching maths and languages. Tesla enthusiast and Full Self-Driving advocate studying at PHZH Zurich.",
-    url: "https://x.com/MarkoSaraf2004",
+    // FIXED: Changed from Twitter URL to your actual website URL
+    url: SITE_URL,
     siteName: "Marko Sarafijanovic",
     type: "website",
     images: ["/marko-profile.png"],
@@ -42,6 +50,11 @@ export const metadata: Metadata = {
     creator: "@MarkoSaraf2004",
     images: ["/marko-profile.png"],
   },
+  // ADDED: Tell robots to index this page
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -51,6 +64,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* ADDED: Explicit canonical link tag as backup */}
+        <link rel="canonical" href={SITE_URL} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
