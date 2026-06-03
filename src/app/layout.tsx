@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
-    description: "Substitute teacher in primary school passionate about teaching maths and languages. Tesla enthusiast and Full Self-Driving advocate studying at PHZH Zurich.",
+    description: "Substitute teacher in primary school passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast and Full Self-Driving advocate.",
     // FIXED: Now points to your actual website
     url: SITE_URL,
     siteName: "Marko Sarafijanovic",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
-    description: "Substitute teacher in primary school passionate about teaching maths and languages. Tesla enthusiast and Full Self-Driving advocate studying at PHZH Zurich.",
+    description: "Substitute teacher in primary school passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast and Full Self-Driving advocate.",
     creator: "@MarkoSaraf2004",
     images: ["/marko-profile.png"],
   },
