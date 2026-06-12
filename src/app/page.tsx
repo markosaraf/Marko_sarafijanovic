@@ -201,8 +201,8 @@ function TweetCard({
         }`}
       >
         <div className="p-4">
-          {/* Title for first card - clickable, shows only when NOT expanded */}
-          {title && !isExpanded && (
+          {/* Title for first card - clickable, always visible */}
+          {title && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -214,7 +214,11 @@ function TweetCard({
                 <span className="text-base md:text-lg font-bold text-[#E31937] group-hover:underline underline-offset-2">
                   {title}
                 </span>
-                <ChevronDown className="w-5 h-5 text-[#E31937] group-hover:translate-y-0.5 transition-transform" />
+                {isExpanded ? (
+                  <ChevronUp className="w-5 h-5 text-[#E31937] group-hover:-translate-y-0.5 transition-transform" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-[#E31937] group-hover:translate-y-0.5 transition-transform" />
+                )}
               </div>
             </button>
           )}
@@ -227,8 +231,8 @@ function TweetCard({
             <Tweet id={tweetId} />
           </div>
           
-          {/* Expand indicator for first card - shows only when NOT expanded */}
-          {index === 0 && !isThreadCard && !isExpanded && (
+          {/* Expand indicator for first card - always visible */}
+          {index === 0 && !isThreadCard && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -242,7 +246,11 @@ function TweetCard({
                 <p className="text-[#E31937] font-semibold">This law keeps preventing FSD (Supervised).</p>
               </div>
               <div className="flex items-center h-full pt-1">
-                <ChevronDown className="w-4 h-4 text-[#E31937] flex-shrink-0" />
+                {isExpanded ? (
+                  <ChevronUp className="w-4 h-4 text-[#E31937] flex-shrink-0" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-[#E31937] flex-shrink-0" />
+                )}
               </div>
             </button>
           )}
@@ -286,12 +294,15 @@ export default function Home() {
 
   const handleTitleClick = () => {
     if (!isFirstCardExpanded) {
+      // Expanding: open and scroll to first reply
       setIsFirstCardExpanded(true);
       setTimeout(() => {
         setScrollToFirstReply(true);
       }, 100);
     } else {
+      // Collapsing: just close
       setIsFirstCardExpanded(false);
+      setScrollToFirstReply(false);
     }
   }
 
