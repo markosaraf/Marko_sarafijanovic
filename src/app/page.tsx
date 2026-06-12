@@ -349,9 +349,10 @@ const threadTweetIds = [
 ];
 
 // Traffic death counter - automatically calculated from thread tweets
-// Base number + additional tweets in thread (excludes the first tweet which is the main tweet)
-const TRAFFIC_DEATH_BASE = 49; // Base number when the counter was first implemented
-const trafficDeathCount = TRAFFIC_DEATH_BASE + (threadTweetIds.length); // -1 to exclude the main tweet duplicate
+// Formula: 50 + (threadTweetIds.length - 1) = 50 + 203 = 253
+// Each new tweet ID added will increase the counter by 1
+const TRAFFIC_DEATH_BASE = 50;
+const trafficDeathCount = TRAFFIC_DEATH_BASE + (threadTweetIds.length - 1);
 
 // Tweet Card Component using react-tweet
 function TweetCard({ 
