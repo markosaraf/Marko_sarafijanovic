@@ -431,6 +431,16 @@ function TweetCard({
                     <span className="text-xs md:text-sm text-slate-500">Traffic deaths since VAF law (March 1, 2025):</span>
                     <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span>
                   </div>
+                  {/* FSD Delay Clock Link */}
+                  <a 
+                    href="https://fsddelay.org" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm font-semibold text-green-600 hover:text-green-700 hover:underline mt-1"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    FSD Delay Clock
+                  </a>
                 </div>
               </button>
             ) : (
