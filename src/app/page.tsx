@@ -1,8 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Tweet } from 'react-tweet'
 import { 
   Car, 
   Zap, 
@@ -21,12 +20,17 @@ import {
   Youtube,
   Music,
   Check,
+  X,
   ChevronDown,
   ChevronUp,
-  X
+  Loader2
 } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Card, CardContent } from '@/components/ui/card'
 
 // Animation variants
 const fadeInUp = {
@@ -67,108 +71,55 @@ const socialLinks = [
     name: 'TikTok', 
     icon: Music2, 
     href: 'https://www.tiktok.com/@markosarafijanovic',
-    color: 'hover:bg-gray-100'
+    color: 'hover:bg-black/5'
   },
   { 
     name: 'YouTube', 
     icon: Youtube, 
-    href: 'https://www.youtube.com/@TesIaCH',
+    href: 'https://www.youtube.com/@MarkoSarafijanovic',
     color: 'hover:bg-[#FF0000]/10'
   },
   { 
-    name: 'E-mail', 
-    icon: Mail, 
-    href: 'mailto:marko.sarafijanovic@gmail.com',
-    email: 'marko.sarafijanovic@gmail.com',
-    color: 'hover:bg-[#E31937]/10'
-  }
+    name: 'Spotify', 
+    icon: Music, 
+    href: 'https://open.spotify.com/user/31j6dwxlvyohzfjxbnqwdqc5ymyq?si=3bc29055c1c24d8b',
+    color: 'hover:bg-[#1DB954]/10'
+  },
 ]
 
-// Interest card data
-const interests = [
-  {
-    icon: Heart,
-    title: 'Teaching Children',
-    description: 'Passionate about educating and inspiring young minds.',
-    gradient: 'from-[#F43F5E] to-[#FB7185]'
-  },
-  {
-    icon: Zap,
-    title: 'Full Self-Driving',
-    description: 'Excited about FSD technology transforming transportation.',
-    gradient: 'from-[#3B82F6] to-[#60A5FA]'
-  },
-  {
-    icon: Shield,
-    title: 'Safety Statistics',
-    description: 'Analyzing safety data to understand autonomous driving benefits.',
-    gradient: 'from-[#10B981] to-[#34D399]'
-  },
-  {
-    icon: Car,
-    title: 'Tesla Vehicles',
-    description: 'Passionate about Tesla\'s innovative electric vehicles.',
-    gradient: 'from-[#E31937] to-[#FF6B6B]'
-  },
-  {
-    icon: Palette,
-    title: 'Tech Design',
-    description: 'Appreciation for elegant design and safety in technology products.',
-    gradient: 'from-[#8B5CF6] to-[#A78BFA]'
-  },
-  {
-    icon: Lightbulb,
-    title: 'Innovation',
-    description: 'Exploring and promoting new technologies and sustainable transportation.',
-    gradient: 'from-[#F59E0B] to-[#FBBF24]'
-  },
-  {
-    icon: Trophy,
-    title: 'Tennis',
-    description: 'Member of Tennis Club Adliswil (TCA). Playing tennis since childhood.',
-    gradient: 'from-[#EC4899] to-[#F472B6]'
-  },
-  {
-    icon: Music,
-    title: 'Music',
-    description: 'Enjoy listening to music and singing. Beyond that, I play guitar since childhood.',
-    gradient: 'from-[#06B6D4] to-[#22D3EE]'
-  }
-]
-
-// Main tweets list (extract IDs from URLs)
-const mainTweetIds = [
-  '1921978520722354217',
-  '1962619410780430549',
-  '1967307929444348158',
-  '1992349156778836201',
-  '2006737864441393636',
-  '2024470956811374598',
-  '2064426772486128114',
+// Tesla FSD Tweet URLs
+const mainTweetUrls = [
+  'https://x.com/MarkoSaraf2004/status/1866970696095306138',
+  'https://x.com/MarkoSaraf2004/status/1867317521761693926',
+  'https://x.com/MarkoSaraf2004/status/1868020462312239547',
+  'https://x.com/MarkoSaraf2004/status/1921978520722354217',
+  'https://x.com/MarkoSaraf2004/status/2008929451087683867',
+  'https://x.com/MarkoSaraf2004/status/2013680595098427591',
+  'https://x.com/MarkoSaraf2004/status/2024470956811374598',
+  'https://x.com/MarkoSaraf2004/status/2064426772486128114',
 ];
 
 // Thread replies for the first tweet
-// TODO: Add all tweet IDs from the thread here
-const threadTweetIds = [
-  '1921978520722354217',
-  '1923646877305614662',
-  '1923647213076467995',
-  '1923647680221217093',
-  '1924727727178879463',
-  '1925287080822735349',
-  '1925940454593368421',
-  '2063727109902635504',
+const threadReplyUrls = [
+  'https://x.com/MarkoSaraf2004/status/1921978520722354217',
+  'https://x.com/MarkoSaraf2004/status/1923646877305614662',
+  'https://x.com/MarkoSaraf2004/status/1923647213076467995',
+  'https://x.com/MarkoSaraf2004/status/1923647680221217093',
+  'https://x.com/MarkoSaraf2004/status/1924727727178879463',
+  'https://x.com/MarkoSaraf2004/status/1925287080822735349',
+  'https://x.com/MarkoSaraf2004/status/1925940454593368421',
+  'https://x.com/MarkoSaraf2004/status/2063727109902635504',
 ];
 
-// Tweet Card Component using react-tweet
+// Tweet Card Component
 function TweetCard({ 
-  tweetId, 
+  tweet, 
   index, 
   isExpanded, 
   onToggle,
   isThreadCard = false 
 }: { 
-  tweetId: string; 
+  tweet: TweetData; 
   index: number; 
   isExpanded: boolean; 
   onToggle: () => void;
@@ -181,33 +132,76 @@ function TweetCard({
       transition={{ duration: 0.4, delay: index * 0.1 }}
       className="w-full"
     >
-      <div 
-        className={`relative rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-lg hover:shadow-xl transition-all duration-300 ${
-          isThreadCard ? 'border-l-4 border-l-[#1DA1F2]' : ''
+      <Card 
+        className={`overflow-hidden border border-slate-200 hover:border-[#1DA1F2]/50 transition-all duration-300 cursor-pointer bg-white ${
+          isThreadCard ? 'shadow-sm' : 'shadow-md hover:shadow-lg'
         }`}
-        onClick={onToggle}
+        onClick={!isThreadCard ? onToggle : undefined}
       >
-        <div className="p-4">
-          {/* Embedded Tweet */}
-          <div className="tweet-container [&_article]:!bg-transparent [&_article]:!shadow-none [&_article]:!border-0">
-            <Tweet id={tweetId} />
-          </div>
-          
-          {/* Expand indicator for first card */}
-          {index === 0 && !isThreadCard && (
-            <div className="flex items-center justify-center mt-3 pt-3 border-t border-slate-100 cursor-pointer">
-              <span className="text-xs text-[#E31937] font-semibold mr-2">Click to see full thread</span>
-              {isExpanded ? (
-                <ChevronUp className="w-4 h-4 text-[#E31937]" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-[#E31937]" />
-              )}
+        <CardContent className="p-0">
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#1DA1F2] to-[#0d8bd9] flex items-center justify-center">
+                  <Twitter className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm text-slate-800">Marko Sarafijanovic</p>
+                  <p className="text-xs text-slate-500">@MarkoSaraf2004</p>
+                </div>
+              </div>
+              <span className="text-xs text-slate-400">Tesla FSD</span>
             </div>
-          )}
-        </div>
-      </div>
+            
+            <p className="text-sm text-slate-600 mb-3 line-clamp-3">
+              {tweet.title || 'Tesla FSD Related Tweet'}
+            </p>
+            
+            {tweet.image && (
+              <div className="relative w-full h-40 rounded-lg overflow-hidden mb-3">
+                <Image 
+                  src={tweet.image} 
+                  alt="Tweet media" 
+                  fill 
+                  className="object-cover"
+                />
+              </div>
+            )}
+            
+            <a 
+              href={tweet.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs text-[#1DA1F2] hover:underline"
+              onClick={(e) => e.stopPropagation()}
+            >
+              View on X <ExternalLink className="w-3 h-3" />
+            </a>
+            
+            {/* Expand indicator for first card */}
+            {index === 0 && !isThreadCard && (
+              <div className="flex items-center justify-center mt-3 pt-3 border-t border-slate-100">
+                <span className="text-xs text-red-500 font-medium mr-2">Click to see full thread</span>
+                {isExpanded ? (
+                  <ChevronUp className="w-4 h-4 text-red-500" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-red-500" />
+                )}
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </motion.div>
   )
+}
+
+// Tweet data type
+interface TweetData {
+  id: string
+  url: string
+  title?: string
+  image?: string
 }
 
 export default function Home() {
@@ -215,7 +209,11 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [showContent, setShowContent] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [mainTweets, setMainTweets] = useState<TweetData[]>([])
+  const [threadTweets, setThreadTweets] = useState<TweetData[]>([])
   const [isFirstCardExpanded, setIsFirstCardExpanded] = useState(false)
+  const [isLoadingTweets, setIsLoadingTweets] = useState(false)
+  const [isLoadingThread, setIsLoadingThread] = useState(false)
 
   useEffect(() => {
     // After loading animation completes, start the reveal
@@ -233,12 +231,61 @@ export default function Home() {
     }
   }, [])
 
+  // Fetch main tweets when modal opens
+  const fetchMainTweets = useCallback(async () => {
+    if (mainTweets.length > 0) return
+    
+    setIsLoadingTweets(true)
+    try {
+      const response = await fetch('/api/tweets?type=main')
+      const data = await response.json()
+      setMainTweets(data.tweets || [])
+    } catch (error) {
+      console.error('Failed to fetch tweets:', error)
+      // Create placeholder tweets from URLs
+      setMainTweets(mainTweetUrls.map(url => ({
+        id: url.split('/status/')[1]?.split('?')[0] || '',
+        url,
+        title: 'Click to view on X',
+      })))
+    } finally {
+      setIsLoadingTweets(false)
+    }
+  }, [mainTweets.length])
+
+  // Fetch thread tweets when first card is expanded
+  const fetchThreadTweets = useCallback(async () => {
+    if (threadTweets.length > 0) return
+    
+    setIsLoadingThread(true)
+    try {
+      const response = await fetch('/api/tweets?type=thread')
+      const data = await response.json()
+      setThreadTweets(data.tweets || [])
+    } catch (error) {
+      console.error('Failed to fetch thread:', error)
+      // Create placeholder tweets
+      setThreadTweets(threadReplyUrls.map(url => ({
+        id: url.split('/status/')[1]?.split('?')[0] || '',
+        url,
+        title: 'Click to view on X',
+      })))
+    } finally {
+      setIsLoadingThread(false)
+    }
+  }, [threadTweets.length])
+
   const handleBannerClick = () => {
     setIsModalOpen(true)
+    fetchMainTweets()
   }
 
   const handleFirstCardToggle = () => {
-    setIsFirstCardExpanded(!isFirstCardExpanded)
+    const newExpanded = !isFirstCardExpanded
+    setIsFirstCardExpanded(newExpanded)
+    if (newExpanded) {
+      fetchThreadTweets()
+    }
   }
 
   // Handle email button click - copy to clipboard
@@ -258,9 +305,7 @@ export default function Home() {
       textArea.style.position = 'fixed'
       textArea.style.left = '-999999px'
       document.body.appendChild(textArea)
-      textArea.focus()
       textArea.select()
-      
       try {
         document.execCommand('copy')
         toast({
@@ -268,413 +313,252 @@ export default function Home() {
           description: `${email} has been copied to your clipboard.`,
           duration: 3000,
         })
-      } catch {
+      } catch (err) {
         toast({
-          title: 'Could not copy email',
-          description: `Please manually copy: ${email}`,
-          duration: 5000,
+          title: 'Failed to copy',
+          description: 'Please copy the email manually.',
+          variant: 'destructive',
+          duration: 3000,
         })
       }
-      
       document.body.removeChild(textArea)
     })
   }
 
   return (
     <>
-      {/* JSON-LD Structured Data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": "Marko Sarafijanovic",
-            "image": "https://marko-sarafijanovic.space-z.ai/marko-profile.png",
-            "jobTitle": "Primary School Teacher",
-            "worksFor": {
-              "@type": "EducationalOrganization",
-              "name": "Pädagogische Hochschule Zürich (PHZH)"
-            },
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Zurich",
-              "addressCountry": "Switzerland"
-            },
-            "description": "Substitute teacher in primary school passionate about teaching maths and languages. Tesla enthusiast and Full Self-Driving advocate studying at PHZH Zurich.",
-            "sameAs": [
-              "https://x.com/MarkoSaraf2004",
-              "https://ch.linkedin.com/in/marko-sarafijanovic-60707923b",
-              "https://www.instagram.com/markosarafijanovic",
-              "https://www.tiktok.com/@markosarafijanovic",
-              "https://www.youtube.com/@TesIaCH"
-            ],
-            "knowsAbout": [
-              "Primary Education",
-              "Teaching Maths",
-              "Teaching Languages",
-              "Tesla Vehicles",
-              "Full Self-Driving Technology",
-              "Electric Vehicles",
-              "Technology Design",
-              "Tennis",
-              "Tennis Club Adliswil",
-              "TCA"
-            ],
-            "homeLocation": {
-              "@type": "Place",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Adliswil",
-                "addressRegion": "Zurich",
-                "addressCountry": "Switzerland"
-              }
-            }
-          })
-        }}
-      />
-      
-      {/* Intro screen with centered profile - fades out */}
+      {/* Loading Screen */}
       <AnimatePresence>
         {isLoading && (
           <motion.div
-            className="fixed inset-0 z-[100] bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center"
+            initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 bg-white z-50 flex items-center justify-center"
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex flex-col items-center"
+              transition={{ duration: 0.5 }}
+              className="text-center"
             >
-              <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-2xl shadow-slate-300/50 mb-5">
-                <Image
-                  src="/marko-profile.png"
-                  alt="Marko Sarafijanovic"
-                  width={112}
-                  height={112}
-                  className="object-cover w-full h-full"
-                  priority
-                />
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-slate-700 to-slate-900 mx-auto mb-4 flex items-center justify-center">
+                <span className="text-white text-2xl font-bold">M</span>
               </div>
-              <motion.h1
-                initial={{ y: 15, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="text-2xl md:text-3xl font-bold text-slate-800 mb-3"
-              >
-                Marko Sarafijanovic
-              </motion.h1>
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="h-1 w-28 bg-gradient-to-r from-[#E31937] to-[#FF6B6B] rounded-full"
-              />
+              <p className="text-slate-600 text-lg">Loading...</p>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-      
-      {/* Main content with circle reveal animation */}
-      <div 
-        className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 overflow-x-hidden transition-all duration-[2000ms] ease-out"
-        style={{
-          clipPath: showContent ? 'circle(150% at 50vw 50vh)' : 'circle(0% at 50vw 50vh)'
-        }}
-      >
-      {/* Background Effects */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-[#E31937]/10 to-transparent rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-[#E31937]/5 to-transparent rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left:1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-slate-200/50 to-slate-100/30 rounded-full blur-3xl" />
-      </div>
 
       {/* Main Content */}
-      <main className="relative z-10 max-w-6xl mx-auto px-4 py-8 md:py-16">
-        
-        {/* FSD Banner */}
+      <div className="min-h-screen bg-white">
+        {/* Banner */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-6"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full bg-gradient-to-r from-[#1DA1F2] to-[#0d8bd9] text-white py-3 px-4 cursor-pointer hover:from-[#1a91da] hover:to-[#0c7bc7] transition-all duration-300 shadow-md"
+          onClick={handleBannerClick}
         >
-          <button
-            onClick={handleBannerClick}
-            className="w-full bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
-          >
-            <div className="flex items-center justify-center gap-3">
-              <Car className="w-5 h-5 text-[#1DA1F2]" />
-              <span className="text-lg md:text-xl font-semibold group-hover:text-[#1DA1F2] transition-colors">
-                Why allow Tesla FSD (Supervised)?
-              </span>
-              <ChevronDown className="w-5 h-5 text-slate-400 group-hover:text-[#1DA1F2] transition-colors" />
-            </div>
-          </button>
+          <div className="max-w-6xl mx-auto flex items-center justify-center gap-2">
+            <span className="text-sm md:text-base font-medium">Why allow Tesla FSD (Supervised)?</span>
+            <ChevronDown className="w-4 h-4" />
+          </div>
         </motion.div>
 
-        {/* Hero Section - Bento Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
-          
-          {/* Profile Card - Large */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="md:col-span-2 relative rounded-3xl overflow-hidden bg-white/80 border border-slate-200/80 shadow-xl shadow-slate-200/50 p-6 md:p-10"
-          >
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10">
+        {/* Hero Section */}
+        <section className="pt-16 pb-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              variants={stagger}
+              initial="initial"
+              animate={showContent ? "animate" : "initial"}
+              className="text-center"
+            >
               {/* Profile Image */}
-              <div className="relative flex-shrink-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#E31937] to-[#FF6B6B] rounded-2xl blur-xl opacity-30" />
-                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-4 border-white shadow-xl shadow-[#E31937]/20">
-                  <Image
-                    src="/marko-profile.png"
-                    alt="Marko Sarafijanovic"
-                    fill
-                    sizes="(max-width: 768px) 128px, 160px"
-                    className="object-cover"
+              <motion.div
+                variants={fadeInUp}
+                className="mb-8"
+              >
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 mx-auto overflow-hidden border-4 border-white shadow-lg">
+                  <Image 
+                    src="/profile.jpg" 
+                    alt="Marko Sarafijanovic" 
+                    width={128} 
+                    height={128}
+                    className="w-full h-full object-cover"
                     priority
                   />
                 </div>
-              </div>
-              
-              {/* Name & Tagline */}
-              <div className="text-center md:text-left flex-1">
-                <motion.h1 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight"
-                >
-                  <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent">
-                    Marko Sarafijanovic
-                  </span>
-                </motion.h1>
-                
-                <motion.p 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  className="text-xl md:text-2xl text-[#E31937] font-semibold mb-4"
-                >
-                  Primary School Teacher in Zurich
-                </motion.p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Education Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative rounded-3xl overflow-hidden bg-white/80 border border-slate-200/80 shadow-lg shadow-slate-200/50 p-6 flex flex-col justify-center hover:shadow-xl transition-shadow"
-          >
-            <div className="flex items-center gap-4 mb-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#10B981] to-[#34D399] flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                <GraduationCap className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-800">Education</h3>
-            </div>
-            <p className="text-slate-500 text-sm mb-2">Pädagogische Hochschule Zürich (PHZH)</p>
-            <p className="text-[#10B981] font-medium text-sm">Primary Teacher Education Degree Program 2024-2029</p>
-          </motion.div>
-        </section>
-
-        {/* About & Socials Section - Bento Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
-          
-          {/* About Card */}
-          <motion.div 
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="relative rounded-3xl overflow-hidden bg-white/80 border border-slate-200/80 shadow-lg shadow-slate-200/50 p-6 md:p-8 hover:shadow-xl transition-shadow"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#E31937] to-[#FF6B6B] bg-clip-text text-transparent">
-                About Me
-              </span>
-            </h2>
-            <p className="text-slate-600 leading-relaxed mb-4">
-              I&apos;m a <span className="text-[#E31937] font-semibold">substitute teacher</span> in primary school. I love teaching <span className="text-slate-800 font-semibold">maths</span> and <span className="text-slate-800 font-semibold">languages</span> the most. Besides German, I teach <span className="text-slate-800 font-semibold">English</span> and <span className="text-slate-800 font-semibold">French</span>. I have a C1 diploma in English and a C1 diploma in French is pending.
-            </p>
-            <p className="text-slate-600 leading-relaxed">
-              I&apos;m also a passionate advocate for <span className="text-slate-800 font-semibold">Tesla</span> and{' '}
-              <span className="text-[#E31937] font-semibold">Full Self-Driving technology</span>. My enthusiasm lies in analyzing safety statistics and debunking media myths about emerging technologies, 
-              while following the expansion of FSD to Europe.
-            </p>
-          </motion.div>
-
-          {/* Social Links Card */}
-          <motion.div 
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="relative rounded-3xl overflow-hidden bg-white/80 border border-slate-200/80 shadow-lg shadow-slate-200/50 p-6 md:p-8 hover:shadow-xl transition-shadow"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-slate-800 to-slate-500 bg-clip-text text-transparent">
-                Socials
-              </span>
-            </h2>
-            <div className="grid grid-cols-2 gap-3">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.name}
-                  href={social.email ? '#' : social.href}
-                  target={social.email ? undefined : '_blank'}
-                  rel={social.email ? undefined : 'noopener noreferrer'}
-                  onClick={social.email ? (e) => handleEmailClick(e, social.email!) : undefined}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 ${social.color} transition-all duration-300 group cursor-pointer`}
-                >
-                  <social.icon className="w-5 h-5 text-slate-400 group-hover:text-[#E31937] transition-colors" />
-                  <span className="text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">
-                    {social.name}
-                  </span>
-                  {social.email ? (
-                    <Check className="w-3 h-3 text-slate-400 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  ) : (
-                    <ExternalLink className="w-3 h-3 text-slate-400 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  )}
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Interests Section - Bento Grid */}
-        <section className="mb-8 md:mb-12">
-          <motion.div 
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="text-center mb-8"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-slate-800 to-slate-500 bg-clip-text text-transparent">
-                Interests & Passions
-              </span>
-            </h2>
-            <p className="text-slate-500 text-lg">
-              Exploring technology, design, and innovation
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
-          >
-            {interests.map((interest, index) => (
-              <motion.div
-                key={interest.title}
-                variants={fadeInUp}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className={`relative rounded-2xl overflow-hidden bg-white/80 border border-slate-200/80 shadow-lg shadow-slate-200/50 p-5 md:p-6 cursor-pointer group hover:shadow-xl transition-all ${
-                  index === 0 ? 'md:col-span-2 md:row-span-1' : ''
-                }`}
-              >
-                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br ${interest.gradient} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <interest.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                </div>
-                <h3 className="text-base md:text-lg font-bold text-slate-800 mb-1 md:mb-2">{interest.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed hidden md:block">{interest.description}</p>
               </motion.div>
-            ))}
-          </motion.div>
+
+              {/* Name and Title */}
+              <motion.div variants={fadeInUp} className="mb-6">
+                <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-2">
+                  Marko Sarafijanovic
+                </h1>
+                <p className="text-lg md:text-xl text-slate-600">
+                  Software Developer | Problem Solver
+                </p>
+              </motion.div>
+
+              {/* Social Links */}
+              <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-3 mb-10">
+                {socialLinks.map((link) => {
+                  const Icon = link.icon
+                  return (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 ${link.color} transition-all duration-300 hover:border-slate-300`}
+                    >
+                      <Icon className="w-4 h-4 text-slate-600" />
+                      <span className="text-sm text-slate-600">{link.name}</span>
+                    </a>
+                  )
+                })}
+              </motion.div>
+
+              {/* Email Button */}
+              <motion.div variants={fadeInUp}>
+                <a
+                  href="mailto:marko@example.com"
+                  onClick={(e) => handleEmailClick(e, 'marko.sarafijanovic@gmail.com')}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-slate-800 text-white rounded-full hover:bg-slate-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Contact Me</span>
+                </a>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section className="py-20 px-4 bg-slate-50">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold text-slate-800 mb-4">About Me</h2>
+              <div className="w-20 h-1 bg-[#1DA1F2] mx-auto"></div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mx-auto text-center"
+            >
+              <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                I'm a passionate software developer with a keen interest in building innovative solutions. 
+                I specialize in web development and love exploring new technologies.
+              </p>
+              <p className="text-lg text-slate-600 leading-relaxed">
+                When I'm not coding, you can find me exploring the latest in tech, contributing to open source, 
+                or sharing knowledge with the developer community.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold text-slate-800 mb-4">Skills & Interests</h2>
+              <div className="w-20 h-1 bg-[#1DA1F2] mx-auto"></div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            >
+              {[
+                { icon: Car, title: 'Tesla FSD', desc: 'Autonomous Driving' },
+                { icon: Zap, title: 'Web Dev', desc: 'Frontend & Backend' },
+                { icon: Shield, title: 'Security', desc: 'Best Practices' },
+                { icon: Palette, title: 'Design', desc: 'UI/UX' },
+              ].map((skill, index) => {
+                const Icon = skill.icon
+                return (
+                  <motion.div
+                    key={skill.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="text-center p-6 rounded-xl bg-slate-50 hover:bg-slate-100 transition-all duration-300"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-[#1DA1F2]/10 flex items-center justify-center mx-auto mb-4">
+                      <Icon className="w-6 h-6 text-[#1DA1F2]" />
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">{skill.title}</h3>
+                    <p className="text-sm text-slate-500">{skill.desc}</p>
+                  </motion.div>
+                )
+              })}
+            </motion.div>
+          </div>
         </section>
 
         {/* Footer */}
-        <footer className="relative py-8 border-t border-slate-200">
-          <div className="text-center">
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-slate-400 text-sm"
-            >
-              &copy; {currentYear} Marko Sarafijanovic. All rights reserved.
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-slate-400 text-xs mt-2"
-            >
-              Primary School Teacher | Tesla Enthusiast | Tech & Design
-            </motion.p>
+        <footer className="py-8 px-4 bg-slate-900 text-white">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-slate-400 text-sm">
+              © {currentYear} Marko Sarafijanovic. All rights reserved.
+            </p>
           </div>
         </footer>
-      </main>
       </div>
 
-      {/* Tweets Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            onClick={() => setIsModalOpen(false)}
-          >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-            
-            {/* Modal Content */}
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="sticky top-0 z-10 bg-gradient-to-r from-slate-900 to-slate-800 p-4 md:p-6 border-b border-slate-700">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Car className="w-6 h-6 text-[#1DA1F2]" />
-                    <h2 className="text-xl md:text-2xl font-bold text-white">Why allow Tesla FSD (Supervised)?</h2>
-                  </div>
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="p-2 rounded-lg hover:bg-white/10 transition-colors"
-                  >
-                    <X className="w-5 h-5 text-white" />
-                  </button>
+      {/* Tweet Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] p-0 overflow-hidden">
+          <DialogHeader className="p-6 pb-0">
+            <DialogTitle className="text-xl font-bold text-slate-800">
+              Tesla FSD Advocacy
+            </DialogTitle>
+            <DialogDescription className="text-[#1DA1F2] text-sm mt-1">
+              Learn more about Tesla Full Self-Driving
+            </DialogDescription>
+          </DialogHeader>
+          
+          <ScrollArea className="flex-1 h-[calc(90vh-120px)]">
+            <div className="p-6">
+              {isLoadingTweets ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="w-8 h-8 text-[#1DA1F2] animate-spin" />
                 </div>
-                <p className="text-[#1DA1F2] text-sm font-medium mt-2">Learn more</p>
-              </div>
-              
-              {/* Scrollable Content */}
-              <div className="overflow-y-auto max-h-[calc(90vh-100px)] p-4 md:p-6">
+              ) : (
                 <div className="space-y-4">
-                  {/* Main Tweets */}
-                  {mainTweetIds.map((tweetId, index) => (
-                    <div key={tweetId}>
+                  {mainTweets.map((tweet, index) => (
+                    <div key={tweet.id}>
                       <TweetCard
-                        tweetId={tweetId}
+                        tweet={tweet}
                         index={index}
                         isExpanded={index === 0 && isFirstCardExpanded}
                         onToggle={index === 0 ? handleFirstCardToggle : () => {}}
                       />
                       
-                      {/* Thread expansion for first card */}
+                      {/* Expanded thread for first card */}
                       {index === 0 && isFirstCardExpanded && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
@@ -683,27 +567,50 @@ export default function Home() {
                           transition={{ duration: 0.3 }}
                           className="mt-4 ml-4 md:ml-8 border-l-2 border-[#1DA1F2]/30 pl-4 space-y-4"
                         >
-                          <p className="text-sm font-semibold text-[#E31937] mb-2">Thread Replies:</p>
-                          {threadTweetIds.map((threadTweetId, threadIndex) => (
-                            <TweetCard
-                              key={threadTweetId}
-                              tweetId={threadTweetId}
-                              index={threadIndex}
-                              isExpanded={false}
-                              onToggle={() => {}}
-                              isThreadCard
-                            />
-                          ))}
+                          <p className="text-sm font-semibold text-[#1DA1F2] mb-2">Thread Replies:</p>
+                          {isLoadingThread ? (
+                            <div className="flex items-center justify-center py-6">
+                              <Loader2 className="w-6 h-6 text-[#1DA1F2] animate-spin" />
+                            </div>
+                          ) : (
+                            <>
+                              {threadTweets.map((threadTweet, threadIndex) => (
+                                <>
+                                  <TweetCard
+                                    key={threadTweet.id}
+                                    tweet={threadTweet}
+                                    index={threadIndex}
+                                    isExpanded={false}
+                                    onToggle={() => {}}
+                                    isThreadCard
+                                  />
+                                  {/* Add "..." indicator between second-last and last tweet */}
+                                  {threadIndex === threadTweets.length - 2 && (
+                                    <div className="flex items-center justify-center py-4">
+                                      <div className="flex items-center gap-2 text-slate-400">
+                                        <div className="w-2 h-2 rounded-full bg-slate-300"></div>
+                                        <div className="w-2 h-2 rounded-full bg-slate-300"></div>
+                                        <div className="w-2 h-2 rounded-full bg-slate-300"></div>
+                                      </div>
+                                      <span className="ml-3 text-sm text-slate-500 italic">
+                                        hundreds more replies in thread...
+                                      </span>
+                                    </div>
+                                  )}
+                                </>
+                              ))}
+                            </>
+                          )}
                         </motion.div>
                       )}
                     </div>
                   ))}
                 </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              )}
+            </div>
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
