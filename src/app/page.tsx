@@ -185,7 +185,7 @@ function TweetCard({
     >
       <div 
         className={`relative rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-lg hover:shadow-xl transition-all duration-300 ${
-          isThreadCard ? 'border-l-4 border-l-[#1DA1F2]' : ''
+          isThreadCard ? 'border-l-4 border-l-[#E31937]' : ''
         }`}
         onClick={onToggle}
       >
@@ -691,7 +691,7 @@ export default function Home() {
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 ml-4 md:ml-8 border-l-2 border-[#1DA1F2]/30 pl-4 space-y-4"
+                          className="mt-4 ml-4 md:ml-8 border-l-2 border-[#E31937]/30 pl-4 space-y-4"
                         >
                           <p className="text-sm font-semibold text-[#E31937] mb-2">Thread Replies:</p>
                           {threadTweetIds.map((threadTweetId, threadIndex) => (
