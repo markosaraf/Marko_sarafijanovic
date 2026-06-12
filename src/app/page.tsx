@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Car, 
@@ -19,10 +19,18 @@ import {
   Mail,
   Youtube,
   Music,
-  Check
+  Check,
+  X,
+  ChevronDown,
+  ChevronUp,
+  Loader2
 } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Card, CardContent } from '@/components/ui/card'
 
 // Animation variants
 const fadeInUp = {
@@ -132,26 +140,208 @@ const interests = [
   }
 ]
 
+// Tweet data type
+interface TweetData {
+  id: string;
+  url: string;
+  html?: string;
+  title?: string;
+  error?: string;
+}
+
+// Main tweets list
+const mainTweetUrls = [
+  'https://x.com/MarkoSaraf2004/status/1921978520722354217',
+  'https://x.com/MarkoSaraf2004/status/1962619410780430549',
+  'https://x.com/MarkoSaraf2004/status/1967307929444348158',
+  'https://x.com/MarkoSaraf2004/status/1992349156778836201',
+  'https://x.com/MarkoSaraf2004/status/2006737864441393636',
+  'https://x.com/MarkoSaraf2004/status/2024470956811374598',
+  'https://x.com/MarkoSaraf2004/status/2064426772486128114',
+];
+
+// Thread replies for the first tweet
+const threadReplyUrls = [
+  'https://x.com/MarkoSaraf2004/status/1921978520722354217',
+  'https://x.com/MarkoSaraf2004/status/1923646877305614662',
+  'https://x.com/MarkoSaraf2004/status/1923647213076467995',
+  'https://x.com/MarkoSaraf2004/status/1923647680221217093',
+  'https://x.com/MarkoSaraf2004/status/1924727727178879463',
+  'https://x.com/MarkoSaraf2004/status/1925287080822735349',
+  'https://x.com/MarkoSaraf2004/status/1925940454593368421',
+  'https://x.com/MarkoSaraf2004/status/2063727109902635504',
+];
+
+// Tweet Card Component
+function TweetCard({ 
+  tweet, 
+  index, 
+  isExpanded, 
+  onToggle,
+  isThreadCard = false 
+}: { 
+  tweet: TweetData; 
+  index: number; 
+  isExpanded: boolean; 
+  onToggle: () => void;
+  isThreadCard?: boolean;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="w-full"
+    >
+      <Card 
+        className={`overflow-hidden border border-slate-200/80 bg-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer ${
+          isThreadCard ? 'border-l-4 border-l-[#1DA1F2]' : ''
+        }`}
+        onClick={onToggle}
+      >
+        <CardContent className="p-0">
+          <div className="p-4">
+            {/* Tweet Header */}
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center overflow-hidden">
+                <Image
+                  src="/marko-profile.png"
+                  alt="Marko Sarafijanovic"
+                  width={40}
+                  height={40}
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-slate-800 text-sm">Marko Sarafijanovic</p>
+                <p className="text-xs text-slate-500">@MarkoSaraf2004</p>
+              </div>
+              <Twitter className="w-5 h-5 text-[#1DA1F2]" />
+            </div>
+            
+            {/* Tweet Content */}
+            <div className="mb-3">
+              {tweet.error ? (
+                <p className="text-red-500 text-sm">Failed to load tweet content</p>
+              ) : (
+                <div className="text-slate-700 text-sm leading-relaxed">
+                  {tweet.title || 'Loading tweet content...'}
+                </div>
+              )}
+            </div>
+            
+            {/* Tweet Link */}
+            <a 
+              href={tweet.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs text-[#1DA1F2] hover:underline"
+              onClick={(e) => e.stopPropagation()}
+            >
+              View on X <ExternalLink className="w-3 h-3" />
+            </a>
+            
+            {/* Expand indicator for first card */}
+            {index === 0 && !isThreadCard && (
+              <div className="flex items-center justify-center mt-3 pt-3 border-t border-slate-100">
+                <span className="text-xs text-slate-500 mr-2">Click to see full thread</span>
+                {isExpanded ? (
+                  <ChevronUp className="w-4 h-4 text-[#1DA1F2]" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-[#1DA1F2]" />
+                )}
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  )
+}
+
 export default function Home() {
   const currentYear = new Date().getFullYear()
   const [isLoading, setIsLoading] = useState(true)
   const [showContent, setShowContent] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [mainTweets, setMainTweets] = useState<TweetData[]>([])
+  const [threadTweets, setThreadTweets] = useState<TweetData[]>([])
+  const [isFirstCardExpanded, setIsFirstCardExpanded] = useState(false)
+  const [isLoadingTweets, setIsLoadingTweets] = useState(false)
+  const [isLoadingThread, setIsLoadingThread] = useState(false)
 
   useEffect(() => {
     // After loading animation completes, start the reveal
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 1500) // Wait for intro animation
+    }, 1500)
 
     const contentTimer = setTimeout(() => {
       setShowContent(true)
-    }, 1600) // Start reveal slightly after loading hides
+    }, 1600)
 
     return () => {
       clearTimeout(timer)
       clearTimeout(contentTimer)
     }
   }, [])
+
+  // Fetch main tweets when modal opens
+  const fetchMainTweets = useCallback(async () => {
+    if (mainTweets.length > 0) return
+    
+    setIsLoadingTweets(true)
+    try {
+      const response = await fetch('/api/tweets?type=main')
+      const data = await response.json()
+      setMainTweets(data.tweets || [])
+    } catch (error) {
+      console.error('Failed to fetch tweets:', error)
+      // Create placeholder tweets
+      setMainTweets(mainTweetUrls.map(url => ({
+        id: url.split('/status/')[1]?.split('?')[0] || '',
+        url,
+        title: 'Click to view on X',
+      })))
+    } finally {
+      setIsLoadingTweets(false)
+    }
+  }, [mainTweets.length])
+
+  // Fetch thread tweets when first card is expanded
+  const fetchThreadTweets = useCallback(async () => {
+    if (threadTweets.length > 0) return
+    
+    setIsLoadingThread(true)
+    try {
+      const response = await fetch('/api/tweets?type=thread')
+      const data = await response.json()
+      setThreadTweets(data.tweets || [])
+    } catch (error) {
+      console.error('Failed to fetch thread:', error)
+      // Create placeholder tweets
+      setThreadTweets(threadReplyUrls.map(url => ({
+        id: url.split('/status/')[1]?.split('?')[0] || '',
+        url,
+        title: 'Click to view on X',
+      })))
+    } finally {
+      setIsLoadingThread(false)
+    }
+  }, [threadTweets.length])
+
+  const handleBannerClick = () => {
+    setIsModalOpen(true)
+    fetchMainTweets()
+  }
+
+  const handleFirstCardToggle = () => {
+    const newExpanded = !isFirstCardExpanded
+    setIsFirstCardExpanded(newExpanded)
+    if (newExpanded) {
+      fetchThreadTweets()
+    }
+  }
 
   // Handle email button click - copy to clipboard
   const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string) => {
@@ -202,7 +392,7 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Marko Sarafijanovic",
-            "image": "https://marko-sarafijanovic.space.z.ai/marko-profile.png",
+            "image": "https://marko-sarafijanovic.space-z.ai/marko-profile.png",
             "jobTitle": "Primary School Teacher",
             "worksFor": {
               "@type": "EducationalOrganization",
@@ -306,6 +496,27 @@ export default function Home() {
       {/* Main Content */}
       <main className="relative z-10 max-w-6xl mx-auto px-4 py-8 md:py-16">
         
+        {/* FSD Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-6"
+        >
+          <button
+            onClick={handleBannerClick}
+            className="w-full bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+          >
+            <div className="flex items-center justify-center gap-3">
+              <Car className="w-5 h-5 text-[#1DA1F2]" />
+              <span className="text-lg md:text-xl font-semibold group-hover:text-[#1DA1F2] transition-colors">
+                Why allow Tesla FSD (Supervised)?
+              </span>
+              <ChevronDown className="w-5 h-5 text-slate-400 group-hover:text-[#1DA1F2] transition-colors" />
+            </div>
+          </button>
+        </motion.div>
+
         {/* Hero Section - Bento Grid */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
           
@@ -325,6 +536,7 @@ export default function Home() {
                     src="/marko-profile.png"
                     alt="Marko Sarafijanovic"
                     fill
+                    sizes="(max-width: 768px) 128px, 160px"
                     className="object-cover"
                     priority
                   />
@@ -511,6 +723,74 @@ export default function Home() {
         </footer>
       </main>
       </div>
+
+      {/* Tweets Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-4xl w-[95vw] md:w-[90vw] max-h-[90vh] p-0 gap-0">
+          <DialogHeader className="p-4 md:p-6 border-b border-slate-200 bg-gradient-to-r from-slate-900 to-slate-800">
+            <DialogTitle className="text-white flex items-center gap-3">
+              <Car className="w-6 h-6 text-[#1DA1F2]" />
+              <span>Why allow Tesla FSD (Supervised)?</span>
+            </DialogTitle>
+            <DialogDescription className="text-[#1DA1F2] text-sm font-medium mt-1">
+              Learn more about Tesla Full Self-Driving technology and safety statistics through these tweets.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <ScrollArea className="flex-1 h-[calc(90vh-120px)]">
+            <div className="p-4 md:p-6">
+              {isLoadingTweets ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="w-8 h-8 text-[#1DA1F2] animate-spin" />
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {/* Main Tweets */}
+                  {mainTweets.map((tweet, index) => (
+                    <div key={tweet.id}>
+                      <TweetCard
+                        tweet={tweet}
+                        index={index}
+                        isExpanded={index === 0 && isFirstCardExpanded}
+                        onToggle={index === 0 ? handleFirstCardToggle : () => {}}
+                      />
+                      
+                      {/* Thread expansion for first card */}
+                      {index === 0 && isFirstCardExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 ml-4 md:ml-8 border-l-2 border-[#1DA1F2]/30 pl-4 space-y-4"
+                        >
+                          <p className="text-sm font-semibold text-[#1DA1F2] mb-2">Thread Replies:</p>
+                          {isLoadingThread ? (
+                            <div className="flex items-center justify-center py-6">
+                              <Loader2 className="w-6 h-6 text-[#1DA1F2] animate-spin" />
+                            </div>
+                          ) : (
+                            threadTweets.map((threadTweet, threadIndex) => (
+                              <TweetCard
+                                key={threadTweet.id}
+                                tweet={threadTweet}
+                                index={threadIndex}
+                                isExpanded={false}
+                                onToggle={() => {}}
+                                isThreadCard
+                              />
+                            ))
+                          )}
+                        </motion.div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
