@@ -166,13 +166,15 @@ function TweetCard({
   index, 
   isExpanded, 
   onToggle,
-  isThreadCard = false 
+  isThreadCard = false,
+  title
 }: { 
   tweetId: string; 
   index: number; 
   isExpanded: boolean; 
   onToggle: () => void;
   isThreadCard?: boolean;
+  title?: string;
 }) {
   return (
     <motion.div
@@ -188,6 +190,13 @@ function TweetCard({
         onClick={onToggle}
       >
         <div className="p-4">
+          {/* Title for first card */}
+          {title && (
+            <h3 className="text-lg md:text-xl font-bold text-[#E31937] mb-3">
+              {title}
+            </h3>
+          )}
+          
           {/* Embedded Tweet */}
           <div className="tweet-container [&_article]:!bg-transparent [&_article]:!shadow-none [&_article]:!border-0">
             <Tweet id={tweetId} />
@@ -670,6 +679,7 @@ export default function Home() {
                         index={index}
                         isExpanded={index === 0 && isFirstCardExpanded}
                         onToggle={index === 0 ? handleFirstCardToggle : () => {}}
+                        title={index === 0 ? 'Prevent traffic accidents and traffic deaths.' : undefined}
                       />
                       
                       {/* Thread expansion for first card */}
