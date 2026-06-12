@@ -206,7 +206,7 @@ function TweetCard({
           {index === 0 && !isThreadCard && (
             <div className="flex items-center justify-center mt-3 pt-3 border-t border-slate-100 cursor-pointer">
               <span className="text-xs text-[#E31937] font-semibold mr-2 text-center">
-                Click to see full traffic death thread since the catastrophic VAF (Verordnung über das automatisierte Fahren) law, which is in effect since March 1, 2025.
+                Click to see full traffic death thread since the catastrophic VAF (Verordnung über das automatisierte Fahren) law, which is in effect since March 1, 2025 and keeps preventing FSD (Supervised).
               </span>
               {isExpanded ? (
                 <ChevronUp className="w-4 h-4 text-[#E31937] flex-shrink-0" />
