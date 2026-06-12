@@ -132,14 +132,23 @@ const interests = [
 
 // Main tweets list (extract IDs from URLs)
 const mainTweetIds = [
-  '1921978520722354217',
-  '1962619410780430549',
-  '1967307929444348158',
-  '1992349156778836201',
-  '2006737864441393636',
-  '2024470956811374598',
-  '2064426772486128114',
+  '1921978520722354217',           // first tweet (existing)
+  '2064192847574872534',           // Tesla Europe - increase safety by 3.5x (NEW)
+  '1967307929444348158',           // prevent deaths
+  '2024470956811374598',           // prevent accidents and injuries
+  '1962619410780430549',           // existing
+  '1992349156778836201',           // existing
+  '2006737864441393636',           // existing
+  '2064426772486128114',           // existing
 ];
+
+// Titles for specific tweets (by ID)
+const tweetTitles: Record<string, string> = {
+  '1921978520722354217': 'Prevent traffic accidents and traffic deaths.',
+  '2064192847574872534': 'Increase safety by 3.5x',
+  '1967307929444348158': 'Prevent deaths',
+  '2024470956811374598': 'Prevent accidents and injuries',
+};
 
 // Thread replies for the first tweet
 const threadTweetIds = [
@@ -946,7 +955,7 @@ export default function Home() {
                         isExpanded={index === 0 && isFirstCardExpanded}
                         onToggle={index === 0 ? handleFirstCardToggle : () => {}}
                         onTitleClick={index === 0 ? handleTitleClick : undefined}
-                        title={index === 0 ? "Prevent traffic accidents and traffic deaths." : undefined}
+                        title={tweetTitles[tweetId]}
                       />
                       
                       {/* Thread expansion for first card */}
