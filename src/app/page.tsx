@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Tweet } from 'react-tweet'
 import { 
@@ -148,6 +148,7 @@ const mainTweetIds = [
 ];
 
 // Thread replies for the first tweet
+// TODO: Add all tweet IDs from the thread here
 const threadTweetIds = [
   '1921978520722354217',
   '1923646877305614662',
@@ -195,11 +196,11 @@ function TweetCard({
           {/* Expand indicator for first card */}
           {index === 0 && !isThreadCard && (
             <div className="flex items-center justify-center mt-3 pt-3 border-t border-slate-100 cursor-pointer">
-              <span className="text-xs text-slate-500 mr-2">Click to see full thread</span>
+              <span className="text-xs text-[#E31937] font-semibold mr-2">Click to see full thread</span>
               {isExpanded ? (
-                <ChevronUp className="w-4 h-4 text-[#1DA1F2]" />
+                <ChevronUp className="w-4 h-4 text-[#E31937]" />
               ) : (
-                <ChevronDown className="w-4 h-4 text-[#1DA1F2]" />
+                <ChevronDown className="w-4 h-4 text-[#E31937]" />
               )}
             </div>
           )}
@@ -682,7 +683,7 @@ export default function Home() {
                           transition={{ duration: 0.3 }}
                           className="mt-4 ml-4 md:ml-8 border-l-2 border-[#1DA1F2]/30 pl-4 space-y-4"
                         >
-                          <p className="text-sm font-semibold text-[#1DA1F2] mb-2">Thread Replies:</p>
+                          <p className="text-sm font-semibold text-[#E31937] mb-2">Thread Replies:</p>
                           {threadTweetIds.map((threadTweetId, threadIndex) => (
                             <TweetCard
                               key={threadTweetId}
