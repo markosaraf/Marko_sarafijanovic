@@ -416,7 +416,7 @@ export default function Home() {
           >
             <div className="flex items-center justify-center gap-3">
               <span className="text-lg md:text-xl font-semibold group-hover:text-white/90 transition-colors">
-                Why allow Tesla FSD (Supervised)?
+                Why approve Tesla FSD (Supervised)?
               </span>
               <ChevronDown className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
             </div>
@@ -656,7 +656,7 @@ export default function Home() {
               <div className="sticky top-0 z-10 bg-gradient-to-r from-[#2AABEE] via-[#4DC4F2] to-[#2AABEE] p-4 md:p-6 border-b border-[#229ED9]">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <h2 className="text-xl md:text-2xl font-bold text-white">Why allow Tesla FSD (Supervised)?</h2>
+                    <h2 className="text-xl md:text-2xl font-bold text-white">Why approve Tesla FSD (Supervised)?</h2>
                   </div>
                   <button
                     onClick={() => setIsModalOpen(false)}
