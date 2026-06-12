@@ -405,33 +405,45 @@ function TweetCard({
         }`}
       >
         <div className="p-4">
-          {/* Title for first card - clickable, always visible */}
+          {/* Title for card - clickable only if onTitleClick is provided */}
           {title && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onTitleClick?.();
-              }}
-              className="w-full mb-3 p-3 rounded-xl bg-red-50 border border-red-200 hover:bg-red-100 hover:border-red-300 transition-all duration-200 cursor-pointer group"
-            >
-              <div className="flex flex-col items-center justify-center gap-2">
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-base md:text-lg font-bold text-[#E31937] group-hover:underline underline-offset-2">
-                    {title}
-                  </span>
-                  {isExpanded ? (
-                    <ChevronUp className="w-5 h-5 text-[#E31937] group-hover:-translate-y-0.5 transition-transform" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-[#E31937] group-hover:translate-y-0.5 transition-transform" />
-                  )}
+            onTitleClick ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTitleClick();
+                }}
+                className="w-full mb-3 p-3 rounded-xl bg-red-50 border border-red-200 hover:bg-red-100 hover:border-red-300 transition-all duration-200 cursor-pointer group"
+              >
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-base md:text-lg font-bold text-[#E31937] group-hover:underline underline-offset-2">
+                      {title}
+                    </span>
+                    {isExpanded ? (
+                      <ChevronUp className="w-5 h-5 text-[#E31937] group-hover:-translate-y-0.5 transition-transform" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-[#E31937] group-hover:translate-y-0.5 transition-transform" />
+                    )}
+                  </div>
+                  {/* Traffic Death Counter */}
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-xs md:text-sm text-slate-500">Traffic deaths since VAF law (March 1, 2025):</span>
+                    <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span>
+                  </div>
                 </div>
-                {/* Traffic Death Counter */}
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs md:text-sm text-slate-500">Traffic deaths since VAF law (March 1, 2025):</span>
-                  <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span>
+              </button>
+            ) : (
+              <div className="w-full mb-3 p-3 rounded-xl bg-red-50 border border-red-200">
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-base md:text-lg font-bold text-[#E31937]">
+                      {title}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </button>
+            )
           )}
           
           {/* Embedded Tweet */}
@@ -470,7 +482,6 @@ function TweetCard({
     </motion.div>
   )
 }
-
 export default function Home() {
   const currentYear = new Date().getFullYear()
   const [isLoading, setIsLoading] = useState(true)
