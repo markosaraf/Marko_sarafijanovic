@@ -76,27 +76,21 @@ const socialLinks = [
     color: 'hover:bg-[#FF0000]/10'
   },
   { 
-    name: 'E-mail', 
+    name: 'Email', 
     icon: Mail, 
-    href: 'mailto:marko.sarafijanovic@gmail.com',
-    email: 'marko.sarafijanovic@gmail.com',
+    href: '',
+    email: 'marko.sarafijanovic@hotmail.com',
     color: 'hover:bg-[#E31937]/10'
   }
 ]
 
-// Interest card data
+// Interests data
 const interests = [
-  {
-    icon: Heart,
-    title: 'Teaching Children',
-    description: 'Passionate about educating and inspiring young minds.',
-    gradient: 'from-[#F43F5E] to-[#FB7185]'
-  },
   {
     icon: Zap,
     title: 'Full Self-Driving',
-    description: 'Excited about FSD technology transforming transportation.',
-    gradient: 'from-[#3B82F6] to-[#60A5FA]'
+    description: 'Advocating for Tesla FSD approval in Switzerland and Europe.',
+    gradient: 'from-[#2AABEE] to-[#4DC4F2]'
   },
   {
     icon: Shield,
@@ -354,6 +348,11 @@ const threadTweetIds = [
   '2065440014100512950',
 ];
 
+// Traffic death counter - automatically calculated from thread tweets
+// Base number + additional tweets in thread (excludes the first tweet which is the main tweet)
+const TRAFFIC_DEATH_BASE = 49; // Base number when the counter was first implemented
+const trafficDeathCount = TRAFFIC_DEATH_BASE + (threadTweetIds.length); // -1 to exclude the main tweet duplicate
+
 // Tweet Card Component using react-tweet
 function TweetCard({ 
   tweetId, 
@@ -405,15 +404,22 @@ function TweetCard({
               }}
               className="w-full mb-3 p-3 rounded-xl bg-red-50 border border-red-200 hover:bg-red-100 hover:border-red-300 transition-all duration-200 cursor-pointer group"
             >
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-base md:text-lg font-bold text-[#E31937] group-hover:underline underline-offset-2">
-                  {title}
-                </span>
-                {isExpanded ? (
-                  <ChevronUp className="w-5 h-5 text-[#E31937] group-hover:-translate-y-0.5 transition-transform" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-[#E31937] group-hover:translate-y-0.5 transition-transform" />
-                )}
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-base md:text-lg font-bold text-[#E31937] group-hover:underline underline-offset-2">
+                    {title}
+                  </span>
+                  {isExpanded ? (
+                    <ChevronUp className="w-5 h-5 text-[#E31937] group-hover:-translate-y-0.5 transition-transform" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-[#E31937] group-hover:translate-y-0.5 transition-transform" />
+                  )}
+                </div>
+                {/* Traffic Death Counter */}
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-xs md:text-sm text-slate-500">Traffic deaths since VAF law (March 1, 2025):</span>
+                  <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span>
+                </div>
               </div>
             </button>
           )}
