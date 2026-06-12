@@ -148,7 +148,6 @@ const mainTweetIds = [
 ];
 
 // Thread replies for the first tweet
-// TODO: Add all tweet IDs from the thread here
 const threadTweetIds = [
   '1921978520722354217',
   '1923646877305614662',
@@ -202,8 +201,8 @@ function TweetCard({
         }`}
       >
         <div className="p-4">
-          {/* Title for first card */}
-          {title && (
+          {/* Title for first card - clickable, shows only when NOT expanded */}
+          {title && !isExpanded && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -228,16 +227,24 @@ function TweetCard({
             <Tweet id={tweetId} />
           </div>
           
-          {/* Expand indicator for first card */}
-          {index === 0 && !isThreadCard && !title && (
-            <div className="flex items-center justify-center mt-3 pt-3 border-t border-slate-100 cursor-pointer">
-              <span className="text-xs text-[#E31937] font-semibold mr-2">Click to see full thread</span>
-              {isExpanded ? (
-                <ChevronUp className="w-4 h-4 text-[#E31937]" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-[#E31937]" />
-              )}
-            </div>
+          {/* Expand indicator for first card - shows only when NOT expanded */}
+          {index === 0 && !isThreadCard && !isExpanded && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onTitleClick?.();
+              }}
+              className="w-full flex items-start justify-center gap-2 mt-3 pt-3 border-t border-slate-100 cursor-pointer hover:bg-slate-50 transition-colors rounded-b-xl -mb-4 -mx-4 px-4 pb-4"
+            >
+              <div className="text-xs text-[#E31937] font-semibold text-center">
+                <p className="mb-1">Click to see full traffic death thread.</p>
+                <p className="text-slate-600 font-normal">Thread started when the catastrophic VAF (Verordnung über das automatisierte Fahren) law came into effect on March 1, 2025.</p>
+                <p className="text-[#E31937] font-semibold">This law keeps preventing FSD (Supervised).</p>
+              </div>
+              <div className="flex items-center h-full pt-1">
+                <ChevronDown className="w-4 h-4 text-[#E31937] flex-shrink-0" />
+              </div>
+            </button>
           )}
         </div>
       </div>
@@ -278,16 +285,21 @@ export default function Home() {
   }
 
   const handleTitleClick = () => {
-    setIsFirstCardExpanded(true);
-    setTimeout(() => {
-      setScrollToFirstReply(true);
-    }, 100);
+    if (!isFirstCardExpanded) {
+      setIsFirstCardExpanded(true);
+      setTimeout(() => {
+        setScrollToFirstReply(true);
+      }, 100);
+    } else {
+      setIsFirstCardExpanded(false);
+    }
   }
 
   // Reset scroll target when modal closes
   useEffect(() => {
     if (!isModalOpen) {
       setScrollToFirstReply(false);
+      setIsFirstCardExpanded(false);
     }
   }, [isModalOpen]);
 
