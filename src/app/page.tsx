@@ -394,7 +394,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="relative z-10 max-w-6xl mx-auto px-4 py-8 md:py-16">
         
-        {/* FSD Banner */}
+        {/* FSD Banner - Lighter blue gradient (Telegram-style), no car icon */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -403,14 +403,13 @@ export default function Home() {
         >
           <button
             onClick={handleBannerClick}
-            className="w-full bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            className="w-full bg-gradient-to-r from-[#2AABEE] via-[#4DC4F2] to-[#2AABEE] text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
           >
             <div className="flex items-center justify-center gap-3">
-              <Car className="w-5 h-5 text-[#1DA1F2]" />
-              <span className="text-lg md:text-xl font-semibold group-hover:text-[#1DA1F2] transition-colors">
+              <span className="text-lg md:text-xl font-semibold group-hover:text-white/90 transition-colors">
                 Why allow Tesla FSD (Supervised)?
               </span>
-              <ChevronDown className="w-5 h-5 text-slate-400 group-hover:text-[#1DA1F2] transition-colors" />
+              <ChevronDown className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
             </div>
           </button>
         </motion.div>
@@ -644,11 +643,10 @@ export default function Home() {
               className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header */}
-              <div className="sticky top-0 z-10 bg-gradient-to-r from-slate-900 to-slate-800 p-4 md:p-6 border-b border-slate-700">
+              {/* Header - Lighter blue gradient (Telegram-style), no car icon */}
+              <div className="sticky top-0 z-10 bg-gradient-to-r from-[#2AABEE] via-[#4DC4F2] to-[#2AABEE] p-4 md:p-6 border-b border-[#229ED9]">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Car className="w-6 h-6 text-[#1DA1F2]" />
                     <h2 className="text-xl md:text-2xl font-bold text-white">Why allow Tesla FSD (Supervised)?</h2>
                   </div>
                   <button
@@ -658,7 +656,7 @@ export default function Home() {
                     <X className="w-5 h-5 text-white" />
                   </button>
                 </div>
-                <p className="text-[#1DA1F2] text-sm font-medium mt-2">Learn more</p>
+                <p className="text-white/80 text-sm font-medium mt-2">Learn more</p>
               </div>
               
               {/* Scrollable Content */}
