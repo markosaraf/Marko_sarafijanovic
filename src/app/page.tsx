@@ -349,9 +349,9 @@ const threadTweetIds = [
 ];
 
 // Traffic death counter - automatically calculated from thread tweets
-// Formula: 50 + (threadTweetIds.length - 1) = 50 + 203 = 253
+// Formula: 51 + (threadTweetIds.length - 1) = 51 + (203 - 1) = 51 + 202 = 253
 // Each new tweet ID added will increase the counter by 1
-const TRAFFIC_DEATH_BASE = 50;
+const TRAFFIC_DEATH_BASE = 51;
 const trafficDeathCount = TRAFFIC_DEATH_BASE + (threadTweetIds.length - 1);
 
 // Tweet Card Component using react-tweet
