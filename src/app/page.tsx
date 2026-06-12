@@ -18,9 +18,11 @@ import {
   Heart,
   Mail,
   Youtube,
-  Music
+  Music,
+  Check
 } from 'lucide-react'
 import Image from 'next/image'
+import { toast } from '@/hooks/use-toast'
 
 // Animation variants
 const fadeInUp = {
@@ -73,6 +75,7 @@ const socialLinks = [
     name: 'E-mail', 
     icon: Mail, 
     href: 'mailto:marko.sarafijanovic@gmail.com',
+    email: 'marko.sarafijanovic@gmail.com',
     color: 'hover:bg-[#E31937]/10'
   }
 ]
@@ -149,6 +152,45 @@ export default function Home() {
       clearTimeout(contentTimer)
     }
   }, [])
+
+  // Handle email button click - copy to clipboard
+  const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string) => {
+    e.preventDefault()
+    
+    navigator.clipboard.writeText(email).then(() => {
+      toast({
+        title: 'Email copied!',
+        description: `${email} has been copied to your clipboard.`,
+        duration: 3000,
+      })
+    }).catch(() => {
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement('textarea')
+      textArea.value = email
+      textArea.style.position = 'fixed'
+      textArea.style.left = '-999999px'
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+      
+      try {
+        document.execCommand('copy')
+        toast({
+          title: 'Email copied!',
+          description: `${email} has been copied to your clipboard.`,
+          duration: 3000,
+        })
+      } catch {
+        toast({
+          title: 'Could not copy email',
+          description: `Please manually copy: ${email}`,
+          duration: 5000,
+        })
+      }
+      
+      document.body.removeChild(textArea)
+    })
+  }
 
   return (
     <>
@@ -258,7 +300,7 @@ export default function Home() {
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-[#E31937]/10 to-transparent rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-[#E31937]/5 to-transparent rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-slate-200/50 to-slate-100/30 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left:1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-slate-200/50 to-slate-100/30 rounded-full blur-3xl" />
       </div>
 
       {/* Main Content */}
@@ -375,18 +417,23 @@ export default function Home() {
               {socialLinks.map((social) => (
                 <motion.a
                   key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={social.email ? '#' : social.href}
+                  target={social.email ? undefined : '_blank'}
+                  rel={social.email ? undefined : 'noopener noreferrer'}
+                  onClick={social.email ? (e) => handleEmailClick(e, social.email!) : undefined}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 ${social.color} transition-all duration-300 group`}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 ${social.color} transition-all duration-300 group cursor-pointer`}
                 >
                   <social.icon className="w-5 h-5 text-slate-400 group-hover:text-[#E31937] transition-colors" />
                   <span className="text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">
                     {social.name}
                   </span>
-                  <ExternalLink className="w-3 h-3 text-slate-400 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {social.email ? (
+                    <Check className="w-3 h-3 text-slate-400 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                  ) : (
+                    <ExternalLink className="w-3 h-3 text-slate-400 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                  )}
                 </motion.a>
               ))}
             </div>
