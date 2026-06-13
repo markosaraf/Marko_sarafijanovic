@@ -143,6 +143,7 @@ const mainTweetIds = [
   '1967307929444348158',           // prevent deaths
   '2024470956811374598',           // prevent accidents and injuries
   '2065524907551735922',           // Stop state favorism and regulatory capture
+  '2065459025186025718',           // Stop state favorism and regulatory capture2
   '1962619410780430549',           // existing
   '1992349156778836201',           // existing
   '2006737864441393636',           // existing
@@ -156,6 +157,7 @@ const tweetTitles: Record<string, string> = {
   '1967307929444348158': 'Prevent deaths',
   '2024470956811374598': 'Prevent accidents and injuries',
   '2065524907551735922': 'Stop state favorism and regulatory capture in Switzerland.🇨🇭',
+  '2065459025186025718': 'Revert Article 34c of VAF (Verordnung über das automatisierte Fahren). Article 32 is leading to state favorism by ASTRA. ASTRA is excempting state projects like AmiGo from PostAuto AG from Article 34c.🇨🇭 Current ASTRA Director: Jürg Röthlisberger. '
 };
 
 // Thread replies for the first tweet
