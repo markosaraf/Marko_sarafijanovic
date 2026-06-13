@@ -136,6 +136,7 @@ const mainTweetIds = [
   '2064192847574872534',           // Tesla Europe - increase safety by 3.5x (NEW)
   '1967307929444348158',           // prevent deaths
   '2024470956811374598',           // prevent accidents and injuries
+  '2065524907551735922',           // Stop state favorism and regulatory capture
   '1962619410780430549',           // existing
   '1992349156778836201',           // existing
   '2006737864441393636',           // existing
@@ -148,6 +149,7 @@ const tweetTitles: Record<string, string> = {
   '2064192847574872534': 'Increase safety by 3.5x',
   '1967307929444348158': 'Prevent deaths',
   '2024470956811374598': 'Prevent accidents and injuries',
+  '2065524907551735922': 'Stop state favorism and regulatory capture in Switzerland.🇨🇭',
 };
 
 // Thread replies for the first tweet
