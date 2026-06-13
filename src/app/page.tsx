@@ -157,7 +157,7 @@ const tweetTitles: Record<string, string> = {
   '1967307929444348158': 'Prevent deaths',
   '2024470956811374598': 'Prevent accidents and injuries',
   '2065524907551735922': 'Stop state favorism and regulatory capture in Switzerland.🇨🇭',
-  '2065459025186025718': 'Revert Article 34c of VAF (Verordnung über das automatisierte Fahren). Article 34c is leading to state favorism by ASTRA. ASTRA is excempting state projects like AmiGo from PostAuto AG from Article 34c.🇨🇭 Current ASTRA Director: Jürg Röthlisberger. '
+  '2065459025186025718': 'Revert Article 34c of VAF (Verordnung über das automatisierte Fahren). Article 34c is leading to state favorism by ASTRA. ASTRA is excempting state projects like "AmiGo" by PostAuto AG from Article 34c.🇨🇭 Current ASTRA Director: Jürg Röthlisberger. '
 };
 
 // Thread replies for the first tweet
