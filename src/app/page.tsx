@@ -526,9 +526,9 @@ export default function Home() {
     }
   }, [])
 
-  const handleBannerClick = () => {
-    setIsModalOpen(true)
-  }
+const handleBannerClick = () => {
+  window.location.href = '/Why-allow-Tesla-FSD-Supervised'
+}
 
   const handleFirstCardToggle = () => {
     setIsFirstCardExpanded(!isFirstCardExpanded)
