@@ -87,6 +87,12 @@ const socialLinks = [
 // Interests data
 const interests = [
   {
+  icon: Heart,
+  title: 'Teaching Children',
+  description: 'Passionate about educating and inspiring young minds.',
+  gradient: 'from-[#F43F5E] to-[#FB7185]'
+}
+  {
     icon: Zap,
     title: 'Full Self-Driving',
     description: 'Advocating for Tesla FSD approval in Switzerland and Europe.',
