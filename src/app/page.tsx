@@ -79,7 +79,7 @@ const socialLinks = [
     name: 'Email', 
     icon: Mail, 
     href: '',
-    email: 'marko.sarafijanovic@hotmail.com',
+    email: 'marko.sarafijanovic@gmail.com',
     color: 'hover:bg-[#E31937]/10'
   }
 ]
