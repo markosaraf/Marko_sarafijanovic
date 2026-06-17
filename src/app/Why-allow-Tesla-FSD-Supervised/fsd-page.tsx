@@ -33,7 +33,7 @@ const tweetTitles: Record<string, string> = {
   '2024470956811374598': 'Prevent accidents and injuries',
   '2065524907551735922': 'Stop state favorism and regulatory capture in Switzerland.🇨🇭',
   '2065459025186025718': 'Revert Article 34c of VAF (Verordnung über das automatisierte Fahren). Article 34c is leading to state favorism by ASTRA. ASTRA is excempting state projects like "AmiGo" by PostAuto AG from Article 34c.🇨🇭 Current ASTRA Director: Jürg Röthlisberger. '
-  '2067300358464934034',: 'Tesla FSD (Supervised) is statistically safer than the 100% state owned PostAuto AG fleet.'
+  '2067300358464934034': 'Tesla FSD (Supervised) is statistically safer than the 100% state owned PostAuto AG fleet.'
 };
 
 // Thread replies for the first tweet
