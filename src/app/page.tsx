@@ -962,7 +962,7 @@ const handleBannerClick = () => {
               <div className="sticky top-0 z-10 bg-gradient-to-r from-[#2AABEE] to-[#4DC4F2] p-4 md:p-6 border-b border-[#2AABEE]/50">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <h2 className="text-xl md:text-2xl font-bold text-white">Why approve Tesla FSD (Supervised)?</h2>
+                    <h2 className="text-xl md:text-2xl font-bold text-white">Why approve Tesla FSD (Supervised) in Switzerland?</h2>
                   </div>
                   <button
                     onClick={() => setIsModalOpen(false)}
