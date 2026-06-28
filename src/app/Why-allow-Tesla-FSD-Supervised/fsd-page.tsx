@@ -422,22 +422,26 @@ export default function FSDPage() {
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-[#E31937]/5 to-transparent rounded-full blur-3xl" />
       </div>
 
-      {/* Header — sticky pinned, never moves on scroll */}
-      <header className="header-glass-blue sticky top-0 z-50 p-4 md:p-6">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <h1 className="text-xl md:text-2xl font-bold text-white">Why approve Tesla FSD (Supervised)?</h1>
+      {/* Header — two-layer structure like vugolaai.com:
+          Outer <header> = sticky positioning only, transparent
+          Inner <div> = backdrop-filter blur + blue glass background */}
+      <header className="sticky top-0 z-50">
+        <div className="header-glass-blue p-4 md:p-6">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl md:text-2xl font-bold text-white">Why approve Tesla FSD (Supervised)?</h1>
+            </div>
+            <button
+              onClick={handleClose}
+              className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5 text-white" />
+            </button>
           </div>
-          <button
-            onClick={handleClose}
-            className="p-2 rounded-lg hover:bg-white/10 transition-colors"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5 text-white" />
-          </button>
-        </div>
-        <div className="max-w-4xl mx-auto">
-          <p className="text-white/80 text-sm font-medium mt-2">Learn more</p>
+          <div className="max-w-4xl mx-auto">
+            <p className="text-white/80 text-sm font-medium mt-2">Learn more</p>
+          </div>
         </div>
       </header>
 
