@@ -122,25 +122,24 @@
 }
 
 /* ============================================================
-   Frosted Glass Header — vugolaai.com two-layer pattern
+   Frosted Glass Header — blue tint + vugolaai.com glass border
    
-   OUTER <header>: just sticky + z-index, transparent
-   INNER .header-glass-blue <div>: blur + blue glass + border
+   NOTE: backdrop-filter is set via INLINE STYLE in fsd-page.tsx
+   because Tailwind v4's CSS processing strips/overrides it
+   when defined in custom CSS classes. Inline styles bypass
+   all CSS cascade layers and cannot be overridden.
    ============================================================ */
 
 .header-glass-blue {
-  /* Semi-transparent blue gradient — original blue look preserved */
+  /* Blue gradient background — original blue look */
   background: linear-gradient(
     to right,
     rgba(42, 171, 238, 0.65),
     rgba(77, 196, 242, 0.65)
   );
-  /* Frosted glass blur — same technique as vugolaai.com liquid-glass */
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  /* Subtle inset shadow for depth — same as vugolaai.com */
+  /* Inset shadow for depth — same as vugolaai.com */
   box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 1px inset;
-  /* position:relative for the ::before pseudo-element to anchor against */
+  /* Position for ::before pseudo-element */
   position: relative;
   /* MUST be visible — overflow:hidden breaks backdrop-filter */
   overflow: visible;
