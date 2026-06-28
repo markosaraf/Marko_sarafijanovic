@@ -122,24 +122,28 @@
 }
 
 /* ============================================================
-   Frosted Glass Header — blue tint + vugolaai.com grey outline
+   Frosted Glass Header — vugolaai.com two-layer pattern
+   
+   OUTER <header>: just sticky + z-index, transparent
+   INNER .header-glass-blue <div>: blur + blue glass + border
    ============================================================ */
 
 .header-glass-blue {
-  /* Semi-transparent blue gradient (see-through) */
+  /* Semi-transparent blue gradient — original blue look preserved */
   background: linear-gradient(
     to right,
     rgba(42, 171, 238, 0.65),
     rgba(77, 196, 242, 0.65)
   );
-  /* Frosted glass blur — same as vugolaai.com */
+  /* Frosted glass blur — same technique as vugolaai.com liquid-glass */
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  /* Subtle inset shadow for depth — same as vugolaai.com light mode */
+  /* Subtle inset shadow for depth — same as vugolaai.com */
   box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 1px inset;
-  /* DO NOT add position:relative or overflow:hidden here —
-     they override Tailwind sticky/fixed and break pinning.
-     sticky/fixed already create a containing block for ::before. */
+  /* position:relative for the ::before pseudo-element to anchor against */
+  position: relative;
+  /* MUST be visible — overflow:hidden breaks backdrop-filter */
+  overflow: visible;
 }
 
 /* Grey gradient outline — exact same technique as vugolaai.com */
@@ -147,7 +151,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit; /* 0 for rectangle header */
+  border-radius: inherit;
   padding: 1.4px; /* "border width" — same as vugolaai.com */
   background: linear-gradient(
     rgba(0, 0, 0, 0.18),
