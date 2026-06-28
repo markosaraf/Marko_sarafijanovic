@@ -427,8 +427,8 @@ export default function FSDPage() {
         <div
           className="header-glass-blue p-4 md:p-6"
           style={{
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
+            backdropFilter: 'blur(3px)',
+            WebkitBackdropFilter: 'blur(3px)',
           }}
         >
           <div className="max-w-4xl mx-auto flex items-center justify-between">
