@@ -402,13 +402,11 @@ export default function FSDPage() {
 
   const handleTitleClick = () => {
     if (!isFirstCardExpanded) {
-      // Expanding: open and scroll to first reply
       setIsFirstCardExpanded(true);
       setTimeout(() => {
         setScrollToFirstReply(true);
       }, 100);
     } else {
-      // Collapsing: just close
       setIsFirstCardExpanded(false);
       setScrollToFirstReply(false);
     }
@@ -423,10 +421,16 @@ export default function FSDPage() {
       </div>
 
       {/* Header — two-layer structure like vugolaai.com:
-          Outer <header> = sticky positioning only, transparent
-          Inner <div> = backdrop-filter blur + blue glass background */}
+          Outer <header> = sticky positioning only, transparent background
+          Inner <div> = backdrop-filter blur via INLINE STYLE + blue glass background via CSS class */}
       <header className="sticky top-0 z-50">
-        <div className="header-glass-blue p-4 md:p-6">
+        <div
+          className="header-glass-blue p-4 md:p-6"
+          style={{
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+          }}
+        >
           <div className="max-w-4xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
               <h1 className="text-xl md:text-2xl font-bold text-white">Why approve Tesla FSD (Supervised)?</h1>
