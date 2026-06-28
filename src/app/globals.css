@@ -122,23 +122,24 @@
 }
 
 /* ============================================================
-   Frosted Glass Header — blue tint + vugolaai.com blur effect
+   Frosted Glass Header — blue tint + vugolaai.com grey outline
    ============================================================ */
 
 .header-glass-blue {
-  /* Semi-transparent blue tint — low opacity so blur is visible
-     (vugolaai.com uses rgba(0,0,0,0.02); we use blue at 0.12
-      to keep the blue identity while showing the frosted blur) */
+  /* Semi-transparent blue gradient (see-through) */
   background: linear-gradient(
     to right,
-    rgba(42, 171, 238, 0.12),
-    rgba(77, 196, 242, 0.12)
+    rgba(42, 171, 238, 0.65),
+    rgba(77, 196, 242, 0.65)
   );
-  /* Frosted glass blur — exactly like vugolaai.com */
+  /* Frosted glass blur — same as vugolaai.com */
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   /* Subtle inset shadow for depth — same as vugolaai.com light mode */
   box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 1px inset;
+  /* DO NOT add position:relative or overflow:hidden here —
+     they override Tailwind sticky/fixed and break pinning.
+     sticky/fixed already create a containing block for ::before. */
 }
 
 /* Grey gradient outline — exact same technique as vugolaai.com */
@@ -146,7 +147,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
+  border-radius: inherit; /* 0 for rectangle header */
   padding: 1.4px; /* "border width" — same as vugolaai.com */
   background: linear-gradient(
     rgba(0, 0, 0, 0.18),
