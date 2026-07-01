@@ -11,7 +11,7 @@ import {
 import { useRouter } from 'next/navigation'
 
 // Main tweets list (extract IDs from URLs)
-const mainTweetIds = [
+export const mainTweetIds = [
   '1921978520722354217',           // first tweet (existing)
   '2064192847574872534',           // Tesla Europe - increase safety by 3.5x (NEW)
   '1967307929444348158',           // prevent deaths
@@ -26,7 +26,7 @@ const mainTweetIds = [
 ];
 
 // Titles for specific tweets (by ID)
-const tweetTitles: Record<string, string> = {
+export const tweetTitles: Record<string, string> = {
   '1921978520722354217': 'Prevent traffic accidents and traffic deaths.',
   '2064192847574872534': 'Increase safety by 3.5x',
   '1967307929444348158': 'Prevent deaths',
@@ -37,7 +37,7 @@ const tweetTitles: Record<string, string> = {
 };
 
 // Thread replies for the first tweet
-const threadTweetIds = [
+export const threadTweetIds = [
   '1921978520722354217',
   '1923646877305614662',
   '1923647213076467995',
@@ -257,8 +257,8 @@ const threadTweetIds = [
 ];
 
 // Traffic death counter - automatically calculated from thread tweets
-const TRAFFIC_DEATH_BASE = 51;
-const trafficDeathCount = TRAFFIC_DEATH_BASE + (threadTweetIds.length - 1);
+export const TRAFFIC_DEATH_BASE = 51;
+export const trafficDeathCount = TRAFFIC_DEATH_BASE + (threadTweetIds.length - 1);
 
 // Tweet Card Component using react-tweet
 function TweetCard({ 
