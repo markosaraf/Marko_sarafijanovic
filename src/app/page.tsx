@@ -605,7 +605,7 @@ const handleBannerClick = () => {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Marko Sarafijanovic",
-            "image": "https://marko-sarafijanovic.space-z.ai/marko-profile.png",
+            "image": "https://marko-sarafijanovic.com/marko-profile.png",
             "jobTitle": "Primary School Teacher",
             "worksFor": {
               "@type": "EducationalOrganization",
