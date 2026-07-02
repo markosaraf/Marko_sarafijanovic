@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { trafficDeathCount } from "./fsd-page";
+import { trafficDeathCount } from "./fsd-data";
 
 export const alt = "Why approve Tesla FSD (Supervised)? — Traffic death counter";
 export const size = { width: 1200, height: 1200 };
@@ -84,7 +84,7 @@ export default function Image() {
                 fontVariantNumeric: "tabular-nums",
               }}
             >
-              {trafficDeathCount}
+              {String(trafficDeathCount)}
             </div>
 
             <div
