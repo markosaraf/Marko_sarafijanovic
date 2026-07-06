@@ -255,6 +255,9 @@ export const threadTweetIds = [
   '2072635572644978836',
   '2072635861917696292',
   '2072636500169175199',
+  '2074030347696627950',
+  '2074030644766625933',
+  '2074031006563082293?',
 ];
 
 // Traffic death counter - automatically calculated from thread tweets
