@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Why approve Tesla FSD (Supervised) in Switzerland?",
     description:
       "Reasons to allow Tesla FSD in Switzerland: Prevent traffic deaths and traffic accidents, increase traffic safety.",
