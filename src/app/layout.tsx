@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     }
   },
 icons: {
-  icon: "/favicon-512x512.png",
-  apple: "/favicon-512x512.png",
+  icon: "/favicon.ico",
+  apple: "/favicon.ico",
 },
   openGraph: {
     title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
