@@ -42,14 +42,14 @@ icons: {
     url: SITE_URL,
     siteName: "Marko Sarafijanovic",
     type: "website",
-    images: ["/marko-profile.png"],
+    images: ["/opengraph-image-homepage.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
     description: "Substitute teacher in primary school passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast and Full Self-Driving advocate.",
     creator: "@MarkoSaraf2004",
-    images: ["/marko-profile.png"],
+    images: ["/opengraph-image-homepage.png"],
   },
   // ADDED: Tell robots to index this page
   robots: {
