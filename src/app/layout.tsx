@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// YOUR ACTUAL PRIMARY DOMAIN
+// MY ACTUAL PRIMARY DOMAIN
 const SITE_URL = "https://marko-sarafijanovic.com";
 
 export const metadata: Metadata = {
