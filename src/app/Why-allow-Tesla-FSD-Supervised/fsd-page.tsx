@@ -232,7 +232,7 @@ export default function FSDPage() {
                   transition={{ duration: 0.3 }}
                   className="mt-4 ml-4 md:ml-8 border-l-2 border-[#E31937]/30 pl-4 space-y-4"
                 >
-                  <p className="text-sm font-semibold text-[#E31937] mb-2">Thread Replies:</p>
+                  <p className="text-sm font-semibold text-[#E31937] mb-2">Traffic deaths thread:</p>
                   {threadTweetIds.map((threadTweetId, threadIndex) => (
                     <TweetCard
                       key={threadTweetId}
