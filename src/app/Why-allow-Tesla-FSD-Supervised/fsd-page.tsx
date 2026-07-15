@@ -128,6 +128,7 @@ function TweetCard({
             >
               <div className="text-xs text-[#E31937] font-semibold text-center">
                 <p className="mb-1">Click to see full traffic death thread.</p>
+                <p className="mb-1">Counter: <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span></p>
                 <p className="text-slate-600 font-normal">Thread started when the catastrophic VAF (Verordnung über das automatisierte Fahren) law came into effect on March 1, 2025.</p>
                 <p className="text-[#E31937] font-semibold">This law keeps preventing FSD (Supervised).</p>
               </div>
