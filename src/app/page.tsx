@@ -757,7 +757,7 @@ const handleBannerClick = () => {
               
               {/* Name & Tagline */}
               <div className="text-center md:text-left flex-1">
-                <motion.h1 
+                <motion.h2 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -766,7 +766,7 @@ const handleBannerClick = () => {
                   <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent">
                     Marko Sarafijanovic
                   </span>
-                </motion.h1>
+                </motion.h2>
                 
                 <motion.p 
                   initial={{ opacity: 0, y: 10 }}
