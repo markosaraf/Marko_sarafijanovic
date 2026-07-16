@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/indexnow?secret=IwEDSfiuel<3",
+      "schedule": "0 3 * * *"
+    }
+  ]
+}
