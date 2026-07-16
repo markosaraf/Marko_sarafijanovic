@@ -119,7 +119,7 @@ const interests = [
   {
     icon: Lightbulb,
     title: 'Innovation',
-    description: 'Exploring and promoting new technologies and sustainable transportation.',
+    description: 'Exploring and promoting new technologies such as sustainable transportation and autonomous transport.',
     gradient: 'from-[#F59E0B] to-[#FBBF24]'
   },
   {
