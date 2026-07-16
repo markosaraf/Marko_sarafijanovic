@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
-  title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
+  title: "Marko Sarafijanovic | Primary Teacher & Tesla (FSD) Advocate",
   description: "Substitute teacher in primary school passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast and Full Self-Driving advocate.",
   keywords: ["Marko Sarafijanovic", "Marko Adliswil", "Marko Zurich", "Marko Zürich", "Marko PHZH", "Marko Pädagogische Hochschule Zürich", "Marko Tesla", "Marko Tennis", "Marko TCA", "Marko Tennis Club Adliswil", "Primary School Teacher", "Substitute Teacher", "Tesla", "FSD", "Full Self-Driving", "Electric Vehicles", "Technology", "Innovation", "Zurich", "Adliswil", "PHZH"],
   authors: [{ name: "Marko Sarafijanovic" }],
