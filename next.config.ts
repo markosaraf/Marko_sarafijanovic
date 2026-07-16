@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  instrumentationHook: true,
   typescript: {
     ignoreBuildErrors: true,
   },
