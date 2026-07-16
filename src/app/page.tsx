@@ -131,7 +131,7 @@ const interests = [
   {
     icon: Music,
     title: 'Music',
-    description: 'I enjoy listening to music and singing. Beyond that, I play guitar since childhood.',
+    description: 'I enjoy listening and singing to popular music. Beyond that, I play guitar since childhood.',
     gradient: 'from-[#06B6D4] to-[#22D3EE]'
   }
 ]
