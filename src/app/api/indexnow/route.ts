@@ -33,7 +33,10 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  if (INDEXNOW_SECRET && !isAuthorized(request)) {
+  // Allow Vercel Cron without secret (Vercel sends this header automatically)
+  const isVercelCron = request.headers.get("x-vercel-cron") === "true";
+
+  if (!isVercelCron && INDEXNOW_SECRET && !isAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
