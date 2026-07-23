@@ -1,8 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/indexnow?secret=msms1829<3",
-      "schedule": "0 3 * * *"
+      "path": "/api/indexnow",
+      "schedule": "0 */6 * * *"
     }
   ]
 }
