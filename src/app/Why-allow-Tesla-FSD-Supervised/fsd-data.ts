@@ -26,7 +26,7 @@ export const mainTweetIds = [
 // Titles for specific tweets (by ID)
 export const tweetTitles: Record<string, string> = {
   '1921978520722354217': 'Prevent traffic accidents and traffic deaths.',
-  '2064192847574872534': 'Increase safety by 5.2x.',
+  '2082175370569417066': 'Increase safety by 5.2x.',
   '1967307929444348158': 'Prevent deaths.',
   '2024470956811374598': 'Prevent accidents and injuries.',
   '2065524907551735922': 'Stop state favorism and regulatory capture in Switzerland.🇨🇭',
