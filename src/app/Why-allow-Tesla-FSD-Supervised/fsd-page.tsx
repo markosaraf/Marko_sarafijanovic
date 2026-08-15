@@ -109,9 +109,16 @@ function TweetCard({
             )
           )}
           
-          {/* Embedded Tweet */}
+          {/* Embedded Tweet
+              — [&_article]:!m-0 resets react-tweet's responsive negative margins
+              — [&_article]:!p-4 md:[&_article]:!p-5 forces consistent inner padding
+                so the tweet avatar (poster's circular profile pic) always has
+                enough clearance from the card's rounded corners. Without this,
+                react-tweet shrinks the article padding on mobile, pushing the
+                avatar into the card's overflow-hidden + rounded-2xl clip zone,
+                which cuts off the top-left of the circle. */}
           <div 
-            className="tweet-container [&_article]:!bg-transparent [&_article]:!shadow-none [&_article]:!border-0 cursor-pointer"
+            className="tweet-container [&_article]:!bg-transparent [&_article]:!shadow-none [&_article]:!border-0 [&_article]:!m-0 [&_article]:!p-4 md:[&_article]:!p-5 cursor-pointer"
             onClick={onToggle}
           >
             <Tweet id={tweetId} />
