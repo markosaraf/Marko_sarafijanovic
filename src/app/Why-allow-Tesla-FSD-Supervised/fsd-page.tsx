@@ -3,9 +3,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Tweet } from 'react-tweet'
-import { 
-  ChevronDown, 
-  ChevronUp, 
+import {
+  ChevronDown,
+  ChevronUp,
   X
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -17,19 +17,19 @@ import {
 } from './fsd-data'
 
 // Tweet Card Component using react-tweet
-function TweetCard({ 
-  tweetId, 
-  index, 
-  isExpanded, 
+function TweetCard({
+  tweetId,
+  index,
+  isExpanded,
   onToggle,
   onTitleClick,
   isThreadCard = false,
   title,
   isScrollTarget = false
-}: { 
-  tweetId: string; 
-  index: number; 
-  isExpanded: boolean; 
+}: {
+  tweetId: string;
+  index: number;
+  isExpanded: boolean;
   onToggle: () => void;
   onTitleClick?: () => void;
   isThreadCard?: boolean;
@@ -52,12 +52,19 @@ function TweetCard({
       transition={{ duration: 0.4, delay: index * 0.1 }}
       className="w-full"
     >
-      <div 
-        className={`relative rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-lg hover:shadow-xl transition-all duration-300 ${
+      {/*
+        Card — overflow-hidden REMOVED.
+        Previously, overflow-hidden + rounded-2xl clipped the tweet avatar's
+        circle on mobile. The "Click to see full thread" button below has been
+        restructured as a sibling (not a child of p-4) with no negative margins,
+        so clipping is no longer needed for it either.
+      */}
+      <div
+        className={`relative rounded-2xl bg-white border border-slate-200/80 shadow-lg hover:shadow-xl transition-all duration-300 ${
           isThreadCard ? 'border-l-4 border-l-[#E31937]' : ''
         }`}
       >
-        <div className="p-4">
+        <div className="p-4 pb-0">
           {/* Title for card - clickable only if onTitleClick is provided */}
           {title && (
             onTitleClick ? (
@@ -85,9 +92,9 @@ function TweetCard({
                     <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span>
                   </div>
                   {/* FSD Delay Clock Link */}
-                  <a 
-                    href="https://fsddelay.org" 
-                    target="_blank" 
+                  <a
+                    href="https://fsddelay.org"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-semibold text-green-600 hover:text-green-700 hover:underline mt-1"
                     onClick={(e) => e.stopPropagation()}
@@ -108,47 +115,82 @@ function TweetCard({
               </div>
             )
           )}
-          
-          {/* Embedded Tweet
-              — [&_article]:!m-0 resets react-tweet's responsive negative margins
-              — [&_article]:!p-4 md:[&_article]:!p-5 forces consistent inner padding
-                so the tweet avatar (poster's circular profile pic) always has
-                enough clearance from the card's rounded corners. Without this,
-                react-tweet shrinks the article padding on mobile, pushing the
-                avatar into the card's overflow-hidden + rounded-2xl clip zone,
-                which cuts off the top-left of the circle. */}
-          <div 
-            className="tweet-container [&_article]:!bg-transparent [&_article]:!shadow-none [&_article]:!border-0 [&_article]:!m-0 [&_article]:!p-4 md:[&_article]:!p-5 cursor-pointer"
+
+          {/*
+            Embedded Tweet — comprehensive avatar overrides.
+
+            Three things conspire to cut off the avatar circle on mobile:
+            1. Card's overflow-hidden + rounded-2xl corner clip (fixed above
+               by removing overflow-hidden)
+            2. Flexbox squeezing: react-tweet's header is a flex row. On narrow
+               viewports, if the avatar doesn't have flex-shrink:0, it gets
+               compressed horizontally → circle becomes oval → looks "cut off".
+               Fix: [&_.react-tweet-avatar]:!flex-shrink-0 + !w-12 + !h-12 +
+                    !min-w-[48px] + !min-h-[48px]
+            3. Image not filling container: if object-fit:cover isn't enforced,
+               the <img> renders at its natural aspect ratio and gets clipped
+               by the circle's overflow:hidden.
+               Fix: [&_.react-tweet-avatar_img]:!w-full + !h-full + !object-cover
+
+            Also: [&_article]:!m-0 + !p-4 resets react-tweet's responsive
+            margins/padding that shrink on mobile.
+          */}
+          <div
+            className="tweet-container
+              [&_article]:!bg-transparent
+              [&_article]:!shadow-none
+              [&_article]:!border-0
+              [&_article]:!m-0
+              [&_article]:!p-4
+              md:[&_article]:!p-5
+              [&_.react-tweet-avatar]:!w-12
+              [&_.react-tweet-avatar]:!h-12
+              [&_.react-tweet-avatar]:!min-w-[48px]
+              [&_.react-tweet-avatar]:!min-h-[48px]
+              [&_.react-tweet-avatar]:!flex-shrink-0
+              [&_.react-tweet-avatar]:!rounded-full
+              [&_.react-tweet-avatar]:!overflow-hidden
+              [&_.react-tweet-avatar_img]:!w-full
+              [&_.react-tweet-avatar_img]:!h-full
+              [&_.react-tweet-avatar_img]:!object-cover
+              [&_.react-tweet-header]:!gap-3
+              cursor-pointer"
             onClick={onToggle}
           >
             <Tweet id={tweetId} />
           </div>
-          
-          {/* Expand indicator for first card - always visible */}
-          {index === 0 && !isThreadCard && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onTitleClick?.();
-              }}
-              className="w-full flex items-start justify-center gap-2 mt-3 pt-3 border-t border-slate-100 cursor-pointer hover:bg-slate-50 transition-colors rounded-b-xl -mb-4 -mx-4 px-4 pb-4"
-            >
-              <div className="text-xs text-[#E31937] font-semibold text-center">
-                <p className="mb-1">Click to see full traffic death thread.</p>
-                <p className="mb-1">Counter: <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span></p>
-                <p className="text-slate-600 font-normal">Thread started when the catastrophic VAF (Verordnung über das automatisierte Fahren) law came into effect on March 1, 2025.</p>
-                <p className="text-[#E31937] font-semibold">This law keeps preventing FSD (Supervised).</p>
-              </div>
-              <div className="flex items-center h-full pt-1">
-                {isExpanded ? (
-                  <ChevronUp className="w-4 h-4 text-[#E31937] flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-[#E31937] flex-shrink-0" />
-                )}
-              </div>
-            </button>
-          )}
         </div>
+
+        {/*
+          Expand indicator for first card.
+          NOW A SIBLING of the p-4 div (was a child).
+          - No -mb-4 -mx-4 negative margins → card doesn't need overflow-hidden
+          - rounded-b-2xl matches the card's bottom corner radius
+          - px-4 pb-4 provides internal padding
+        */}
+        {index === 0 && !isThreadCard && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onTitleClick?.();
+            }}
+            className="w-full flex items-start justify-center gap-2 mt-3 pt-3 border-t border-slate-100 cursor-pointer hover:bg-slate-50 transition-colors px-4 pb-4 rounded-b-2xl"
+          >
+            <div className="text-xs text-[#E31937] font-semibold text-center">
+              <p className="mb-1">Click to see full traffic death thread.</p>
+              <p className="mb-1">Counter: <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span></p>
+              <p className="text-slate-600 font-normal">Thread started when the catastrophic VAF (Verordnung über das automatisierte Fahren) law came into effect on March 1, 2025.</p>
+              <p className="text-[#E31937] font-semibold">This law keeps preventing FSD (Supervised).</p>
+            </div>
+            <div className="flex items-center h-full pt-1">
+              {isExpanded ? (
+                <ChevronUp className="w-4 h-4 text-[#E31937] flex-shrink-0" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-[#E31937] flex-shrink-0" />
+              )}
+            </div>
+          </button>
+        )}
       </div>
     </motion.div>
   );
@@ -230,7 +272,7 @@ export default function FSDPage() {
                 onTitleClick={index === 0 ? handleTitleClick : undefined}
                 title={tweetTitles[tweetId]}
               />
-              
+
               {/* Thread expansion for first card */}
               {index === 0 && isFirstCardExpanded && (
                 <motion.div
