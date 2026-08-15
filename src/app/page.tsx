@@ -9,11 +9,9 @@ import {
   Shield, 
   Palette, 
   Lightbulb, 
-  Twitter, 
   Linkedin, 
   ExternalLink,
   Instagram,
-  Music2,
   GraduationCap,
   Trophy,
   Heart,
@@ -27,6 +25,20 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from '@/hooks/use-toast'
+
+// Custom X (Twitter) brand icon
+const XTwitterIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.244 2.25h3.308l-7.347 8.388L22.5 21.75h-6.727l-5.376-6.939-6.163 6.939H2.25l7.84-8.958L2.25 2.25h6.727l4.91 6.347 5.357-6.347zm-1.143 17.39h1.836L7.17 4.36H5.17l11.931 15.28z"/>
+  </svg>
+)
+
+// Custom TikTok brand icon
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.16 8.16 0 0 0 3.76.93V6.19a4.81 4.81 0 0 1-0-.5z"/>
+  </svg>
+)
 
 // Animation variants
 const fadeInUp = {
@@ -47,7 +59,7 @@ const stagger = {
 const socialLinks = [
   { 
     name: 'X (Twitter)', 
-    icon: Twitter, 
+    icon: XTwitterIcon, 
     href: 'https://x.com/MarkoSaraf2004',
     color: 'hover:bg-gray-100'
   },
@@ -65,7 +77,7 @@ const socialLinks = [
   },
   { 
     name: 'TikTok', 
-    icon: Music2, 
+    icon: TikTokIcon, 
     href: 'https://www.tiktok.com/@markosarafijanovic',
     color: 'hover:bg-gray-100'
   },
@@ -261,7 +273,7 @@ const threadTweetIds = [
   '1990395354219462872',
   '1990395506179088440',
   '1990395692414578689',
-  '1990395839936606294',
+  '1990395839966606294',
   '1990396050855674016',
   '1990396382960550319',
   '1994487384692723759',
@@ -351,7 +363,7 @@ const threadTweetIds = [
   '2058919153772212594',
   '2058919300333805812',
   '2058919467954970927',
-  '2058919738911183230',
+  '2058919738911188230',
   '2059728201312592067',
   '2059728348574630013',
   '2061175649566331386',
