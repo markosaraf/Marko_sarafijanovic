@@ -53,11 +53,11 @@ function TweetCard({
       className="w-full"
     >
       {/*
-        Card — overflow-hidden REMOVED.
+        Card — no overflow-hidden.
         overflow-hidden + rounded-2xl would clip the tweet avatar
         circle on mobile. The expand button below is a sibling of
         p-4 (not a child) with no negative margins, so clipping is
-        unnecessary for it either.
+        unnecessary.
       */}
       <div
         className={`relative rounded-2xl bg-white border border-slate-200/80 shadow-lg hover:shadow-xl transition-all duration-300 ${
@@ -65,7 +65,7 @@ function TweetCard({
         }`}
       >
         <div className="p-4 pb-0">
-          {/* Title for card - clickable only if onTitleClick is provided */}
+          {/* Title for card */}
           {title && (
             onTitleClick ? (
               <button
@@ -86,12 +86,10 @@ function TweetCard({
                       <ChevronDown className="w-5 h-5 text-[#E31937] group-hover:translate-y-0.5 transition-transform" />
                     )}
                   </div>
-                  {/* Traffic Death Counter */}
                   <div className="flex items-center gap-2 mt-1">
                     <span className="text-xs md:text-sm text-slate-500">Traffic deaths since VAF law (March 1, 2025):</span>
                     <span className="text-lg md:text-xl font-bold text-[#E31937] tabular-nums">{trafficDeathCount}</span>
                   </div>
-                  {/* FSD Delay Clock Link */}
                   <a
                     href="https://fsddelay.org"
                     target="_blank"
@@ -117,15 +115,16 @@ function TweetCard({
           )}
 
           {/*
-            Embedded Tweet — avatar overrides are in globals.css
-            (OUTSIDE Tailwind cascade layers) so they actually win
-            over react-tweet's own CSS.
-
-            Tailwind arbitrary-variant selectors like
-            [&_.react-tweet-avatar]:!flex-shrink-0 land inside
-            @layer utilities and LOSE to react-tweet's un-layered
-            styles in the cascade. That's why the previous fix
-            didn't work. globals.css rules outside @layer always win.
+            Embedded Tweet
+            Avatar overrides live in globals.css (outside @layer).
+            react-tweet uses CSS Modules (.module.css) so class names
+            like .react-tweet-avatar are HASHED at build time and
+            don't exist in the DOM — that's why Tailwind arbitrary
+            variants [&_.react-tweet-avatar] and plain CSS selectors
+            targeting .react-tweet-avatar never matched anything.
+            The fix uses .react-tweet-theme (the only non-hashed
+            class) + structural selectors to reach the header div
+            that has overflow:hidden.
           */}
           <div
             className="tweet-container cursor-pointer"
@@ -137,10 +136,7 @@ function TweetCard({
 
         {/*
           Expand indicator for first card.
-          Sibling of p-4 div (was a child).
-          - No negative margins → card doesn't need overflow-hidden
-          - rounded-b-2xl matches the card's bottom corner radius
-          - px-4 pb-4 provides internal padding
+          Sibling of p-4 div — no negative margins, no overflow-hidden needed.
         */}
         {index === 0 && !isThreadCard && (
           <button
@@ -203,9 +199,7 @@ export default function FSDPage() {
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-[#E31937]/5 to-transparent rounded-full blur-3xl" />
       </div>
 
-      {/* Header — two-layer structure like vugolaai.com:
-          Outer <header> = sticky positioning only, transparent background
-          Inner <div> = backdrop-filter blur via INLINE STYLE + blue glass background via CSS class */}
+      {/* Header */}
       <header className="sticky top-0 z-50">
         <div
           className="header-glass-blue p-4 md:p-6"
@@ -235,7 +229,6 @@ export default function FSDPage() {
       {/* Scrollable Content */}
       <main className="relative z-10 max-w-4xl mx-auto p-4 md:p-6">
         <div className="space-y-4">
-          {/* Main Tweets */}
           {mainTweetIds.map((tweetId, index) => (
             <div key={tweetId}>
               <TweetCard
@@ -247,7 +240,6 @@ export default function FSDPage() {
                 title={tweetTitles[tweetId]}
               />
 
-              {/* Thread expansion for first card */}
               {index === 0 && isFirstCardExpanded && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
