@@ -54,10 +54,10 @@ function TweetCard({
     >
       {/*
         Card — overflow-hidden REMOVED.
-        Previously, overflow-hidden + rounded-2xl clipped the tweet avatar's
-        circle on mobile. The "Click to see full thread" button below has been
-        restructured as a sibling (not a child of p-4) with no negative margins,
-        so clipping is no longer needed for it either.
+        overflow-hidden + rounded-2xl would clip the tweet avatar
+        circle on mobile. The expand button below is a sibling of
+        p-4 (not a child) with no negative margins, so clipping is
+        unnecessary for it either.
       */}
       <div
         className={`relative rounded-2xl bg-white border border-slate-200/80 shadow-lg hover:shadow-xl transition-all duration-300 ${
@@ -117,44 +117,18 @@ function TweetCard({
           )}
 
           {/*
-            Embedded Tweet — comprehensive avatar overrides.
+            Embedded Tweet — avatar overrides are in globals.css
+            (OUTSIDE Tailwind cascade layers) so they actually win
+            over react-tweet's own CSS.
 
-            Three things conspire to cut off the avatar circle on mobile:
-            1. Card's overflow-hidden + rounded-2xl corner clip (fixed above
-               by removing overflow-hidden)
-            2. Flexbox squeezing: react-tweet's header is a flex row. On narrow
-               viewports, if the avatar doesn't have flex-shrink:0, it gets
-               compressed horizontally → circle becomes oval → looks "cut off".
-               Fix: [&_.react-tweet-avatar]:!flex-shrink-0 + !w-12 + !h-12 +
-                    !min-w-[48px] + !min-h-[48px]
-            3. Image not filling container: if object-fit:cover isn't enforced,
-               the <img> renders at its natural aspect ratio and gets clipped
-               by the circle's overflow:hidden.
-               Fix: [&_.react-tweet-avatar_img]:!w-full + !h-full + !object-cover
-
-            Also: [&_article]:!m-0 + !p-4 resets react-tweet's responsive
-            margins/padding that shrink on mobile.
+            Tailwind arbitrary-variant selectors like
+            [&_.react-tweet-avatar]:!flex-shrink-0 land inside
+            @layer utilities and LOSE to react-tweet's un-layered
+            styles in the cascade. That's why the previous fix
+            didn't work. globals.css rules outside @layer always win.
           */}
           <div
-            className="tweet-container
-              [&_article]:!bg-transparent
-              [&_article]:!shadow-none
-              [&_article]:!border-0
-              [&_article]:!m-0
-              [&_article]:!p-4
-              md:[&_article]:!p-5
-              [&_.react-tweet-avatar]:!w-12
-              [&_.react-tweet-avatar]:!h-12
-              [&_.react-tweet-avatar]:!min-w-[48px]
-              [&_.react-tweet-avatar]:!min-h-[48px]
-              [&_.react-tweet-avatar]:!flex-shrink-0
-              [&_.react-tweet-avatar]:!rounded-full
-              [&_.react-tweet-avatar]:!overflow-hidden
-              [&_.react-tweet-avatar_img]:!w-full
-              [&_.react-tweet-avatar_img]:!h-full
-              [&_.react-tweet-avatar_img]:!object-cover
-              [&_.react-tweet-header]:!gap-3
-              cursor-pointer"
+            className="tweet-container cursor-pointer"
             onClick={onToggle}
           >
             <Tweet id={tweetId} />
@@ -163,8 +137,8 @@ function TweetCard({
 
         {/*
           Expand indicator for first card.
-          NOW A SIBLING of the p-4 div (was a child).
-          - No -mb-4 -mx-4 negative margins → card doesn't need overflow-hidden
+          Sibling of p-4 div (was a child).
+          - No negative margins → card doesn't need overflow-hidden
           - rounded-b-2xl matches the card's bottom corner radius
           - px-4 pb-4 provides internal padding
         */}
