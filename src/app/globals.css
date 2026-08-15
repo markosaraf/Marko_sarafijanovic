@@ -169,3 +169,84 @@
     linear-gradient(#fff 0 0);
   pointer-events: none;
 }
+
+/* ============================================================
+   react-tweet Avatar Fix — OUTSIDE Tailwind cascade layers
+
+   ROOT CAUSE (3 layers of failure in previous attempts):
+
+   1. react-tweet uses CSS Modules (.module.css). Class names
+      like .header, .avatar, .avatarOverflow are HASHED at
+      build time → .react-tweet-avatar / .react-tweet-header
+      DO NOT EXIST in the DOM. All previous selectors targeting
+      them matched NOTHING.
+
+   2. The only non-hashed class is .react-tweet-theme (from
+      theme.css, a regular CSS file). We use it as our anchor.
+
+   3. The .header CSS Module class has overflow:hidden +
+      line-height:1.25rem (20px). The 48px avatar extends
+      28px below the line-height boundary, and overflow:hidden
+      slices the bottom ~5-8px of the circle.
+
+   4. The .root CSS Module class (same element as
+      .react-tweet-theme) also has overflow:hidden +
+      max-width:550px.
+
+   We use structural selectors from .react-tweet-theme to
+   reach the header div (article > div:first-child for
+   standalone tweets) and override its overflow.
+   ============================================================ */
+
+/* --- 1. Root wrapper: kill overflow, border, max-width, margin --- */
+.tweet-container .react-tweet-theme {
+  overflow: visible !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* --- 2. Article: overflow visible, controlled padding --- */
+.tweet-container article {
+  overflow: visible !important;
+  padding: 16px !important;
+}
+
+@media (min-width: 768px) {
+  .tweet-container article {
+    padding: 20px !important;
+  }
+}
+
+/* --- 3. Header div: THE KEY FIX
+      react-tweet's .header has overflow:hidden which clips the
+      48px avatar. For standalone tweets the header is the first
+      <div> child of <article>. overflow:visible lets the full
+      avatar circle render. min-height ensures the row is tall
+      enough even if line-height is 20px. --- */
+.tweet-container article > div:first-child {
+  overflow: visible !important;
+  min-height: 48px !important;
+}
+
+/* --- 4. Avatar <a>: lock size, prevent flex shrink --- */
+.tweet-container article > div:first-child > a:first-child {
+  flex-shrink: 0 !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  position: relative !important;
+}
+
+/* --- 5. Avatar image: fill the circle with cover crop --- */
+.tweet-container article > div:first-child > a:first-child img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
