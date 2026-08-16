@@ -250,3 +250,36 @@
   object-fit: cover !important;
   display: block !important;
 }
+
+/* ============================================================
+   react-tweet Light Theme Override — Fix white text on desktop
+   
+   ROOT CAUSE:
+   react-tweet's theme.css contains an unconditional
+   @media (prefers-color-scheme: dark) rule that sets
+   --tweet-font-color to rgb(247, 249, 249) (white) and
+   --tweet-bg-color to rgb(21, 32, 43) (dark).
+   
+   On desktop browsers where the OS has dark mode enabled,
+   this media query activates and makes tweet text white
+   on a white page background — invisible text.
+   
+   Mobile browsers often don't trigger this media query
+   (or the mobile OS is set to light mode), so the bug
+   doesn't appear there.
+   
+   FIX: Override the CSS custom properties with !important
+   to force light theme colors regardless of OS preference.
+   The .tweet-container ancestor gives us enough specificity
+   to win over :where(.react-tweet-theme) in the media query
+   (since :where() has zero specificity).
+   ============================================================ */
+
+.tweet-container .react-tweet-theme {
+  --tweet-font-color: rgb(15, 20, 25) !important;
+  --tweet-font-color-secondary: rgb(83, 100, 113) !important;
+  --tweet-bg-color: #fff !important;
+  --tweet-bg-color-hover: rgb(247, 249, 249) !important;
+  --tweet-border: 1px solid rgb(207, 217, 222) !important;
+  --tweet-skeleton-gradient: linear-gradient(270deg, #fafafa, #eaeaea, #eaeaea, #fafafa) !important;
+}
