@@ -237,7 +237,7 @@ export default function FSDPage() {
             className="w-full"
           >
             <a
-              href="https://www.tesla.com"
+              href="https://www.tesla.com/fsd-evidence-dashboard"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex flex-col items-center justify-center w-full rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
@@ -246,7 +246,7 @@ export default function FSDPage() {
                 Tesla-Conducted FSD Studies
               </span>
               <span className="mt-2 text-xs md:text-sm text-white/90 leading-relaxed max-w-2xl">
-                In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 18 european countries. On fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen), FSD achieved a pass rate of 92% across 230,000+ scenario tests.
+                In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 18 european countries. To additionally test FSD (Supvervised), it was tested on fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen). FSD (Supervised) achieved a pass rate of 92% across 230,000+ scenario tests.
               </span>
               <div className="absolute inset-0 rounded-2xl bg-white/0 group-hover:bg-white/10 transition-colors duration-300 pointer-events-none" />
             </a>
