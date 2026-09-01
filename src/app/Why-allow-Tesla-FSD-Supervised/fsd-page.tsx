@@ -65,32 +65,6 @@ function TweetCard({
         }`}
       >
         <div className="p-4 pb-0">
-          {/*
-            Tesla-Conducted FSD Studies button.
-            Apple-style pill card in Tesla's exact primary button blue (#3E6AE1 —
-            the color behind tds-btn--primary "Order Now" on tesla.com).
-            Rendered ONLY above the "Prevent traffic accidents and deaths" card.
-          */}
-          {index === 0 && !isThreadCard && (
-            <a
-              href="https://www.tesla.com/AI"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block w-full mb-3 px-5 py-5 md:py-6 rounded-[20px] bg-[#3E6AE1] text-white text-center shadow-[0_4px_16px_rgba(62,106,225,0.35)] hover:bg-[#3560C4] hover:shadow-[0_8px_24px_rgba(62,106,225,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-300 ease-out cursor-pointer"
-              style={{
-                fontFamily:
-                  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              }}
-            >
-              <span className="block text-lg md:text-xl font-semibold tracking-tight">
-                Tesla-Conducted FSD Studies
-              </span>
-              <span className="block mt-2 text-xs md:text-sm font-normal leading-relaxed text-white/85">
-                In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 18 european countries. On fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen), FSD achieved a pass rate of 92% across 230,000+ scenario tests.
-              </span>
-            </a>
-          )}
-
           {/* Title for card */}
           {title && (
             onTitleClick ? (
@@ -144,10 +118,10 @@ function TweetCard({
             Embedded Tweet
             Avatar overrides live in globals.css (outside @layer).
             react-tweet uses CSS Modules (.module.css) so class names
-            like .react-tweet_avatar are HASHED at build time and
+            like .react-tweet-avatar are HASHED at build time and
             don't exist in the DOM — that's why Tailwind arbitrary
-            variants [&_.react-tweet_avatar] and plain CSS selectors
-            targeting .react-tweet_avatar never matched anything.
+            variants [&_.react-tweet-avatar] and plain CSS selectors
+            targeting .react-tweet-avatar never matched anything.
             The fix uses .react-tweet-theme (the only non-hashed
             class) + structural selectors to reach the header div
             that has overflow:hidden.
@@ -255,6 +229,29 @@ export default function FSDPage() {
       {/* Scrollable Content */}
       <main className="relative z-10 max-w-4xl mx-auto p-4 md:p-6">
         <div className="space-y-4">
+          {/* Tesla-Conducted FSD Studies Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full"
+          >
+            <a
+              href="https://www.tesla.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative flex flex-col items-center justify-center w-full rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+            >
+              <span className="text-base md:text-lg font-semibold text-white tracking-tight">
+                Tesla-Conducted FSD Studies
+              </span>
+              <span className="mt-2 text-xs md:text-sm text-white/90 leading-relaxed max-w-2xl">
+                In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 18 european countries. On fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen), FSD achieved a pass rate of 92% across 230,000+ scenario tests.
+              </span>
+              <div className="absolute inset-0 rounded-2xl bg-white/0 group-hover:bg-white/10 transition-colors duration-300 pointer-events-none" />
+            </a>
+          </motion.div>
+
           {mainTweetIds.map((tweetId, index) => (
             <div key={tweetId}>
               <TweetCard
