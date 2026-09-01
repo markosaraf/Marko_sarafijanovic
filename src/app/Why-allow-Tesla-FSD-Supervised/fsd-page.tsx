@@ -170,6 +170,7 @@ export default function FSDPage() {
   const router = useRouter();
   const [isFirstCardExpanded, setIsFirstCardExpanded] = useState(false);
   const [scrollToFirstReply, setScrollToFirstReply] = useState(false);
+  const [studiesPressed, setStudiesPressed] = useState(false);
 
   const handleClose = () => {
     router.push('/');
@@ -189,6 +190,14 @@ export default function FSDPage() {
       setIsFirstCardExpanded(false);
       setScrollToFirstReply(false);
     }
+  };
+
+  const handleStudiesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setStudiesPressed(true);
+    setTimeout(() => {
+      window.location.href = 'https://www.tesla.com/fsd-evidence-dashboard';
+    }, 200);
   };
 
   return (
@@ -240,15 +249,28 @@ export default function FSDPage() {
               href="https://www.tesla.com/fsd-evidence-dashboard"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex flex-col items-center justify-center w-full rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+              onClick={handleStudiesClick}
+              className={`
+                group relative flex flex-col items-center justify-center w-full 
+                rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md 
+                transition-all duration-150 ease-out select-none
+                ${studiesPressed ? 'scale-[0.96]' : 'hover:shadow-xl hover:scale-[1.01]'}
+              `}
             >
               <span className="text-base md:text-lg font-semibold text-white tracking-tight">
                 Tesla-Conducted FSD Studies
               </span>
               <span className="mt-2 text-xs md:text-sm text-white/90 leading-relaxed max-w-2xl">
-                In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 18 european countries. To additionally test FSD (Supvervised), it was tested on fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen). FSD (Supervised) achieved a pass rate of 92% across 230,000+ scenario tests.
+                In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 18 european countries. To additionally test FSD (Supervised), it was tested on fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen). FSD (Supervised) achieved a pass rate of 92% across 230,000+ scenario tests.
               </span>
-              <div className="absolute inset-0 rounded-2xl bg-white/0 group-hover:bg-white/10 transition-colors duration-300 pointer-events-none" />
+              {/* Apple-like press flash overlay */}
+              <div
+                className={`
+                  absolute inset-0 rounded-2xl bg-white pointer-events-none
+                  transition-opacity duration-150 ease-out
+                  ${studiesPressed ? 'opacity-20' : 'opacity-0 group-hover:opacity-10'}
+                `}
+              />
             </a>
           </motion.div>
 
