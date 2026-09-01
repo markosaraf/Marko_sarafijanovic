@@ -261,7 +261,7 @@ export default function FSDPage() {
                 Tesla-Conducted FSD Studies
               </span>
               <span className="mt-2 text-xs md:text-sm text-white/90 leading-relaxed max-w-2xl">
-                In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 18 european countries. To additionally test FSD (Supervised), it was tested on fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen). FSD (Supervised) achieved a pass rate of 92% across 230,000+ scenario tests.
+                In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 22 european countries. To additionally test FSD (Supervised), it was tested on fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen). FSD (Supervised) achieved a pass rate of 92% across 230,000+ scenario tests.
               </span>
               {/* Apple-like press flash overlay */}
               <div
