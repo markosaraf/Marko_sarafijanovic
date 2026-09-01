@@ -340,17 +340,39 @@ const handleBannerClick = () => {
           transition={{ duration: 0.6 }}
           className="mb-6"
         >
-          <button
-            onClick={handleBannerClick}
-            className="w-full bg-gradient-to-r from-[#2AABEE] via-[#3498db] to-[#4DC4F2] text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+          <motion.div
+            animate={{ y: [0, -6, 0] }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+            whileHover={{ y: 0, scale: 1.01 }}
+            className="will-change-transform"
           >
-            <div className="flex items-center justify-center gap-3">
-              <span className="text-lg md:text-xl font-semibold group-hover:text-white/90 transition-colors">
-                Why approve Tesla FSD (Supervised)?
-              </span>
-              <ChevronDown className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
-            </div>
-          </button>
+            <button
+              onClick={handleBannerClick}
+              className="w-full bg-gradient-to-r from-[#2AABEE] via-[#3498db] to-[#4DC4F2] text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            >
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-lg md:text-xl font-semibold group-hover:text-white/90 transition-colors">
+                  Why approve Tesla FSD (Supervised)?
+                </span>
+                <motion.div
+                  animate={{ y: [0, 4, 0] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  }}
+                >
+                  <ChevronDown className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
+                </motion.div>
+              </div>
+            </button>
+          </motion.div>
         </motion.div>
 
         {/* Hero Section - Bento Grid */}
@@ -473,7 +495,7 @@ const handleBannerClick = () => {
                   whileTap={{ scale: 0.98 }}
                   className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 ${social.color} transition-all duration-300 group cursor-pointer`}
                 >
-                  <social.icon className={`${social.iconClassName || 'w-5 h-5'} flex-shrink-0 text-slate-400 group-hover:text-[#E31937] transition-colors`} />
+                  <social.icon className={`w-5 h-5 flex-shrink-0 text-slate-400 group-hover:text-[#E31937] transition-colors`} />
                   <span className="text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">
                     {social.name}
                   </span>
