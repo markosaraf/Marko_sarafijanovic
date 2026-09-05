@@ -15,5 +15,7 @@ Allow: /
 
 Sitemap: https://marko-sarafijanovic.com/sitemap.xml
 
-# IndexNow key for instant search engine indexing
-IndexNow: 5c5e58a9f4d85d2aefef4c600532c8c539f9238084720ebaa53ef8e7558adeb7
+# IndexNow key for instant search engine indexing (must match the key in
+# src/lib/indexnow.ts and the key file
+# public/4e67e0472eaa4cc0a2963c678efa9d5c.txt)
+IndexNow: 4e67e0472eaa4cc0a2963c678efa9d5c
