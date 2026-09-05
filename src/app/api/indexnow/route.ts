@@ -13,6 +13,18 @@ function isAuthorized(request: NextRequest): boolean {
   return false;
 }
 
+function isVercelCron(request: NextRequest): boolean {
+  // Vercel Cron invocations carry the x-vercel-cron header (scheduled
+  // runs) or x-vercel-cron-preview (manual "Run" from the dashboard).
+  // Checked by PRESENCE, not exact value — the header's value has varied
+  // across Vercel versions ("true", "1", the schedule string), and an
+  // exact match like === "true" can silently 401 the cron.
+  const cronHeader =
+    request.headers.get("x-vercel-cron") ??
+    request.headers.get("x-vercel-cron-preview");
+  return Boolean(cronHeader);
+}
+
 export async function POST(request: NextRequest) {
   if (INDEXNOW_SECRET && !isAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -33,10 +45,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  // Allow Vercel Cron without secret (Vercel sends this header automatically)
-  const isVercelCron = request.headers.get("x-vercel-cron") === "true";
-
-  if (!isVercelCron && INDEXNOW_SECRET && !isAuthorized(request)) {
+  // Vercel Cron passes via its header; everyone else needs the secret
+  // (if one is configured).
+  if (!isVercelCron(request) && INDEXNOW_SECRET && !isAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
