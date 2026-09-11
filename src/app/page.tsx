@@ -357,7 +357,7 @@ const handleBannerClick = () => {
             >
               <div className="flex items-center justify-center gap-3">
                 <span className="text-lg md:text-xl font-semibold group-hover:text-white/90 transition-colors">
-                  Why approve Tesla FSD (Supervised)?
+                  Marko Sarafijanovic | Why approve FSD (Supervised) from Tesla?
                 </span>
                 <motion.div
                   animate={{ y: [0, 4, 0] }}
