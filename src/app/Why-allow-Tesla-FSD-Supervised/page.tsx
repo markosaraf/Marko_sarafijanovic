@@ -6,7 +6,7 @@ import FSDPage from "./fsd-page";
 
 export const metadata: Metadata = {
   title:
-    "Marko Sarafijanovic: Why approve Tesla FSD (Supervised) in Switzerland?",
+    "Marko Sarafijanovic | Why approve FSD (Supervised) from Tesla?",
   description:
     "Reasons to allow Tesla FSD in Switzerland: Prevent traffic deaths and traffic accidents, increase traffic safety, Stop state favorism and regulatory capture in Switzerland.",
   keywords: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
       "https://marko-sarafijanovic.com/Why-allow-Tesla-FSD-Supervised",
   },
   openGraph: {
-    title: "Why approve Tesla FSD (Supervised) in Switzerland?",
+    title: "Marko Sarafijanovic | Why approve FSD (Supervised) from Tesla?",
     description:
       "Reasons to allow Tesla FSD in Switzerland: Prevent traffic deaths and traffic accidents, increase traffic safety.",
     url: "https://marko-sarafijanovic.com/Why-allow-Tesla-FSD-Supervised",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why approve Tesla FSD (Supervised) in Switzerland?",
+    title: "Marko Sarafijanovic | Why approve FSD (Supervised) from Tesla?",
     description:
       "Reasons to allow Tesla FSD in Switzerland: Prevent traffic deaths and traffic accidents, increase traffic safety.",
     creator: "@MarkoSaraf2004",
