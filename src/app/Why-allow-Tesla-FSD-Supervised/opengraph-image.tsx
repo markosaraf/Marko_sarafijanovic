@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { trafficDeathCount } from "./fsd-data";
 
-export const alt = "Why approve Tesla FSD (Supervised)? — Traffic death counter";
+export const alt = "Marko Sarafijanovic | Why approve FSD (Supervised) from Tesla? — Traffic death counter";
 export const size = { width: 1200, height: 1200 };
 export const contentType = "image/png";
 
@@ -36,7 +36,7 @@ export default function Image() {
               lineHeight: 1.2,
             }}
           >
-            Why approve Tesla FSD (Supervised)?
+            Marko Sarafijanovic | Why approve FSD (Supervised) from Tesla?
           </div>
           <div
             style={{
