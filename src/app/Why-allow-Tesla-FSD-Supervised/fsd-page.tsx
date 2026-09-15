@@ -236,12 +236,20 @@ export default function FSDPage() {
             transition={{ duration: 0.5 }}
             className="w-full"
           >
+            {/*
+              The <a> is the button surface. We declare it as a Tailwind
+              container (`@container`) so the wave inside can size itself
+              relative to the actual button width via `cqi` units — this is
+              the robust fix for the previous bug where `width: 220%`
+              resolved against a 0×0 positioned parent and produced a
+              0×0 wave that was invisible.
+            */}
             <a
               href="https://www.tesla.com/fsd-evidence-dashboard"
               target="_blank"
               rel="noopener noreferrer"
               className="
-                group relative flex flex-col items-center justify-center w-full
+                group @container relative flex flex-col items-center justify-center w-full
                 rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md
                 transition-all duration-150 ease-out cursor-pointer select-none
                 hover:shadow-xl hover:scale-[1.01] active:scale-[0.96]
@@ -249,19 +257,40 @@ export default function FSDPage() {
             >
               {/*
                 Apple-style ALWAYS-ON shockwave.
-                Continuously loops so the button always looks tappable.
-                Each cycle: a soft white ring emerges from the exact center,
-                scales outward, and fades — clipped by rounded-2xl so it stays
-                "inside" the surface. Subtle (peak opacity ~0.3, soft blur).
-                The wrapper sits at z-0; text below sits at z-10 so it stays
-                crisp and readable on top of the wave.
 
-                Timing: 0.8s wave + 1.7s pause = 2.5s cycle. Gentle enough
-                to read as "hint" rather than "noise".
+                Why this layout works (previous version was invisible on Vercel):
+                ────────────────────────────────────────────────────────────────
+                1) The wrapper span is `absolute inset-0 overflow-hidden
+                   rounded-2xl` — it clips the wave to the button shape so the
+                   wave appears to emerge from *inside* the surface.
 
-                The wrapper fades out on hover (group-hover:opacity-0) so the
-                active flash overlay takes over as the click affordance and
-                the wave doesn't fight it.
+                2) The motion.span is sized with `cqi` (container query inline)
+                   units: 220cqi = 220% of the <a> button's width. The <a> is
+                   declared as `@container`, so 1cqi = 1% of the button width.
+                   This guarantees the wave is always wider than the button,
+                   no matter the viewport.
+
+                3) Centering uses framer-motion's own `x: '-50%'` and
+                   `y: '-50%'` (in both `initial` AND `animate`), NOT an inline
+                   `transform: translate(-50%, -50%)` style. Framer-motion
+                   composes the CSS `transform` itself; any inline transform
+                   is overwritten by the `scale` animation. Keeping the
+                   translate inside framer-motion's state ensures the final
+                   transform is `translateX(-50%) translateY(-50%) scale(...)`
+                   and the wave stays anchored at the button's center
+                   throughout the entire scale animation.
+
+                4) Peak opacity 0.55 (was 0.3) — high enough to read clearly
+                   on the saturated #3E6AE1 blue, still subtle enough to feel
+                   Apple-like. No CSS blur — the previous `blur-[2px]` was
+                   eating most of the already-faint wave.
+
+                5) Cycle: 1.1s wave + 0.9s pause = 2.0s. Active enough to
+                   draw the eye, calm enough not to annoy.
+
+                6) The wrapper fades out on hover (group-hover:opacity-0)
+                   so the active flash overlay takes over as the click
+                   affordance.
               */}
               <span
                 aria-hidden="true"
@@ -271,24 +300,28 @@ export default function FSDPage() {
                 "
               >
                 <motion.span
-                  initial={{ scale: 0, opacity: 0 }}
+                  initial={{ scale: 0, opacity: 0, x: '-50%', y: '-50%' }}
                   animate={{
                     scale: [0, 1],
-                    opacity: [0.3, 0],
+                    opacity: [0.55, 0],
+                    x: '-50%',
+                    y: '-50%',
                   }}
                   transition={{
-                    duration: 0.8,
+                    duration: 1.1,
                     ease: [0.22, 1, 0.36, 1], // Apple "ease-out-expo"
                     repeat: Infinity,
-                    repeatDelay: 1.7,
+                    repeatDelay: 0.9,
                     repeatType: 'loop',
                   }}
-                  className="absolute left-1/2 top-1/2 block rounded-full bg-white blur-[2px]"
+                  className="absolute left-1/2 top-1/2 block rounded-full bg-white"
                   style={{
-                    transform: 'translate(-50%, -50%)',
-                    // 220% of button width so the wave is large enough
-                    // to fully sweep across even the widest button state.
-                    width: '220%',
+                    // 220cqi = 220% of the <a> button's width (the <a>
+                    // is declared as `@container`). aspect-ratio keeps it
+                    // circular. This is the robust replacement for the old
+                    // `width: 220%` which collapsed to 0 on a positioned
+                    // parent.
+                    width: '220cqi',
                     aspectRatio: '1 / 1',
                   }}
                 />
