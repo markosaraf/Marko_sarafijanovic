@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Tweet } from 'react-tweet'
 import {
@@ -171,6 +171,12 @@ export default function FSDPage() {
   const [isFirstCardExpanded, setIsFirstCardExpanded] = useState(false);
   const [scrollToFirstReply, setScrollToFirstReply] = useState(false);
 
+  // Apple-style click shockwave state for the Tesla-Conducted FSD Studies button.
+  // Each click pushes a new ripple id; the ripple is removed after its animation
+  // finishes so we can stack rapid clicks cleanly.
+  const [studiesRipples, setStudiesRipples] = useState<number[]>([]);
+  const studiesRippleIdRef = useRef(0);
+
   const handleClose = () => {
     router.push('/');
   };
@@ -190,6 +196,18 @@ export default function FSDPage() {
       setScrollToFirstReply(false);
     }
   };
+
+  // Spawn a single shockwave from the center of the studies button.
+  // We do NOT preventDefault — the link still opens the Tesla page in a new tab.
+  const handleStudiesClick = useCallback(() => {
+    const id = studiesRippleIdRef.current++;
+    setStudiesRipples((prev) => [...prev, id]);
+    // Match this to the motion duration below (700ms) so the ripple is
+    // removed right as it fades out.
+    window.setTimeout(() => {
+      setStudiesRipples((prev) => prev.filter((r) => r !== id));
+    }, 700);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
@@ -240,6 +258,7 @@ export default function FSDPage() {
               href="https://www.tesla.com/fsd-evidence-dashboard"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleStudiesClick}
               className="
                 group relative flex flex-col items-center justify-center w-full
                 rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md
@@ -247,13 +266,59 @@ export default function FSDPage() {
                 hover:shadow-xl hover:scale-[1.01] active:scale-[0.96]
               "
             >
-              <span className="text-base md:text-lg font-semibold text-white tracking-tight">
+              {/*
+                Apple-like click shockwave.
+                It emerges from the exact center of the button, scales outward,
+                and fades — clipped by the button's rounded-2xl so it stays
+                "inside" the surface. Subtle (peak opacity ~0.35, soft blur).
+                The wrapper sits at z-0; text below sits at z-10 so it
+                remains crisp and readable on top of the ripple.
+              */}
+              <span
+                aria-hidden="true"
+                className="
+                  pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-2xl
+                "
+              >
+                <AnimatePresence>
+                  {studiesRipples.map((id) => (
+                    <span
+                      key={id}
+                      className="absolute left-1/2 top-1/2"
+                      style={{ transform: 'translate(-50%, -50%)' }}
+                    >
+                      <motion.span
+                        initial={{ scale: 0, opacity: 0.35 }}
+                        animate={{ scale: 1, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{
+                          duration: 0.7,
+                          ease: [0.22, 1, 0.36, 1], // Apple-style "ease-out-expo"
+                        }}
+                        className="block rounded-full bg-white blur-[2px]"
+                        style={{
+                          // 220% of button width so the wave is large enough
+                          // to fully sweep across even the widest button state.
+                          width: '220%',
+                          aspectRatio: '1 / 1',
+                        }}
+                      />
+                    </span>
+                  ))}
+                </AnimatePresence>
+              </span>
+
+              {/* Title — z-10 so it stays above the shockwave */}
+              <span className="relative z-10 text-base md:text-lg font-semibold text-white tracking-tight">
                 Tesla-Conducted FSD Studies
               </span>
-              <span className="mt-2 text-xs md:text-sm text-white/90 leading-relaxed max-w-2xl">
+
+              {/* Description — z-10 so it stays above the shockwave */}
+              <span className="relative z-10 mt-2 text-xs md:text-sm text-white/90 leading-relaxed max-w-2xl">
                 In 2024 and 2025 the engineering fleet drove on FSD (Supervised) 1.6 million km across 22 european countries. To additionally test FSD (Supervised), it was tested on fixed routes that concentrate challenging driving interactions (Amsterdam, Barcelona, Rome, Paris, Munich, Copenhagen). FSD (Supervised) achieved a pass rate of 92% across 230,000+ scenario tests.
               </span>
-              {/* Apple-like press flash overlay */}
+
+              {/* Apple-like press flash overlay (hover/active state highlight) */}
               <div
                 className="
                   absolute inset-0 rounded-2xl bg-white pointer-events-none
