@@ -170,7 +170,6 @@ export default function FSDPage() {
   const router = useRouter();
   const [isFirstCardExpanded, setIsFirstCardExpanded] = useState(false);
   const [scrollToFirstReply, setScrollToFirstReply] = useState(false);
-  const [studiesPressed, setStudiesPressed] = useState(false);
 
   const handleClose = () => {
     router.push('/');
@@ -190,14 +189,6 @@ export default function FSDPage() {
       setIsFirstCardExpanded(false);
       setScrollToFirstReply(false);
     }
-  };
-
-  const handleStudiesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setStudiesPressed(true);
-    setTimeout(() => {
-      window.location.href = 'https://www.tesla.com/fsd-evidence-dashboard';
-    }, 200);
   };
 
   return (
@@ -249,13 +240,12 @@ export default function FSDPage() {
               href="https://www.tesla.com/fsd-evidence-dashboard"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={handleStudiesClick}
-              className={`
-                group relative flex flex-col items-center justify-center w-full 
-                rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md 
-                transition-all duration-150 ease-out select-none
-                ${studiesPressed ? 'scale-[0.96]' : 'hover:shadow-xl hover:scale-[1.01]'}
-              `}
+              className="
+                group relative flex flex-col items-center justify-center w-full
+                rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md
+                transition-all duration-150 ease-out cursor-pointer select-none
+                hover:shadow-xl hover:scale-[1.01] active:scale-[0.96]
+              "
             >
               <span className="text-base md:text-lg font-semibold text-white tracking-tight">
                 Tesla-Conducted FSD Studies
@@ -265,11 +255,11 @@ export default function FSDPage() {
               </span>
               {/* Apple-like press flash overlay */}
               <div
-                className={`
+                className="
                   absolute inset-0 rounded-2xl bg-white pointer-events-none
                   transition-opacity duration-150 ease-out
-                  ${studiesPressed ? 'opacity-20' : 'opacity-0 group-hover:opacity-10'}
-                `}
+                  opacity-0 group-hover:opacity-10 active:opacity-20
+                "
               />
             </a>
           </motion.div>
