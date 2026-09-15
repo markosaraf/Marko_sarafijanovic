@@ -315,7 +315,7 @@ export default function FSDPage() {
                     repeatDelay: 0.9,
                     repeatType: 'loop',
                   }}
-                  className="absolute left-1/2 top-1/2 block rounded-full bg-[#EDEDED]"
+                  className="absolute left-1/2 top-1/2 block rounded-full bg-[#d4af37]"
                   style={{
                     // 220cqi = 220% of the <a> button's width (the <a>
                     // is declared as `@container`). aspect-ratio keeps it
