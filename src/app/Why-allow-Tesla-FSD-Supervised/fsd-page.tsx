@@ -333,7 +333,7 @@ export default function FSDPage() {
                     // only fades after that.
                     times: [0, 0.85, 1],
                     repeat: Infinity,
-                    repeatDelay: 0.9,
+                    repeatDelay: 0,
                     repeatType: 'loop',
                   }}
                   className="absolute left-1/2 top-1/2 block rounded-full bg-[#D4AF37]"
