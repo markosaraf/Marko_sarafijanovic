@@ -320,7 +320,7 @@ export default function FSDPage() {
                     // duration (the whole spread), then drop to 0 in the
                     // final 15%. This is the fix for "color disappears as
                     // soon as the shockwave spreads a bit".
-                    opacity: [0.55, 0.55, 0],
+                    opacity: [1, 1, 0],
                     x: '-50%',
                     y: '-50%',
                   }}
