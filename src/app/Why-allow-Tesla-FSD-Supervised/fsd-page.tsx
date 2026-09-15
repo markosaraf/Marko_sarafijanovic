@@ -280,13 +280,14 @@ export default function FSDPage() {
                    and the wave stays anchored at the button's center
                    throughout the entire scale animation.
 
-                4) Peak opacity 0.55 (was 0.3) — high enough to read clearly
-                   on the saturated #3E6AE1 blue, still subtle enough to feel
-                   Apple-like. No CSS blur — the previous `blur-[2px]` was
-                   eating most of the already-faint wave.
+                4) Wave color is #EDEDED — a soft near-white gray that reads
+                   as a gentle "glow" on top of the saturated #3E6AE1 blue,
+                   more Apple-like than pure white. Peak opacity 0.55 keeps
+                   it clearly visible without being garish. No CSS blur.
 
-                5) Cycle: 1.1s wave + 0.9s pause = 2.0s. Active enough to
-                   draw the eye, calm enough not to annoy.
+                5) Cycle: 6.7s wave + 0.9s pause = 7.6s. Very slow and
+                   meditative — the wave barely creeps outward, like a slow
+                   breath. Calm rather than attention-grabbing.
 
                 6) The wrapper fades out on hover (group-hover:opacity-0)
                    so the active flash overlay takes over as the click
@@ -314,7 +315,7 @@ export default function FSDPage() {
                     repeatDelay: 0.9,
                     repeatType: 'loop',
                   }}
-                  className="absolute left-1/2 top-1/2 block rounded-full bg-white"
+                  className="absolute left-1/2 top-1/2 block rounded-full bg-[#EDEDED]"
                   style={{
                     // 220cqi = 220% of the <a> button's width (the <a>
                     // is declared as `@container`). aspect-ratio keeps it
