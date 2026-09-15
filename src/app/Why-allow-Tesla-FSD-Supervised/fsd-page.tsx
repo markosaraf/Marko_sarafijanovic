@@ -308,7 +308,7 @@ export default function FSDPage() {
                     y: '-50%',
                   }}
                   transition={{
-                    duration: 73.7,
+                    duration: 6.7,
                     ease: [0.22, 1, 0.36, 1], // Apple "ease-out-expo"
                     repeat: Infinity,
                     repeatDelay: 0.9,
