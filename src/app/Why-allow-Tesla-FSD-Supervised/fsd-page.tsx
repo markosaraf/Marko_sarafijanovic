@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { Tweet } from 'react-tweet'
 import {
   ChevronDown,
@@ -171,12 +171,6 @@ export default function FSDPage() {
   const [isFirstCardExpanded, setIsFirstCardExpanded] = useState(false);
   const [scrollToFirstReply, setScrollToFirstReply] = useState(false);
 
-  // Apple-style click shockwave state for the Tesla-Conducted FSD Studies button.
-  // Each click pushes a new ripple id; the ripple is removed after its animation
-  // finishes so we can stack rapid clicks cleanly.
-  const [studiesRipples, setStudiesRipples] = useState<number[]>([]);
-  const studiesRippleIdRef = useRef(0);
-
   const handleClose = () => {
     router.push('/');
   };
@@ -196,18 +190,6 @@ export default function FSDPage() {
       setScrollToFirstReply(false);
     }
   };
-
-  // Spawn a single shockwave from the center of the studies button.
-  // We do NOT preventDefault — the link still opens the Tesla page in a new tab.
-  const handleStudiesClick = useCallback(() => {
-    const id = studiesRippleIdRef.current++;
-    setStudiesRipples((prev) => [...prev, id]);
-    // Match this to the motion duration below (700ms) so the ripple is
-    // removed right as it fades out.
-    window.setTimeout(() => {
-      setStudiesRipples((prev) => prev.filter((r) => r !== id));
-    }, 700);
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
@@ -258,7 +240,6 @@ export default function FSDPage() {
               href="https://www.tesla.com/fsd-evidence-dashboard"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={handleStudiesClick}
               className="
                 group relative flex flex-col items-center justify-center w-full
                 rounded-2xl bg-[#3E6AE1] px-6 py-5 text-center shadow-md
@@ -267,45 +248,50 @@ export default function FSDPage() {
               "
             >
               {/*
-                Apple-like click shockwave.
-                It emerges from the exact center of the button, scales outward,
-                and fades — clipped by the button's rounded-2xl so it stays
-                "inside" the surface. Subtle (peak opacity ~0.35, soft blur).
-                The wrapper sits at z-0; text below sits at z-10 so it
-                remains crisp and readable on top of the ripple.
+                Apple-style ALWAYS-ON shockwave.
+                Continuously loops so the button always looks tappable.
+                Each cycle: a soft white ring emerges from the exact center,
+                scales outward, and fades — clipped by rounded-2xl so it stays
+                "inside" the surface. Subtle (peak opacity ~0.3, soft blur).
+                The wrapper sits at z-0; text below sits at z-10 so it stays
+                crisp and readable on top of the wave.
+
+                Timing: 0.8s wave + 1.7s pause = 2.5s cycle. Gentle enough
+                to read as "hint" rather than "noise".
+
+                The wrapper fades out on hover (group-hover:opacity-0) so the
+                active flash overlay takes over as the click affordance and
+                the wave doesn't fight it.
               */}
               <span
                 aria-hidden="true"
                 className="
                   pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-2xl
+                  opacity-100 group-hover:opacity-0 transition-opacity duration-300
                 "
               >
-                <AnimatePresence>
-                  {studiesRipples.map((id) => (
-                    <span
-                      key={id}
-                      className="absolute left-1/2 top-1/2"
-                      style={{ transform: 'translate(-50%, -50%)' }}
-                    >
-                      <motion.span
-                        initial={{ scale: 0, opacity: 0.35 }}
-                        animate={{ scale: 1, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{
-                          duration: 0.7,
-                          ease: [0.22, 1, 0.36, 1], // Apple-style "ease-out-expo"
-                        }}
-                        className="block rounded-full bg-white blur-[2px]"
-                        style={{
-                          // 220% of button width so the wave is large enough
-                          // to fully sweep across even the widest button state.
-                          width: '220%',
-                          aspectRatio: '1 / 1',
-                        }}
-                      />
-                    </span>
-                  ))}
-                </AnimatePresence>
+                <motion.span
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{
+                    scale: [0, 1],
+                    opacity: [0.3, 0],
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    ease: [0.22, 1, 0.36, 1], // Apple "ease-out-expo"
+                    repeat: Infinity,
+                    repeatDelay: 1.7,
+                    repeatType: 'loop',
+                  }}
+                  className="absolute left-1/2 top-1/2 block rounded-full bg-white blur-[2px]"
+                  style={{
+                    transform: 'translate(-50%, -50%)',
+                    // 220% of button width so the wave is large enough
+                    // to fully sweep across even the widest button state.
+                    width: '220%',
+                    aspectRatio: '1 / 1',
+                  }}
+                />
               </span>
 
               {/* Title — z-10 so it stays above the shockwave */}
