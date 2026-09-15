@@ -280,10 +280,19 @@ export default function FSDPage() {
                    and the wave stays anchored at the button's center
                    throughout the entire scale animation.
 
-                4) Wave color is #EDEDED — a soft near-white gray that reads
-                   as a gentle "glow" on top of the saturated #3E6AE1 blue,
-                   more Apple-like than pure white. Peak opacity 0.55 keeps
-                   it clearly visible without being garish. No CSS blur.
+                4) Wave color is #D4AF37 — a soft gold that reads as a
+                   gentle "glow" on top of the saturated #3E6AE1 blue.
+                   The opacity HOLD while spreading: instead of fading
+                   linearly from 0.55 → 0 across the whole animation
+                   (which made the color vanish as soon as the wave
+                   started moving), we hold opacity at 0.55 for the
+                   entire spreading phase (0 → 85% of the duration)
+                   and only fade to 0 in the final 15%, after the wave
+                   has already reached its full size. This keeps the
+                   gold color visible for the whole spread.
+                   `times: [0, 0.85, 1]` is shared by `scale` and
+                   `opacity` so both use 3 keyframes anchored at
+                   those normalized timestamps. No CSS blur.
 
                 5) Cycle: 6.7s wave + 0.9s pause = 7.6s. Very slow and
                    meditative — the wave barely creeps outward, like a slow
@@ -303,19 +312,31 @@ export default function FSDPage() {
                 <motion.span
                   initial={{ scale: 0, opacity: 0, x: '-50%', y: '-50%' }}
                   animate={{
-                    scale: [0, 1],
-                    opacity: [0.55, 0],
+                    // 3 keyframes — must match `opacity` and `times` length.
+                    // scale: 0 → 1 over [0, 0.85], then holds at 1 for the
+                    // last 15% while opacity fades out.
+                    scale: [0, 1, 1],
+                    // opacity: hold at 0.55 from start through 85% of the
+                    // duration (the whole spread), then drop to 0 in the
+                    // final 15%. This is the fix for "color disappears as
+                    // soon as the shockwave spreads a bit".
+                    opacity: [0.55, 0.55, 0],
                     x: '-50%',
                     y: '-50%',
                   }}
                   transition={{
                     duration: 6.7,
                     ease: [0.22, 1, 0.36, 1], // Apple "ease-out-expo"
+                    // Shared timestamps for both `scale` and `opacity`:
+                    // t=0 → t=0.85*6.7s=5.695s → t=6.7s.
+                    // The wave reaches full size at 85% and the color
+                    // only fades after that.
+                    times: [0, 0.85, 1],
                     repeat: Infinity,
                     repeatDelay: 0.9,
                     repeatType: 'loop',
                   }}
-                  className="absolute left-1/2 top-1/2 block rounded-full bg-[#d4af37]"
+                  className="absolute left-1/2 top-1/2 block rounded-full bg-[#D4AF37]"
                   style={{
                     // 220cqi = 220% of the <a> button's width (the <a>
                     // is declared as `@container`). aspect-ratio keeps it
