@@ -6,7 +6,6 @@ const baseAssets = [
  ['cybercab_and_my.png','Cybercab and Model Y'],
  ['CybercabSide.png','Cybercab'],
  ['accessibility_vehicle.png','Robovan – accessibility vehicle'],
- ['CybercabSide_light.png','Cybercab — light study'],
  ['CybercabSideNoGlow.png','Cybercab — clean silhouette'],
  ['CybercabHeadlights.png','Signature headlights'],
  ['cybercab_back.png','Rear view'],
