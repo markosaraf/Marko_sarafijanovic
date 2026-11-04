@@ -1,23 +1,29 @@
 import Gallery from './gallery'
-import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft, ArrowUpRight, Camera, CalendarDays, MapPin } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin } from 'lucide-react'
 
 export default function CybercabPage() {
   return (
     <main className="min-h-screen bg-[#111111] text-[#f7f3e9] selection:bg-[#DCA842] selection:text-[#111111]">
-      <div className="mx-auto max-w-6xl px-6 py-8 md:px-10 md:py-12">
-        <nav className="flex items-center justify-between gap-4 border-b border-white/10 pb-7 text-sm">
+      <div className="mx-auto max-w-6xl px-6 py-5 md:px-10">
+        <nav className="event-corner-nav flex items-center justify-between gap-4 text-sm">
           <Link href="/" className="flex items-center gap-2 text-white/70 transition-colors hover:text-[#DCA842]"><ArrowLeft size={18} /> Back to home</Link>
           <span className="text-white/50">Marko Sarafijanovic</span>
         </nav>
-        <style>{`@media (min-width: 1100px) { .cybercab-hero-logo { position: absolute; right: 0; top: 112px; width: 280px; height: 100px; margin: 0; } }`}</style>
-        <header className="relative overflow-hidden pb-16 pt-16 md:pb-24 md:pt-24">
-          <div aria-hidden="true" className="cybercab-hero-logo pointer-events-none mb-8 h-24 w-72 max-w-full bg-[#DCA842]" style={{ maskImage: "url(/cybercab/robotaxi-logo.png)", maskSize: "contain", maskPosition: "center", maskRepeat: "no-repeat", WebkitMaskImage: "url(/cybercab/robotaxi-logo.png)", WebkitMaskSize: "contain", WebkitMaskPosition: "center", WebkitMaskRepeat: "no-repeat" }} />
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[#DCA842]">Zürich, Switzerland / November 2026</p>
+        <style>{`
+          .event-corner-nav {width:calc(100vw - 48px);margin-left:calc(50% - 50vw + 24px);}
+          .compact-gold-hero {padding:28px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 240px;align-items:center;column-gap:32px;}
+          .compact-gold-hero h1 {grid-column:1;grid-row:1;font-size:64px;}
+          .compact-gold-hero h1 span {font-size:38px;}
+          .cybercab-hero-logo {grid-column:2;grid-row:1;width:240px;height:90px;}
+          .compact-gold-hero>p,.compact-gold-hero>.event-details {grid-column:1/-1;}
+          @media(max-width:650px){.compact-gold-hero{grid-template-columns:minmax(0,1fr) 100px;gap:12px;padding-top:24px;}.compact-gold-hero h1{font-size:40px;}.compact-gold-hero h1 span{font-size:23px;}.cybercab-hero-logo{width:100px;height:48px;}.event-corner-nav{font-size:12px;}}
+        `}</style>
+        <header className="compact-gold-hero">
+          <div aria-hidden="true" className="cybercab-hero-logo pointer-events-none bg-[#DCA842]" style={{ maskImage: "url(/cybercab/robotaxi-logo.png)", maskSize: "contain", maskPosition: "center", maskRepeat: "no-repeat", WebkitMaskImage: "url(/cybercab/robotaxi-logo.png)", WebkitMaskSize: "contain", WebkitMaskPosition: "center", WebkitMaskRepeat: "no-repeat" }} />
           <h1 className="relative text-5xl font-semibold leading-[1.08] tracking-tight sm:text-7xl md:text-8xl">Cybercab<span className="mt-2 block text-[#DCA842] text-3xl sm:text-5xl md:text-6xl">@ Autoshow Zürich</span></h1>
-          <p className="mt-7 max-w-lg text-lg leading-relaxed text-white/60">Up close with Tesla’s Cybercab at Autoshow Zürich.</p>
-          <div className="mt-9 flex flex-wrap gap-x-8 gap-y-4 text-sm text-white/75">
+          <p className="mt-4 text-base leading-relaxed text-white/60">Up close with Tesla’s Cybercab at Autoshow Zürich.</p>
+          <div className="event-details mt-4 flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/75">
             <span className="flex items-center gap-2"><CalendarDays size={17} className="text-[#DCA842]" />5–8 November 2026</span>
             <span className="flex items-center gap-2"><MapPin size={17} className="text-[#DCA842]" />Autoshow Zürich</span>
           </div>

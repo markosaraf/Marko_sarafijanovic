@@ -63,14 +63,15 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
    animation.current=requestAnimationFrame(frame)
  }
 
- return <section className="cybercab-gallery" style={{marginTop:40,color:pale?'#171819':'#f7f3e9'}} aria-label="Robotaxi artwork collection" aria-roledescription="carousel">
+ return <section className="cybercab-gallery" style={{marginTop:24,color:pale?'#171819':'#f7f3e9'}} aria-label="Robotaxi artwork collection" aria-roledescription="carousel">
  <style>{`
  .cybercab-gallery .gallery-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:12px}
  .cybercab-gallery h2{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;margin:0}
- .cybercab-gallery .gallery-viewport{display:flex;position:relative;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:28px 10% 36px;scrollbar-width:thin;scrollbar-color:#DCA842 transparent;perspective:1600px;overscroll-behavior-x:contain}
+ .cybercab-gallery .gallery-viewport{display:flex;position:relative;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 10% 28px;scrollbar-width:thin;scrollbar-color:#DCA842 transparent;perspective:1600px;overscroll-behavior-x:contain}
  .cybercab-gallery .gallery-slide{flex:0 0 100%;min-width:0;background:#fff;color:#171819;border-radius:22px;margin:0;scroll-snap-align:center;box-shadow:0 18px 30px #0002;transition:transform .45s,opacity .45s;transform:scale(.92) rotateY(var(--angle));transform-origin:center;opacity:.65;overflow:hidden}
  .cybercab-gallery .gallery-slide[data-active=true]{transform:scale(1) rotateY(0deg);opacity:1}
- .cybercab-gallery .gallery-slide img{width:100%;height:clamp(300px,42vw,530px);object-fit:contain;display:block;user-select:none;padding:28px}
+ .cybercab-gallery .gallery-slide img{width:100%;height:clamp(260px,calc(100svh - 440px),530px);object-fit:contain;display:block;user-select:none;padding:28px}
+ .robotaxi-comparison .cybercab-gallery .gallery-slide img{height:clamp(260px,calc(100svh - 540px),530px)}
  .cybercab-gallery .gallery-slide img.night-art{padding:0;object-fit:cover;object-position:center}
  .cybercab-gallery .contrast-art{filter:brightness(0) opacity(.8)}
  .cybercab-gallery figcaption{border-top:1px solid #eee;padding:20px 26px;display:flex;justify-content:space-between;gap:16px;font-size:15px}
