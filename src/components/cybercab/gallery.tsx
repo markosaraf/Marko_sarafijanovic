@@ -10,7 +10,7 @@ const baseAssets = [
  ['CybercabHeadlights.png','Signature headlights'],
  ['cybercab_back.png','Rear view'],
  ['cybercab_back_both_doors_open.png','Doors open'],
- ['cybercab_topdown_seats_with_floor.png','Inside the cabin'],
+ ['accessibility_vehicle.png','Accessibility vehicle'],
  ['robotaxi_coin.png','Robotaxi coin'],
  ['robotaxi_logo.png','Robotaxi — white'],
  ['robotaxi-gold-logo.png','Robotaxi — champagne'],
@@ -18,8 +18,16 @@ const baseAssets = [
  ['tips_trunk_storage_cybercab.png','Room for the ride'],
  ['tips_arrival_lights_cybercab.png','Arrival lights'],
 ]
+const lightAssets: Record<string,string> = {
+ 'CybercabSide.png':'CybercabSide_light.png',
+ 'CybercabSideNoGlow.png':'CybercabSideNoGlow_Light.png',
+ 'cybercab_and_my.png':'cybercab_and_my_light.png',
+ 'tips_cybercab_door.png':'tips_cybercab_door_light.png',
+ 'tips_trunk_storage_cybercab.png':'tips_trunk_storage_cybercab_light.png',
+ 'tips_arrival_lights_cybercab.png':'tips_arrival_lights_cybercab_light.png',
+}
 export default function Gallery({ pale = false }: { pale?: boolean }) {
- const assets = baseAssets.map(([file,label],i)=>[i===0 && !pale?'refer_details_background_duo_landscape.jpg':file,label])
+ const assets = baseAssets.map(([file,label],i)=>[i===0 && !pale?'refer_details_background_duo_landscape.jpg':pale?(lightAssets[file] || file):file,label])
  const rail = useRef<HTMLDivElement>(null)
  const [selected,setSelected] = useState(0)
  const go = (index:number) => {
@@ -53,7 +61,7 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
  `}</style>
  <div className="gallery-heading"><h2>Cybercab, every angle.</h2><span aria-live="polite">{String(selected+1).padStart(2,'0')} / {assets.length}</span></div>
  <div className="gallery-viewport" ref={rail} tabIndex={0} aria-label="Scroll sideways or use arrow keys to browse" onScroll={()=>{if(!rail.current)return;const el=rail.current;const center=el.scrollLeft+el.clientWidth/2;let closest=0;let distance=Infinity;Array.from(el.children).forEach((child,i)=>{const c=child as HTMLElement;const d=Math.abs(c.offsetLeft+c.clientWidth/2-center);if(d<distance){distance=d;closest=i}});setSelected(closest)}} onKeyDown={e=>{if(e.key==='ArrowRight'){e.preventDefault();go(Math.min(15,selected+1))}if(e.key==='ArrowLeft'){e.preventDefault();go(Math.max(0,selected-1))}}}>
- {assets.map(([file,label],i)=><figure className="gallery-slide" style={{'--angle':i<selected?'12deg':'-12deg',background:(!pale || file==='CybercabHeadlights.png')?(pale?'#e5d79e':'#DCA842'):undefined} as React.CSSProperties} data-active={i===selected} key={file} role="group" aria-roledescription="slide" aria-label={`${i+1} of ${assets.length}`}><img className={file==='robotaxi_logo.png'?'contrast-art':file.startsWith('refer_details_background')?'night-art':undefined} src={'/cybercab/artwork/'+file} alt={label} draggable={false} loading={i<2?'eager':'lazy'}/><figcaption><span>{label}</span><a href={'/cybercab/artwork/'+file} target="_blank" rel="noopener noreferrer">Full size ↗</a></figcaption></figure>)}
+ {assets.map(([file,label],i)=><figure className="gallery-slide" style={{'--angle':i<selected?'12deg':'-12deg',background:(!pale || file==='CybercabHeadlights.png')?(pale?'#e5d79e':'#DCA842'):undefined} as React.CSSProperties} data-active={i===selected} key={label} role="group" aria-roledescription="slide" aria-label={`${i+1} of ${assets.length}`}><img className={file==='robotaxi_logo.png'?'contrast-art':(file.startsWith('refer_details_background') || file==='accessibility_vehicle.png')?'night-art':undefined} src={'/cybercab/artwork/'+file} alt={label} draggable={false} loading={i<2?'eager':'lazy'}/><figcaption><span>{label}</span><a href={'/cybercab/artwork/'+file} target="_blank" rel="noopener noreferrer">Full size ↗</a></figcaption></figure>)}
  </div>
  <div className="gallery-controls"><div className="gallery-progress">{assets.map(([,label],i)=><button key={label} aria-label={'Show '+label} aria-current={selected===i} onClick={()=>go(i)}/>)}</div><div className="gallery-arrows"><button aria-label="Previous image" disabled={selected===0} onClick={()=>go(selected-1)}>←</button><button aria-label="Next image" disabled={selected===15} onClick={()=>go(selected+1)}>→</button></div></div>
  <p className="artwork-credit">Tesla Robotaxi app artwork</p>
