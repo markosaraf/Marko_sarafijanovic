@@ -114,6 +114,24 @@ function TweetCard({
             )
           )}
 
+          {index === 0 && !isThreadCard && (
+            <section aria-label="Featured traffic death post" className="mb-5 border-b border-slate-200 pb-5">
+              <p className="text-sm font-semibold text-[#E31937]">Bubikon ZH — traffic death 342</p>
+              <div className="tweet-container">
+                <Tweet id="2106422169018249346" />
+              </div>
+              <a
+                href="https://x.com/MarkoSaraf2004/status/2101418428279968255"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-blue-700 underline underline-offset-4"
+              >
+                View the original report in the thread
+              </a>
+              <p className="mt-5 text-sm font-semibold text-slate-600">Post #1 — the start of the thread</p>
+            </section>
+          )}
+
           {/*
             Embedded Tweet
             Avatar overrides live in globals.css (outside @layer).
