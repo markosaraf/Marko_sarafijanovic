@@ -1,6 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
-import useEmblaCarousel from 'embla-carousel-react'
+import { useState, useRef } from 'react'
 const assets = [
  ['CybercabSide.png','Cybercab — illuminated'],
  ['CybercabSide_light.png','Cybercab — light study'],
@@ -20,21 +19,41 @@ const assets = [
  ['tips_arrival_lights_cybercab.png','Arrival lights'],
 ]
 export default function Gallery({ pale = false }: { pale?: boolean }) {
- const [viewport, api] = useEmblaCarousel({align:'start',containScroll:'trimSnaps'})
+ const rail = useRef<HTMLDivElement>(null)
  const [selected,setSelected] = useState(0)
- useEffect(()=>{
-   if (!api) return
-   const update=()=>setSelected(api.selectedScrollSnap())
-   update()
-   api.on('select',update).on('reInit',update)
-   return ()=>{api.off('select',update).off('reInit',update)}
- },[api])
- return <section className="cybercab-gallery" style={{marginTop:32,color:pale?'#171819':'#f7f3e9'}} aria-label="Robotaxi artwork collection" aria-roledescription="carousel">
- <style>{`.cybercab-gallery .gallery-viewport{overflow:hidden;cursor:grab}.cybercab-gallery .gallery-viewport:active{cursor:grabbing}.cybercab-gallery .gallery-track{display:flex;touch-action:pan-y pinch-zoom;gap:20px}.cybercab-gallery .gallery-slide{flex:0 0 88%;min-width:0;background:#171819;border:1px solid #ffffff20;border-radius:16px;overflow:hidden;margin:0}.cybercab-gallery .gallery-slide img{width:100%;height:500px;object-fit:contain;display:block;user-select:none}.cybercab-gallery figcaption{padding:18px 24px;color:#e5d79e;display:flex;justify-content:space-between;gap:16px}.cybercab-gallery .gallery-controls{display:flex;align-items:center;justify-content:space-between;margin:20px 0;gap:16px}.cybercab-gallery button{background:#202224;border:1px solid #777;border-radius:50%;width:48px;height:48px;cursor:pointer;color:#e5d79e;font-size:24px}.cybercab-gallery button:disabled{opacity:.3;cursor:default}.cybercab-gallery button:focus-visible,.cybercab-gallery .gallery-viewport:focus-visible{outline:3px solid #DCA842;outline-offset:3px}.cybercab-gallery .artwork-credit{font-size:12px;opacity:.7}@media(max-width:650px){.cybercab-gallery .gallery-slide{flex-basis:92%}.cybercab-gallery .gallery-slide img{height:330px}.cybercab-gallery figcaption{font-size:13px;padding:16px}.cybercab-gallery .gallery-track{gap:12px}}`}</style>
- <h2 style={{fontSize:26,marginBottom:16}}>Cybercab, every angle.</h2>
- <div className="gallery-viewport" ref={viewport} tabIndex={0} aria-label="Swipe or use arrow keys to browse" onKeyDown={e=>{if(e.key==='ArrowRight'){e.preventDefault();api?.scrollNext()}if(e.key==='ArrowLeft'){e.preventDefault();api?.scrollPrev()}}}>
- <div className="gallery-track">{assets.map(([file,label],i)=><figure className="gallery-slide" key={file} role="group" aria-roledescription="slide" aria-label={`${i+1} of ${assets.length}`}><img src={'/cybercab/artwork/'+file} alt={label} draggable={false} loading={i<2?'eager':'lazy'}/><figcaption><span>{label}</span><a href={'/cybercab/artwork/'+file} target="_blank" rel="noopener noreferrer">Full size ↗</a></figcaption></figure>)}</div>
+ const go = (index:number) => {
+   const item=rail.current?.children[index] as HTMLElement | undefined
+   if(item && rail.current) rail.current.scrollTo({left:item.offsetLeft-(rail.current.clientWidth-item.clientWidth)/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})
+ }
+ return <section className="cybercab-gallery" style={{marginTop:40,color:pale?'#171819':'#f7f3e9'}} aria-label="Robotaxi artwork collection" aria-roledescription="carousel">
+ <style>{`
+ .cybercab-gallery .gallery-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:12px}
+ .cybercab-gallery h2{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;margin:0}
+ .cybercab-gallery .gallery-viewport{display:flex;position:relative;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:28px 10% 36px;scrollbar-width:thin;scrollbar-color:#DCA842 transparent;perspective:1600px;overscroll-behavior-x:contain}
+ .cybercab-gallery .gallery-slide{flex:0 0 100%;min-width:0;background:#fff;color:#171819;border-radius:22px;margin:0;scroll-snap-align:center;box-shadow:0 18px 30px #0002;transition:transform .45s,opacity .45s;transform:scale(.92) rotateY(var(--angle));transform-origin:center;opacity:.65;overflow:hidden}
+ .cybercab-gallery .gallery-slide[data-active=true]{transform:scale(1) rotateY(0deg);opacity:1}
+ .cybercab-gallery .gallery-slide img{width:100%;height:clamp(300px,42vw,530px);object-fit:contain;display:block;user-select:none;padding:28px}
+ .cybercab-gallery .contrast-art{filter:brightness(0) opacity(.8)}
+ .cybercab-gallery figcaption{border-top:1px solid #eee;padding:20px 26px;display:flex;justify-content:space-between;gap:16px;font-size:15px}
+ .cybercab-gallery .gallery-controls{display:flex;align-items:center;justify-content:space-between;margin:22px 0;gap:16px}
+ .cybercab-gallery .gallery-arrows{display:flex;gap:10px}
+ .cybercab-gallery button{border:1px solid #aaa5;background:transparent;color:inherit;cursor:pointer}
+ .cybercab-gallery .gallery-arrows button{border-radius:50%;width:48px;height:48px;font-size:24px}
+ .cybercab-gallery button:disabled{opacity:.25;cursor:default}
+ .cybercab-gallery button:focus-visible,.cybercab-gallery .gallery-viewport:focus-visible{outline:3px solid #DCA842;outline-offset:3px}
+ .cybercab-gallery .gallery-progress{display:flex;gap:5px;flex:1;max-width:360px}
+ .cybercab-gallery .gallery-progress button{height:24px;flex:1;border:0;position:relative;padding:0}
+ .cybercab-gallery .gallery-progress button:after{content:'';height:3px;position:absolute;top:10px;left:0;right:0;background:#8885;border-radius:3px}
+ .cybercab-gallery .gallery-progress button[aria-current=true]:after{background:#DCA842;height:5px;top:9px}
+ .cybercab-gallery .artwork-credit{font-size:12px;opacity:.65;margin-top:18px}
+ @media(max-width:650px){.cybercab-gallery .gallery-viewport{gap:12px;padding:20px 4% 28px}.cybercab-gallery .gallery-slide{border-radius:16px}.cybercab-gallery .gallery-slide img{height:310px;padding:16px}.cybercab-gallery figcaption{font-size:12px;padding:16px}.cybercab-gallery .gallery-controls{flex-wrap:wrap}.cybercab-gallery .gallery-progress{max-width:none}.cybercab-gallery .gallery-slide{transform:scale(.95);opacity:.8}}
+ @media(prefers-reduced-motion:reduce){.cybercab-gallery .gallery-slide{transition:none}}
+ `}</style>
+ <div className="gallery-heading"><h2>Cybercab, every angle.</h2><span aria-live="polite">{String(selected+1).padStart(2,'0')} / {assets.length}</span></div>
+ <div className="gallery-viewport" ref={rail} tabIndex={0} aria-label="Scroll sideways or use arrow keys to browse" onScroll={()=>{if(!rail.current)return;const el=rail.current;const center=el.scrollLeft+el.clientWidth/2;let closest=0;let distance=Infinity;Array.from(el.children).forEach((child,i)=>{const c=child as HTMLElement;const d=Math.abs(c.offsetLeft+c.clientWidth/2-center);if(d<distance){distance=d;closest=i}});setSelected(closest)}} onKeyDown={e=>{if(e.key==='ArrowRight'){e.preventDefault();go(Math.min(15,selected+1))}if(e.key==='ArrowLeft'){e.preventDefault();go(Math.max(0,selected-1))}}}>
+ {assets.map(([file,label],i)=><figure className="gallery-slide" style={{'--angle':i<selected?'12deg':'-12deg'} as React.CSSProperties} data-active={i===selected} key={file} role="group" aria-roledescription="slide" aria-label={`${i+1} of ${assets.length}`}><img className={['robotaxi_logo.png','CybercabHeadlights.png'].includes(file)?'contrast-art':undefined} src={'/cybercab/artwork/'+file} alt={label} draggable={false} loading={i<2?'eager':'lazy'}/><figcaption><span>{label}</span><a href={'/cybercab/artwork/'+file} target="_blank" rel="noopener noreferrer">Full size ↗</a></figcaption></figure>)}
  </div>
- <div className="gallery-controls"><span className="artwork-credit">Tesla Robotaxi app artwork</span><div style={{display:'flex',alignItems:'center',gap:16}}><span aria-live="polite">{selected+1} / {assets.length}</span><button aria-label="Previous image" disabled={selected===0} onClick={()=>api?.scrollPrev()}>←</button><button aria-label="Next image" disabled={selected===assets.length-1} onClick={()=>api?.scrollNext()}>→</button></div></div>
+ <div className="gallery-controls"><div className="gallery-progress">{assets.map(([,label],i)=><button key={label} aria-label={'Show '+label} aria-current={selected===i} onClick={()=>go(i)}/>)}</div><div className="gallery-arrows"><button aria-label="Previous image" disabled={selected===0} onClick={()=>go(selected-1)}>←</button><button aria-label="Next image" disabled={selected===15} onClick={()=>go(selected+1)}>→</button></div></div>
+ <p className="artwork-credit">Tesla Robotaxi app artwork</p>
  </section>
 }

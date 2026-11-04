@@ -420,6 +420,8 @@ export default function Home() {
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Cybercab <span className="text-[#DCA842]">@ Autoshow Zürich</span></h2>
             <p className="mt-3 text-sm text-white/65">5–8 November 2026 · Autoshow Zürich</p>
           </div>
+          <img src="/cybercab/artwork/CybercabSide.png" alt="Cybercab render from the Robotaxi app" className="gold-home-car" />
+          <style>{`.gold-home-car{width:200px;height:140px;object-fit:contain;flex-shrink:0}@media(max-width:1100px){.gold-home-car{width:150px;height:115px}}@media(max-width:640px){.gold-home-car{width:100%;height:190px}}`}</style>
           <span className="relative flex shrink-0 items-center gap-3 self-start rounded-full bg-[#DCA842] px-5 py-3 font-semibold text-[#111111] sm:self-center">View Cybercab <ArrowUpRight size={20} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
         </a>
 
