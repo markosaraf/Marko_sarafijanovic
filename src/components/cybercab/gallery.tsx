@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 const baseAssets = [
  ['refer_details_background_landscape.jpg','Into the night'],
  ['CybercabTop.png','Cybercab from above'],
@@ -32,10 +32,38 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
  const assets = baseAssets.map(([file,label],i)=>[i===0 && !pale?'refer_details_background_duo_landscape.jpg':pale?(lightAssets[file] || file):file,label])
  const rail = useRef<HTMLDivElement>(null)
  const [selected,setSelected] = useState(0)
- const go = (index:number) => {
-   const item=rail.current?.children[index] as HTMLElement | undefined
-   if(item && rail.current) rail.current.scrollTo({left:item.offsetLeft-(rail.current.clientWidth-item.clientWidth)/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})
+ const animation = useRef<number | null>(null)
+ const targetIndex = useRef<number | null>(null)
+ const cancelMotion = () => {
+   if(animation.current !== null) cancelAnimationFrame(animation.current)
+   animation.current = null
+   targetIndex.current = null
+   if(rail.current) rail.current.style.scrollSnapType = ''
  }
+ useEffect(()=>()=>{if(animation.current !== null) cancelAnimationFrame(animation.current)},[])
+ const go = (index:number) => {
+   const viewport=rail.current
+   const bounded=Math.max(0,Math.min(assets.length-1,index))
+   const item=viewport?.children[bounded] as HTMLElement | undefined
+   if(!viewport || !item) return
+   cancelMotion()
+   const start=viewport.scrollLeft
+   const end=Math.max(0,Math.min(viewport.scrollWidth-viewport.clientWidth,item.offsetLeft-(viewport.clientWidth-item.clientWidth)/2))
+   if(matchMedia('(prefers-reduced-motion: reduce)').matches){viewport.scrollLeft=end;return}
+   targetIndex.current=bounded
+   viewport.style.scrollSnapType='none'
+   const began=performance.now()
+   const duration=Math.min(1100,650+Math.abs(end-start)/6)
+   const frame=(now:number)=>{
+     const t=Math.min(1,(now-began)/duration)
+     const eased=t*t*t*(t*(t*6-15)+10)
+     viewport.scrollLeft=start+(end-start)*eased
+     if(t<1){animation.current=requestAnimationFrame(frame)}
+     else {animation.current=null;targetIndex.current=null;viewport.style.scrollSnapType='';setSelected(bounded)}
+   }
+   animation.current=requestAnimationFrame(frame)
+ }
+
  return <section className="cybercab-gallery" style={{marginTop:40,color:pale?'#171819':'#f7f3e9'}} aria-label="Robotaxi artwork collection" aria-roledescription="carousel">
  <style>{`
  .cybercab-gallery .gallery-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:12px}
@@ -62,10 +90,10 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
  @media(prefers-reduced-motion:reduce){.cybercab-gallery .gallery-slide{transition:none}}
  `}</style>
  <div className="gallery-heading"><h2>Cybercab, every angle.</h2><span aria-live="polite">{String(selected+1).padStart(2,'0')} / {assets.length}</span></div>
- <div className="gallery-viewport" ref={rail} tabIndex={0} aria-label="Scroll sideways or use arrow keys to browse" onScroll={()=>{if(!rail.current)return;const el=rail.current;const center=el.scrollLeft+el.clientWidth/2;let closest=0;let distance=Infinity;Array.from(el.children).forEach((child,i)=>{const c=child as HTMLElement;const d=Math.abs(c.offsetLeft+c.clientWidth/2-center);if(d<distance){distance=d;closest=i}});setSelected(closest)}} onKeyDown={e=>{if(e.key==='ArrowRight'){e.preventDefault();go(Math.min(assets.length-1,selected+1))}if(e.key==='ArrowLeft'){e.preventDefault();go(Math.max(0,selected-1))}}}>
+ <div className="gallery-viewport" ref={rail} onWheel={cancelMotion} onPointerDown={cancelMotion} tabIndex={0} aria-label="Scroll sideways or use arrow keys to browse" onScroll={()=>{if(!rail.current)return;const el=rail.current;const center=el.scrollLeft+el.clientWidth/2;let closest=0;let distance=Infinity;Array.from(el.children).forEach((child,i)=>{const c=child as HTMLElement;const d=Math.abs(c.offsetLeft+c.clientWidth/2-center);if(d<distance){distance=d;closest=i}});setSelected(closest)}} onKeyDown={e=>{if(e.key==='ArrowRight'){e.preventDefault();go((targetIndex.current ?? selected)+1)}if(e.key==='ArrowLeft'){e.preventDefault();go((targetIndex.current ?? selected)-1)}}}>
  {assets.map(([file,label],i)=><figure className="gallery-slide" style={{'--angle':i<selected?'12deg':'-12deg',background:(!pale || file==='CybercabHeadlights.png')?(pale?'#e5d79e':'#DCA842'):undefined} as React.CSSProperties} data-active={i===selected} key={label} role="group" aria-roledescription="slide" aria-label={`${i+1} of ${assets.length}`}><img className={file==='robotaxi_logo.png'?'contrast-art':(file.startsWith('refer_details_background') || file==='accessibility_vehicle.png')?'night-art':undefined} src={'/cybercab/artwork/'+file} alt={label} draggable={false} loading={i<2?'eager':'lazy'}/><figcaption><span>{label}</span><a href={'/cybercab/artwork/'+file} target="_blank" rel="noopener noreferrer">Full size ↗</a></figcaption></figure>)}
  </div>
- <div className="gallery-controls"><div className="gallery-progress">{assets.map(([,label],i)=><button key={label} aria-label={'Show '+label} aria-current={selected===i} onClick={()=>go(i)}/>)}</div><div className="gallery-arrows"><button aria-label="Previous image" disabled={selected===0} onClick={()=>go(selected-1)}>←</button><button aria-label="Next image" disabled={selected===assets.length-1} onClick={()=>go(selected+1)}>→</button></div></div>
+ <div className="gallery-controls"><div className="gallery-progress">{assets.map(([,label],i)=><button key={label} aria-label={'Show '+label} aria-current={selected===i} onClick={()=>go(i)}/>)}</div><div className="gallery-arrows"><button aria-label="Previous image" disabled={selected===0} onClick={()=>go((targetIndex.current ?? selected)-1)}>←</button><button aria-label="Next image" disabled={selected===assets.length-1} onClick={()=>go((targetIndex.current ?? selected)+1)}>→</button></div></div>
  <p className="artwork-credit">Tesla Robotaxi app artwork</p>
  </section>
 }
