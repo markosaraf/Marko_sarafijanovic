@@ -413,7 +413,10 @@ export default function Home() {
         >
           <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-32 h-80 w-80 rounded-full bg-[#DCA842]/15 blur-3xl" />
           <div className="relative">
-            <span className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#DCA842]">CYBERCAB TOUR</span>
+            <span className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#DCA842]">
+              <span aria-label="Robotaxi" role="img" className="mr-2 inline-block h-8 w-24 shrink-0 bg-[#DCA842]" style={{ maskImage: 'url(/cybercab/robotaxi-logo.png)', maskSize: 'contain', maskPosition: 'center', maskRepeat: 'no-repeat', WebkitMaskImage: 'url(/cybercab/robotaxi-logo.png)', WebkitMaskSize: 'contain', WebkitMaskPosition: 'center', WebkitMaskRepeat: 'no-repeat' }} />
+              CYBERCAB TOUR
+            </span>
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Cybercab <span className="text-[#DCA842]">@ Autoshow Zürich</span></h2>
             <p className="mt-3 text-sm text-white/65">5–8 November 2026 · Autoshow Zürich</p>
           </div>
