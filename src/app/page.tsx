@@ -178,9 +178,6 @@ export default function Home() {
     }
   }, [])
 
-const handleBannerClick = () => {
-  window.location.href = '/Why-allow-Tesla-FSD-Supervised'
-}
 
   const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string) => {
     e.preventDefault()
@@ -338,7 +335,7 @@ const handleBannerClick = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6"
+          className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           <motion.div
             animate={{ y: [0, -6, 0] }}
@@ -349,11 +346,11 @@ const handleBannerClick = () => {
               ease: "easeInOut"
             }}
             whileHover={{ y: 0, scale: 1.01 }}
-            className="will-change-transform"
+            className="will-change-transform h-full"
           >
-            <button
-              onClick={handleBannerClick}
-              className="w-full bg-gradient-to-r from-[#2AABEE] via-[#3498db] to-[#4DC4F2] text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            <a
+              href="/Why-allow-Tesla-FSD-Supervised"
+              className="flex h-full items-center justify-center w-full bg-gradient-to-r from-[#2AABEE] via-[#3498db] to-[#4DC4F2] text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
             >
               <div className="flex items-center justify-center gap-3">
                 <span className="text-lg md:text-xl font-semibold group-hover:text-white/90 transition-colors">
@@ -371,7 +368,40 @@ const handleBannerClick = () => {
                   <ChevronDown className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
                 </motion.div>
               </div>
-            </button>
+            </a>
+          </motion.div>
+          <motion.div
+            animate={{ y: [0, -6, 0] }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+            whileHover={{ y: 0, scale: 1.01 }}
+            className="will-change-transform h-full"
+          >
+            <a
+              href="/Why-allow-Tesla-Assisted-Driving-TAD"
+              className="flex h-full items-center justify-center w-full bg-gradient-to-r from-[#2AABEE] via-[#3498db] to-[#4DC4F2] text-white py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            >
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-lg md:text-xl font-semibold group-hover:text-white/90 transition-colors">
+                  Why approve Tesla Assisted Driving (TAD)?
+                </span>
+                <motion.div
+                  animate={{ y: [0, 4, 0] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  }}
+                >
+                  <ChevronDown className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
+                </motion.div>
+              </div>
+            </a>
           </motion.div>
         </motion.div>
 

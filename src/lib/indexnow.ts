@@ -5,6 +5,7 @@ const SITE_HOST = "marko-sarafijanovic.com";
 const SITE_URLS: string[] = [
   "https://marko-sarafijanovic.com",
   "https://marko-sarafijanovic.com/Why-allow-Tesla-FSD-Supervised",
+  "https://marko-sarafijanovic.com/Why-allow-Tesla-Assisted-Driving-TAD",
   // 👆 Add new page URLs here as you create them
 ];
 
