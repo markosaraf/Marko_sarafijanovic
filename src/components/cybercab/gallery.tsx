@@ -1,19 +1,19 @@
 'use client'
 import { useState, useRef } from 'react'
 const assets = [
- ['CybercabSide.png','Cybercab — illuminated'],
+ ['refer_details_background_landscape.jpg','Into the night'],
+ ['CybercabTop.png','Cybercab from above'],
+ ['cybercab_and_my.png','Cybercab and Model Y'],
+ ['CybercabSide.png','Cybercab'],
  ['CybercabSide_light.png','Cybercab — light study'],
  ['CybercabSideNoGlow.png','Cybercab — clean silhouette'],
  ['CybercabHeadlights.png','Signature headlights'],
- ['CybercabTop.png','Cybercab from above'],
- ['cybercab_and_my.png','Cybercab and Model Y'],
  ['cybercab_back.png','Rear view'],
  ['cybercab_back_both_doors_open.png','Doors open'],
  ['cybercab_topdown_seats_with_floor.png','Inside the cabin'],
  ['robotaxi_coin.png','Robotaxi coin'],
  ['robotaxi_logo.png','Robotaxi — white'],
  ['robotaxi-gold-logo.png','Robotaxi — champagne'],
- ['refer_details_background_landscape.jpg','Into the night'],
  ['tips_cybercab_door.png','The door detail'],
  ['tips_trunk_storage_cybercab.png','Room for the ride'],
  ['tips_arrival_lights_cybercab.png','Arrival lights'],
