@@ -24,8 +24,9 @@ export default function CybercabPage() {
           <Link href="/" className="flex items-center gap-2 text-white/70 transition-colors hover:text-[#DCA842]"><ArrowLeft size={18} /> Back to home</Link>
           <span className="text-white/50">Marko Sarafijanovic</span>
         </nav>
+        <style>{`@media (min-width: 1100px) { .cybercab-hero-logo { position: absolute; right: 0; top: 112px; width: 280px; height: 100px; margin: 0; } }`}</style>
         <header className="relative overflow-hidden pb-16 pt-16 md:pb-24 md:pt-24">
-          <div aria-hidden="true" className="pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-[#DCA842]/10 blur-3xl" />
+          <div aria-hidden="true" className="cybercab-hero-logo pointer-events-none mb-8 h-24 w-72 max-w-full bg-[#DCA842]" style={{ maskImage: "url(/cybercab/robotaxi-logo.png)", maskSize: "contain", maskPosition: "center", maskRepeat: "no-repeat", WebkitMaskImage: "url(/cybercab/robotaxi-logo.png)", WebkitMaskSize: "contain", WebkitMaskPosition: "center", WebkitMaskRepeat: "no-repeat" }} />
           <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[#DCA842]">Zürich, Switzerland / November 2026</p>
           <h1 className="relative text-5xl font-semibold leading-[1.08] tracking-tight sm:text-7xl md:text-8xl">Cybercab<span className="mt-2 block text-[#DCA842] text-3xl sm:text-5xl md:text-6xl">@ Autoshow Zürich</span></h1>
           <p className="mt-7 max-w-lg text-lg leading-relaxed text-white/60">Up close with Tesla’s Cybercab at Autoshow Zürich.</p>
