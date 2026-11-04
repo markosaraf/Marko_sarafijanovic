@@ -451,7 +451,7 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="text-xl md:text-2xl text-[#E31937] font-semibold mb-4"
                 >
-                  Primary School Teacher in Zurich
+                  Substitute Primary School Teacher in Zurich
                 </motion.p>
               </div>
             </div>
