@@ -4,16 +4,16 @@ import { ArrowLeft, ArrowUpRight, Camera, CalendarDays, MapPin } from 'lucide-re
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://marko-sarafijanovic.com'),
-  title: 'Tesla Cybercab @ Autoshow Zürich 2026 | Marko Sarafijanovic',
+  title: 'Marko Sarafijanovic | Tesla Cybercab @ Autoshow Zürich 2026',
   description: 'Tesla Cybercab at Autoshow Zürich, 5–8 November 2026. Discover the gold Cybercab through photos and close-up details by Marko Sarafijanovic.',
   alternates: { canonical: '/cybercab-autoshow-zurich' },
   openGraph: {
-    title: 'Tesla Cybercab @ Autoshow Zürich 2026',
+    title: 'Marko Sarafijanovic | Tesla Cybercab @ Autoshow Zürich 2026',
     description: 'Tesla Cybercab at Autoshow Zürich, 5–8 November 2026. Discover the gold Cybercab through photos and close-up details by Marko Sarafijanovic.',
     url: '/cybercab-autoshow-zurich',
     type: 'website',
   },
-  twitter: { card: 'summary', title: 'Tesla Cybercab @ Autoshow Zürich 2026', description: 'Tesla Cybercab at Autoshow Zürich, 5–8 November 2026. Discover the gold Cybercab through photos and close-up details by Marko Sarafijanovic.' },
+  twitter: { card: 'summary', title: 'Marko Sarafijanovic | Tesla Cybercab @ Autoshow Zürich 2026', description: 'Tesla Cybercab at Autoshow Zürich, 5–8 November 2026. Discover the gold Cybercab through photos and close-up details by Marko Sarafijanovic.' },
 }
 
 export default function CybercabPage() {
