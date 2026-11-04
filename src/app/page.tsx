@@ -345,7 +345,7 @@ export default function Home() {
               repeatType: "reverse",
               ease: "easeInOut"
             }}
-            whileHover={{ y: 0, scale: 1.01 }}
+            whileHover={{ scale: 1.01 }}
             className="will-change-transform h-full"
           >
             <a
@@ -371,14 +371,15 @@ export default function Home() {
             </a>
           </motion.div>
           <motion.div
-            animate={{ y: [0, -6, 0] }}
+            initial={{ y: -6 }}
+            animate={{ y: [-6, 0, -6] }}
             transition={{
               duration: 2.5,
               repeat: Infinity,
               repeatType: "reverse",
               ease: "easeInOut"
             }}
-            whileHover={{ y: 0, scale: 1.01 }}
+            whileHover={{ scale: 1.01 }}
             className="will-change-transform h-full"
           >
             <a
