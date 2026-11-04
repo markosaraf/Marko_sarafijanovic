@@ -221,7 +221,7 @@ export default function Home() {
     <>
       <style>{`
         @font-face {font-family:RobotaxiHome;src:url('/cybercab/artwork/UniversalSans-Text-Regular-430.ttf') format('truetype');font-display:swap;}
-        .pale-home {font-family:RobotaxiHome,Arial,sans-serif;background:#e5e5e7!important;} .pale-home a[href^="/Why-allow"] {font-family:Arial,Helvetica,sans-serif;}
+        .pale-home {font-family:RobotaxiHome,Arial,sans-serif;background:#e5e5e7!important;} .pale-home a[href^="/Why-allow"] {font-family:var(--font-geist-sans),Arial,sans-serif;}
         .pale-home a[href="/cybercab-autoshow-zurich"]{background:#171819;border-color:#ded1a0;}
         .pale-home a[href="/cybercab-autoshow-zurich"]>span:last-child{background:#e5d79e;color:#171819;}
         .pale-home a[href="/cybercab-autoshow-zurich"] h2 span,.pale-home a[href="/cybercab-autoshow-zurich"] div>span{color:#e5d79e;}
