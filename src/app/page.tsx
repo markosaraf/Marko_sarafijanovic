@@ -16,7 +16,8 @@ import {
   Mail,
   Music,
   Check,
-  ChevronDown
+  ChevronDown,
+  ArrowUpRight
 } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from '@/hooks/use-toast'
@@ -405,6 +406,19 @@ export default function Home() {
             </a>
           </motion.div>
         </motion.div>
+
+        <a
+          href="/cybercab-autoshow-zurich"
+          className="group relative mb-8 flex flex-col gap-6 overflow-hidden rounded-3xl border border-[#DCA842]/50 bg-[#111111] p-7 text-white shadow-xl shadow-[#DCA842]/10 transition-shadow hover:shadow-[#DCA842]/25 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#DCA842] sm:flex-row sm:items-center sm:justify-between md:p-9"
+        >
+          <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-32 h-80 w-80 rounded-full bg-[#DCA842]/15 blur-3xl" />
+          <div className="relative">
+            <span className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#DCA842]">CYBERCAB TOUR</span>
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Cybercab <span className="text-[#DCA842]">@ Autoshow Zürich</span></h2>
+            <p className="mt-3 text-sm text-white/65">5–8 November 2026 · Autoshow Zürich</p>
+          </div>
+          <span className="relative flex shrink-0 items-center gap-3 self-start rounded-full bg-[#DCA842] px-5 py-3 font-semibold text-[#111111] sm:self-center">View Cybercab <ArrowUpRight size={20} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
+        </a>
 
         {/* Hero Section - Bento Grid */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
