@@ -116,7 +116,7 @@ function TweetCard({
 
           {index === 0 && !isThreadCard && (
             <section aria-label="Featured traffic death post" className="mb-5 border-b border-slate-200 pb-5">
-              <p className="text-sm font-semibold text-[#E31937]">First fatal crash involving a Tesla documented in this thread since VAF took effect</p>
+              <p className="text-sm font-semibold text-[#E31937]">FIRST FATAL CRASH INVOLVING A TESLA SINCE VAF TOOK EFFECT.</p>
               <div
                 className="tweet-container cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600"
                 role="link"
