@@ -13,11 +13,11 @@ export default function RobotaxiPreview() {
         .robotaxi-shell {max-width:1120px;margin:auto;}
         .robotaxi-nav {display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 0 24px;width:calc(100vw - 48px);margin-left:calc(50% - 50vw + 24px);font-size:14px;color:#595b5e;}
         .robotaxi-nav a {display:flex;align-items:center;gap:8px;}
-        .robotaxi-hero {background:#171819;border-radius:14px;padding:24px 30px;color:#f4f4f4;display:grid;grid-template-columns:1fr 240px;gap:28px;align-items:center;}
+        .robotaxi-hero {background:#171819;border-radius:14px;padding:20px 30px;color:#f4f4f4;display:grid;grid-template-columns:1fr 240px;gap:12px 28px;align-items:center;}
         .robotaxi-eyebrow {font-size:13px;letter-spacing:.08em;color:#ddce94;margin:0 0 24px;}
-        .robotaxi-hero h1 {font-family:RobotaxiDisplay,Arial,sans-serif;font-weight:500;font-size:64px;line-height:1.12;letter-spacing:-2px;margin:0;}
-        .robotaxi-hero h1 span {display:block;color:#e5d79e;font-size:37px;letter-spacing:-1px;margin-top:12px;}
-        .robotaxi-intro {color:#aaaeb1;font-size:16px;line-height:1.7;margin:12px 0 0;max-width:400px;}
+        .robotaxi-hero h1 {font-family:RobotaxiDisplay,Arial,sans-serif;font-weight:500;font-size:56px;line-height:1.12;letter-spacing:-2px;margin:0;}
+        .robotaxi-hero h1 span {display:block;color:#e5d79e;font-size:34px;letter-spacing:-1px;margin-top:12px;}
+        .robotaxi-intro {grid-column:1/-1;color:#aaaeb1;font-size:16px;line-height:1.7;margin:0;max-width:400px;}
         .robotaxi-wordmark {width:210px;height:auto;margin:0 auto 12px;}
         .robotaxi-vehicle {width:100%;height:230px;object-fit:contain;}
         .robotaxi-artwork {margin-top:32px;}
@@ -31,12 +31,12 @@ export default function RobotaxiPreview() {
         .robotaxi-views figure {margin:0;}
         @media(max-width:650px){.robotaxi-views{grid-template-columns:1fr;}.robotaxi-vehicle{height:210px;}.robotaxi-artwork>figure>img{height:260px;}}
 
-        .robotaxi-details {display:grid;grid-template-columns:1fr 1fr;background:#f6f6f6;border-radius:12px;margin-top:16px;}
-        .robotaxi-detail {display:flex;gap:16px;align-items:center;padding:12px 24px;}
-        .robotaxi-detail + .robotaxi-detail {border-left:1px solid #dedee0;}
-        .robotaxi-detail svg {color:#727477;flex-shrink:0;}
-        .robotaxi-detail small {display:block;font-size:12px;color:#727477;margin-bottom:2px;}
-        .robotaxi-detail p {font-size:15px;margin:0;}
+        .robotaxi-details {display:flex;flex-wrap:wrap;gap:16px;grid-column:1/-1;margin-top:0;}
+        .robotaxi-detail {display:flex;gap:8px;align-items:center;padding:0;}
+        .robotaxi-detail + .robotaxi-detail {border:0;}
+        .robotaxi-detail svg {color:#b7b8ba;flex-shrink:0;width:16px;height:16px;}
+        .robotaxi-detail small {display:block;font-size:12px;color:#b7b8ba;margin-bottom:2px;}
+        .robotaxi-detail p {font-size:13px;margin:0;}
         .robotaxi-journal {margin-top:48px;}
         .robotaxi-journal h2 {font-family:RobotaxiDisplay,Arial,sans-serif;font-weight:500;font-size:26px;margin:0 0 10px;}
         .robotaxi-journal p {color:#626467;font-size:15px;line-height:1.6;margin:0;}
@@ -45,18 +45,19 @@ export default function RobotaxiPreview() {
         .robotaxi-event span {flex:1;font-size:15px;}
         .robotaxi-footer {display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:56px;font-size:12px;color:#74767a;}
         .robotaxi-comparison a:focus-visible {outline:2px solid #9a782c;outline-offset:6px;}
-        @media(max-width:760px){.robotaxi-comparison{padding:20px 18px;}.robotaxi-hero{padding:20px 16px;grid-template-columns:minmax(0,1fr) 90px;gap:12px;}.robotaxi-hero h1{font-size:36px;}.robotaxi-hero h1 span{font-size:22px;}.robotaxi-wordmark{width:90px;margin:0;}.robotaxi-details{grid-template-columns:1fr 1fr;}.robotaxi-detail+.robotaxi-detail{border-left:1px solid #dedee0;}.robotaxi-detail{padding:12px;}.robotaxi-nav{font-size:12px;}}
+        @media(max-width:760px){.robotaxi-comparison{padding:20px 18px;}.robotaxi-hero{padding:20px 16px;grid-template-columns:minmax(0,1fr) 90px;gap:12px;}.robotaxi-hero h1{font-size:36px;}.robotaxi-hero h1 span{font-size:22px;}.robotaxi-wordmark{width:90px;margin:0;}.robotaxi-details{grid-template-columns:1fr 1fr;}.robotaxi-detail+.robotaxi-detail{border:0;}.robotaxi-detail{padding:0;}.robotaxi-nav{font-size:12px;}}
       `}</style>
       <div className="robotaxi-shell">
         <nav className="robotaxi-nav"><Link href="/"><ArrowLeft size={18}/>Back to home</Link><span>Marko Sarafijanovic</span></nav>
         <header className="robotaxi-hero">
-          <div><h1>Cybercab<span>@ Autoshow Zürich</span></h1><p className="robotaxi-intro">Up close with Tesla’s Cybercab at Autoshow Zürich.</p></div>
+          <div><h1>Cybercab<span>@ Autoshow Zürich</span></h1></div>
           <div><img className="robotaxi-wordmark" src="/cybercab/artwork/robotaxi-gold-logo.png" alt="Robotaxi" width="348" height="123" /></div>
-        </header>
+        <p className="robotaxi-intro">Up close with Tesla’s Cybercab at Autoshow Zürich.</p>
         <div className="robotaxi-details">
           <div className="robotaxi-detail"><CalendarDays size={22}/><div><small>Date</small><p>5–8 November 2026</p></div></div>
           <div className="robotaxi-detail"><MapPin size={22}/><div><small>Event</small><p>Autoshow Zürich</p></div></div>
         </div>
+        </header>
         <Gallery pale />
         <a className="robotaxi-event" href="https://www.tesla.com/fr_ch/event/cybercab-is-on-tour-in-europe-and-zurich-is-next" target="_blank" rel="noopener noreferrer"><ArrowUpRight size={22}/><span>Tesla event details</span><ChevronRight size={20}/></a>
         <footer className="robotaxi-footer"><span>Cybercab @ Autoshow Zürich</span><span>Marko Sarafijanovic</span></footer>

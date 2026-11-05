@@ -10,7 +10,7 @@ const baseAssets = [
  ['CybercabHeadlights.png','Signature headlights'],
  ['cybercab_back.png','Rear view'],
  ['cybercab_back_both_doors_open.png','Doors open'],
- ['robotaxi_coin.png','Robotaxi coin'],
+ ['coin_spritesheet.png','Robotaxi coins'],
  ['robotaxi_logo.png','Robotaxi — white'],
  ['robotaxi-gold-logo.png','Robotaxi — champagne'],
  ['tips_cybercab_door.png','The door detail'],
@@ -71,7 +71,6 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
  .cybercab-gallery .gallery-slide{flex:0 0 100%;min-width:0;background:#fff;color:#171819;border-radius:22px;margin:0;scroll-snap-align:center;box-shadow:0 18px 30px #0002;transition:transform .45s,opacity .45s;transform:scale(.92) rotateY(var(--angle));transform-origin:center;opacity:.65;overflow:hidden}
  .cybercab-gallery .gallery-slide[data-active=true]{transform:scale(1) rotateY(0deg);opacity:1}
  .cybercab-gallery .gallery-slide img{width:100%;height:clamp(260px,calc(100svh - 440px),530px);object-fit:contain;display:block;user-select:none;padding:28px}
- .robotaxi-comparison .cybercab-gallery .gallery-slide img{height:clamp(260px,calc(100svh - 540px),530px)}
  .cybercab-gallery .gallery-slide img.night-art{padding:0;object-fit:cover;object-position:center}
  .cybercab-gallery .contrast-art{filter:brightness(0) opacity(.8)}
  .cybercab-gallery figcaption{border-top:1px solid #eee;padding:20px 26px;display:flex;justify-content:space-between;gap:16px;font-size:15px}
