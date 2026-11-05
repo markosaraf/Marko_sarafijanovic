@@ -72,38 +72,32 @@ const socialLinks = [
     name: 'X', 
     icon: XTwitterIcon, 
     href: 'https://x.com/MarkoSaraf2004',
-    color: 'hover:bg-gray-100'
   },
   { 
     name: 'LinkedIn', 
     icon: Linkedin, 
     href: 'https://ch.linkedin.com/in/marko-sarafijanovic-60707923b',
-    color: 'hover:bg-[#0077B5]/10'
   },
   { 
     name: 'Instagram', 
     icon: InstagramIcon, 
     href: 'https://www.instagram.com/markosarafijanovic',
-    color: 'hover:bg-[#E4405F]/10'
   },
   { 
     name: 'TikTok', 
     icon: TikTokIcon, 
     href: 'https://www.tiktok.com/@markosarafijanovic',
-    color: 'hover:bg-gray-100'
   },
   { 
     name: 'YouTube', 
     icon: YouTubeIcon, 
     href: 'https://www.youtube.com/@TesIaCH',
-    color: 'hover:bg-[#FF0000]/10'
   },
   { 
     name: 'Email', 
     icon: Mail, 
     href: '',
     email: 'marko.sarafijanovic@gmail.com',
-    color: 'hover:bg-[#86713e]/10'
   }
 ]
 
@@ -564,9 +558,9 @@ export default function Home() {
                   onClick={social.email ? (e) => handleEmailClick(e, social.email!) : undefined}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 ${social.color} transition-all duration-300 group cursor-pointer`}
+                  className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 hover:bg-[#e5d79e]/15 hover:border-[#e5d79e]/60 hover:shadow-[0_0_22px_rgba(229,215,158,0.35)] focus-visible:bg-[#e5d79e]/15 focus-visible:border-[#e5d79e]/60 focus-visible:shadow-[0_0_22px_rgba(229,215,158,0.35)] transition-all duration-300 group cursor-pointer`}
                 >
-                  <social.icon className={`w-5 h-5 flex-shrink-0 text-slate-400 group-hover:text-[#86713e] transition-colors`} />
+                  <social.icon className={`w-5 h-5 flex-shrink-0 text-[#86713e] group-hover:text-[#86713e] transition-colors`} />
                   <span className="text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">
                     {social.name}
                   </span>
