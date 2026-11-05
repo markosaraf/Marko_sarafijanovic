@@ -10,13 +10,11 @@ import {
   Palette, 
   Lightbulb, 
   Linkedin, 
-  ExternalLink,
   GraduationCap,
   Trophy,
   Heart,
   Mail,
   Music,
-  Check,
   ChevronDown,
   ArrowUpRight
 } from 'lucide-react'
@@ -564,11 +562,6 @@ export default function Home() {
                   <span className="text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">
                     {social.name}
                   </span>
-                  {social.email ? (
-                    <Check className="w-3 h-3 text-slate-400 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  ) : (
-                    <ExternalLink className="w-3 h-3 text-slate-400 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  )}
                 </motion.a>
               ))}
             </div>
