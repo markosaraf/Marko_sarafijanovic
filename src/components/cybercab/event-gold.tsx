@@ -12,12 +12,14 @@ export default function CybercabPage() {
         </nav>
         <style>{`
           .event-corner-nav {width:calc(100vw - 48px);margin-left:calc(50% - 50vw + 24px);}
-          .compact-gold-hero {padding:28px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 240px;align-items:center;column-gap:32px;}
+          .compact-gold-hero {padding:28px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 225px;align-items:center;column-gap:32px;}
           .compact-gold-hero h1 {grid-column:1;grid-row:1;font-size:64px;}
           .compact-gold-hero h1 span {font-size:38px;}
-          .cybercab-hero-logo {grid-column:2;grid-row:1;width:240px;height:90px;}
+          .cybercab-hero-logo {grid-column:2;grid-row:1;width:225px;height:80px;}
           .compact-gold-hero>p,.compact-gold-hero>.event-details {grid-column:1/-1;}
-          @media(max-width:650px){.compact-gold-hero{grid-template-columns:minmax(0,1fr) 100px;gap:12px;padding-top:24px;}.compact-gold-hero h1{font-size:40px;}.compact-gold-hero h1 span{font-size:23px;}.cybercab-hero-logo{width:100px;height:48px;}.event-corner-nav{font-size:12px;}}
+          @media(min-width:1280px) and (max-width:1399px){.compact-gold-hero{margin-inline:90px;}}
+          @media(min-width:1280px){.event-corner-nav{position:absolute;top:20px;left:24px;right:24px;width:auto;margin:0;}.compact-gold-hero{padding-top:0;}}
+          @media(max-width:650px){.compact-gold-hero{grid-template-columns:minmax(0,1fr) 95px;gap:12px;padding-top:24px;}.compact-gold-hero h1{font-size:40px;}.compact-gold-hero h1 span{font-size:23px;}.cybercab-hero-logo{width:95px;height:40px;}.event-corner-nav{font-size:12px;}}
         `}</style>
         <header className="compact-gold-hero">
           <div aria-hidden="true" className="cybercab-hero-logo pointer-events-none bg-[#DCA842]" style={{ maskImage: "url(/cybercab/robotaxi-logo.png)", maskSize: "contain", maskPosition: "center", maskRepeat: "no-repeat", WebkitMaskImage: "url(/cybercab/robotaxi-logo.png)", WebkitMaskSize: "contain", WebkitMaskPosition: "center", WebkitMaskRepeat: "no-repeat" }} />

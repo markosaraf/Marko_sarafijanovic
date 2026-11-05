@@ -13,12 +13,12 @@ export default function RobotaxiPreview() {
         .robotaxi-shell {max-width:1120px;margin:auto;}
         .robotaxi-nav {display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 0 24px;width:calc(100vw - 48px);margin-left:calc(50% - 50vw + 24px);font-size:14px;color:#595b5e;}
         .robotaxi-nav a {display:flex;align-items:center;gap:8px;}
-        .robotaxi-hero {background:#171819;border-radius:14px;padding:20px 30px;color:#f4f4f4;display:grid;grid-template-columns:1fr 240px;gap:12px 28px;align-items:center;}
+        .robotaxi-hero {background:#171819;border-radius:14px;padding:20px 30px;color:#f4f4f4;display:grid;grid-template-columns:1fr 225px;gap:12px 28px;align-items:center;}
         .robotaxi-eyebrow {font-size:13px;letter-spacing:.08em;color:#ddce94;margin:0 0 24px;}
         .robotaxi-hero h1 {font-family:RobotaxiDisplay,Arial,sans-serif;font-weight:500;font-size:56px;line-height:1.12;letter-spacing:-2px;margin:0;}
         .robotaxi-hero h1 span {display:block;color:#e5d79e;font-size:34px;letter-spacing:-1px;margin-top:12px;}
         .robotaxi-intro {grid-column:1/-1;color:#aaaeb1;font-size:16px;line-height:1.7;margin:0;max-width:400px;}
-        .robotaxi-wordmark {width:210px;height:auto;margin:0 auto 12px;}
+        .robotaxi-wordmark {width:225px;height:80px;object-fit:contain;margin:0;}
         .robotaxi-vehicle {width:100%;height:230px;object-fit:contain;}
         .robotaxi-artwork {margin-top:32px;}
         .robotaxi-artwork>figure {margin:0;overflow:hidden;border-radius:14px;background:#171819;}
@@ -45,7 +45,9 @@ export default function RobotaxiPreview() {
         .robotaxi-event span {flex:1;font-size:15px;}
         .robotaxi-footer {display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:56px;font-size:12px;color:#74767a;}
         .robotaxi-comparison a:focus-visible {outline:2px solid #9a782c;outline-offset:6px;}
-        @media(max-width:760px){.robotaxi-comparison{padding:20px 18px;}.robotaxi-hero{padding:20px 16px;grid-template-columns:minmax(0,1fr) 90px;gap:12px;}.robotaxi-hero h1{font-size:36px;}.robotaxi-hero h1 span{font-size:22px;}.robotaxi-wordmark{width:90px;margin:0;}.robotaxi-details{grid-template-columns:1fr 1fr;}.robotaxi-detail+.robotaxi-detail{border:0;}.robotaxi-detail{padding:0;}.robotaxi-nav{font-size:12px;}}
+        @media(min-width:1280px) and (max-width:1399px){.robotaxi-hero{margin-inline:90px;}}
+          @media(min-width:1280px){.robotaxi-nav{position:absolute;top:20px;left:24px;right:24px;width:auto;margin:0;padding:0;}.robotaxi-hero{padding-top:0;padding-bottom:12px;}}
+        @media(max-width:760px){.robotaxi-comparison{padding:20px 18px;}.robotaxi-hero{padding:20px 16px;grid-template-columns:minmax(0,1fr) 95px;gap:12px;}.robotaxi-hero h1{font-size:36px;}.robotaxi-hero h1 span{font-size:22px;}.robotaxi-wordmark{width:95px;height:40px;margin:0;}.robotaxi-details{grid-template-columns:1fr 1fr;}.robotaxi-detail+.robotaxi-detail{border:0;}.robotaxi-detail{padding:0;}.robotaxi-nav{font-size:12px;}}
       `}</style>
       <div className="robotaxi-shell">
         <nav className="robotaxi-nav"><Link href="/"><ArrowLeft size={18}/>Back to home</Link><span>Marko Sarafijanovic</span></nav>
