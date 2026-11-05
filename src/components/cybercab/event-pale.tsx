@@ -48,6 +48,17 @@ export default function RobotaxiPreview() {
         @media(min-width:1280px) and (max-width:1399px){.robotaxi-hero{margin-inline:90px;}}
           @media(min-width:1280px){.robotaxi-nav{position:absolute;top:20px;left:24px;right:24px;width:auto;margin:0;padding:0;}.robotaxi-hero{padding-top:0;padding-bottom:12px;}}
         @media(max-width:760px){.robotaxi-comparison{padding:20px 18px;}.robotaxi-hero{padding:20px 16px;grid-template-columns:minmax(0,1fr) 95px;gap:12px;}.robotaxi-hero h1{font-size:36px;}.robotaxi-hero h1 span{font-size:22px;}.robotaxi-wordmark{width:95px;height:40px;margin:0;}.robotaxi-details{grid-template-columns:1fr 1fr;}.robotaxi-detail+.robotaxi-detail{border:0;}.robotaxi-detail{padding:0;}.robotaxi-nav{font-size:12px;}}
+        @media(max-width:650px){
+          .robotaxi-comparison{padding:12px 18px;}
+          .robotaxi-nav{position:absolute;top:12px;left:18px;right:18px;width:auto;margin:0;padding:0;font-size:10px;align-items:start;}
+          .robotaxi-nav a{gap:4px;}.robotaxi-nav svg{width:12px;}.robotaxi-nav>span{width:80px;text-align:right;}
+          .robotaxi-hero{position:relative;display:block;padding:0;background:transparent;color:#171819;border-radius:0;}
+          .robotaxi-hero h1{margin-left:90px;font-size:clamp(24px,7.7vw,30px);line-height:1.12;letter-spacing:-1px;pointer-events:none;}
+          .robotaxi-hero h1 span{margin-left:-90px;margin-top:16px;font-size:18px;color:#6b5727;letter-spacing:-.5px;}
+          .robotaxi-wordmark{position:absolute;right:0;top:40px;width:clamp(100px,30.7vw,120px);height:44px;}
+          .robotaxi-intro{margin-top:18px;font-size:13px;line-height:1.4;color:#595b5e;}
+          .robotaxi-details{margin-top:10px;gap:10px;}.robotaxi-detail small{display:none;}.robotaxi-detail p{font-size:11px;}.robotaxi-detail svg{color:#595b5e;}
+        }
       `}</style>
       <div className="robotaxi-shell">
         <nav className="robotaxi-nav"><Link href="/"><ArrowLeft size={18}/>Back to home</Link><span>Marko Sarafijanovic</span></nav>

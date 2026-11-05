@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin } from 'lucide-react'
 
 export default function CybercabPage() {
   return (
-    <main className="min-h-screen bg-[#111111] text-[#f7f3e9] selection:bg-[#DCA842] selection:text-[#111111]">
+    <main className="gold-event min-h-screen bg-[#111111] text-[#f7f3e9] selection:bg-[#DCA842] selection:text-[#111111]">
       <div className="mx-auto max-w-6xl px-6 py-5 md:px-10">
         <nav className="event-corner-nav flex items-center justify-between gap-4 text-sm">
           <Link href="/" className="flex items-center gap-2 text-white/70 transition-colors hover:text-[#DCA842]"><ArrowLeft size={18} /> Back to home</Link>
@@ -19,7 +19,17 @@ export default function CybercabPage() {
           .compact-gold-hero>p,.compact-gold-hero>.event-details {grid-column:1/-1;}
           @media(min-width:1280px) and (max-width:1399px){.compact-gold-hero{margin-inline:90px;}}
           @media(min-width:1280px){.event-corner-nav{position:absolute;top:20px;left:24px;right:24px;width:auto;margin:0;}.compact-gold-hero{padding-top:0;}}
-          @media(max-width:650px){.compact-gold-hero{grid-template-columns:minmax(0,1fr) 95px;gap:12px;padding-top:24px;}.compact-gold-hero h1{font-size:40px;}.compact-gold-hero h1 span{font-size:23px;}.cybercab-hero-logo{width:95px;height:40px;}.event-corner-nav{font-size:12px;}}
+          @media(max-width:650px){
+            .gold-event>div{padding:12px 18px;}
+            .event-corner-nav{position:absolute;top:12px;left:18px;right:18px;width:auto;margin:0;font-size:10px;align-items:start;}
+            .event-corner-nav a{gap:4px;}.event-corner-nav svg{width:12px;}.event-corner-nav>span{width:80px;text-align:right;}
+            .compact-gold-hero{position:relative;display:block;padding:0;}
+            .compact-gold-hero h1{margin-left:90px;font-size:clamp(24px,7.7vw,30px);line-height:1.12;pointer-events:none;}
+            .compact-gold-hero h1 span{margin-left:-90px;margin-top:16px;font-size:18px;}
+            .cybercab-hero-logo{position:absolute;right:0;top:40px;width:clamp(100px,30.7vw,120px);height:44px;}
+            .compact-gold-hero>p{margin-top:18px;font-size:13px;line-height:1.4;}
+            .compact-gold-hero>.event-details{margin-top:10px;font-size:11px;gap:10px;}
+          }
         `}</style>
         <header className="compact-gold-hero">
           <div aria-hidden="true" className="cybercab-hero-logo pointer-events-none bg-[#DCA842]" style={{ maskImage: "url(/cybercab/robotaxi-logo.png)", maskSize: "contain", maskPosition: "center", maskRepeat: "no-repeat", WebkitMaskImage: "url(/cybercab/robotaxi-logo.png)", WebkitMaskSize: "contain", WebkitMaskPosition: "center", WebkitMaskRepeat: "no-repeat" }} />

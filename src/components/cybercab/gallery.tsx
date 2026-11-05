@@ -85,7 +85,8 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
  .cybercab-gallery .gallery-progress button:after{content:'';height:3px;position:absolute;top:10px;left:0;right:0;background:#8885;border-radius:3px}
  .cybercab-gallery .gallery-progress button[aria-current=true]:after{background:#DCA842;height:5px;top:9px}
  .cybercab-gallery .artwork-credit{font-size:12px;opacity:.65;margin-top:18px}
- @media(max-width:650px){.cybercab-gallery .gallery-viewport{gap:12px;padding:20px 4% 28px}.cybercab-gallery .gallery-slide{border-radius:16px}.cybercab-gallery .gallery-slide img{height:310px;padding:16px}.cybercab-gallery figcaption{font-size:12px;padding:16px}.cybercab-gallery .gallery-controls{flex-wrap:wrap}.cybercab-gallery .gallery-progress{max-width:none}.cybercab-gallery .gallery-slide{transform:scale(.95);opacity:.8}}
+ @media(max-width:650px){.cybercab-gallery{margin-top:16px!important}.cybercab-gallery .gallery-viewport{gap:12px;padding:20px 4% 28px}.cybercab-gallery .gallery-slide{border-radius:16px}.cybercab-gallery .gallery-slide img{height:clamp(160px,calc(100svh - 330px),530px);padding:16px}.cybercab-gallery figcaption{font-size:12px;padding:16px}.cybercab-gallery .gallery-controls{flex-wrap:wrap}.cybercab-gallery .gallery-progress{max-width:none}.cybercab-gallery .gallery-slide{transform:scale(.95);opacity:.8}}
+ @media(max-width:340px){.cybercab-gallery .gallery-slide img{height:clamp(140px,calc(100svh - 380px),480px)}}
  @media(prefers-reduced-motion:reduce){.cybercab-gallery .gallery-slide{transition:none}}
  `}</style>
  <div className="gallery-heading"><h2>Cybercab, every angle.</h2><span aria-live="polite">{String(selected+1).padStart(2,'0')} / {assets.length}</span></div>
