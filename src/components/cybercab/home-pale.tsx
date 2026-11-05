@@ -348,14 +348,14 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
-      <main className="relative z-10 max-w-6xl mx-auto px-4 pt-3 pb-8 md:py-16">
+      <main className="relative z-10 max-w-6xl mx-auto px-4 pt-5 pb-8 md:py-16">
         
         {/* FSD Banner */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-3 md:mb-6 grid grid-cols-1 md:grid-cols-2 gap-4"
+          className="mb-5 md:mb-6 grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           <motion.div
             animate={{ y: [0, -6, 0] }}
