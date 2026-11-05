@@ -154,7 +154,7 @@ const interests = [
   {
     icon: Music,
     title: 'Music',
-    description: "I’ve played guitar since childhood, and I enjoy listening to popular music and singing along.",
+    description: "I’ve played guitar since childhood, and I enjoy listening to music and singing along.",
     gradient: 'from-[#06B6D4] to-[#22D3EE]'
   }
 ]
@@ -410,7 +410,7 @@ export default function Home() {
 
         <a
           href="/cybercab-autoshow-zurich"
-          className="group relative mb-8 flex flex-col gap-6 overflow-hidden rounded-3xl border border-[#DCA842]/50 bg-[#111111] p-7 text-white shadow-xl shadow-[#DCA842]/10 transition-shadow hover:shadow-[#DCA842]/25 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#DCA842] sm:flex-row sm:items-center sm:justify-between md:p-9"
+          className="cybercab-home-link group relative mb-8 flex flex-col gap-6 overflow-hidden rounded-3xl border border-[#DCA842]/50 bg-[#111111] p-7 text-white shadow-xl shadow-[#DCA842]/10 transition-shadow hover:shadow-[#DCA842]/25 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#DCA842] sm:flex-row sm:items-center sm:justify-between md:p-9"
         >
           <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-32 h-80 w-80 rounded-full bg-[#DCA842]/15 blur-3xl" />
           <div className="relative">
@@ -418,13 +418,15 @@ export default function Home() {
               <span aria-label="Robotaxi" role="img" className="mr-2 inline-block h-8 w-24 shrink-0 bg-[#DCA842]" style={{ maskImage: 'url(/cybercab/robotaxi-logo.png)', maskSize: 'contain', maskPosition: 'center', maskRepeat: 'no-repeat', WebkitMaskImage: 'url(/cybercab/robotaxi-logo.png)', WebkitMaskSize: 'contain', WebkitMaskPosition: 'center', WebkitMaskRepeat: 'no-repeat' }} />
               CYBERCAB TOUR
             </span>
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Cybercab <span className="text-[#DCA842]">@ Autoshow Zürich</span></h2>
-            <p className="mt-3 text-sm text-white/65">5–8 November 2026 · Autoshow Zürich</p>
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Cybercab <span className="text-[#DCA842]">@ Auto Zürich</span><img className="mobile-title-car" src="/cybercab/artwork/CybercabSide.png" alt="" aria-hidden="true" /></h2>
+            <p className="mt-3 text-sm text-white/65">5–8 November 2026 · Auto Zürich</p>
           </div>
           <img src="/cybercab/artwork/CybercabSide.png" alt="Cybercab render from the Robotaxi app" className="gold-home-car" />
           <style>{`.gold-home-car{width:200px;height:140px;object-fit:contain;flex-shrink:0}@media(max-width:1100px){.gold-home-car{width:150px;height:115px}}@media(max-width:640px){.gold-home-car{width:100%;height:190px}}`}</style>
           <span className="relative flex shrink-0 items-center gap-3 self-start rounded-full bg-[#DCA842] px-5 py-3 font-semibold text-[#111111] sm:self-center">View Cybercab <ArrowUpRight size={20} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
         </a>
+
+        <style>{`.mobile-title-car{display:none}@media(max-width:640px){.cybercab-home-link{padding:20px;gap:14px}.cybercab-home-link h2{font-size:20px;line-height:1.35}.cybercab-home-link .mobile-title-car{display:inline-block;width:62px;height:26px;object-fit:contain;vertical-align:middle;margin-left:8px}.cybercab-home-link .gold-home-car,.cybercab-home-link .pale-home-car{display:none}.cybercab-home-link>span:last-child{padding:8px 16px;font-size:14px}.cybercab-home-link p{font-size:12px;margin-top:8px}}`}</style>
 
         {/* Hero Section - Bento Grid */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">

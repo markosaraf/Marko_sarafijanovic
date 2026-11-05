@@ -33,16 +33,16 @@ export default function CybercabPage() {
         `}</style>
         <header className="compact-gold-hero">
           <div aria-hidden="true" className="cybercab-hero-logo pointer-events-none bg-[#DCA842]" style={{ maskImage: "url(/cybercab/robotaxi-logo.png)", maskSize: "contain", maskPosition: "center", maskRepeat: "no-repeat", WebkitMaskImage: "url(/cybercab/robotaxi-logo.png)", WebkitMaskSize: "contain", WebkitMaskPosition: "center", WebkitMaskRepeat: "no-repeat" }} />
-          <h1 className="relative text-5xl font-semibold leading-[1.08] tracking-tight sm:text-7xl md:text-8xl">Cybercab<span className="mt-2 block text-[#DCA842] text-3xl sm:text-5xl md:text-6xl">@ Autoshow Zürich</span></h1>
-          <p className="mt-4 text-base leading-relaxed text-white/60">Up close with Tesla’s Cybercab at Autoshow Zürich.</p>
+          <h1 className="relative text-5xl font-semibold leading-[1.08] tracking-tight sm:text-7xl md:text-8xl">Cybercab<span className="mt-2 block text-[#DCA842] text-3xl sm:text-5xl md:text-6xl">@ Auto Zürich</span></h1>
+          <p className="mt-4 text-base leading-relaxed text-white/60">Up close with Tesla’s Cybercab at Auto Zürich.</p>
           <div className="event-details mt-4 flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/75">
             <span className="flex items-center gap-2"><CalendarDays size={17} className="text-[#DCA842]" />5–8 November 2026</span>
-            <span className="flex items-center gap-2"><MapPin size={17} className="text-[#DCA842]" />Autoshow Zürich</span>
+            <span className="flex items-center gap-2"><MapPin size={17} className="text-[#DCA842]" />Auto Zürich</span>
           </div>
         </header>
         <Gallery />
         <footer className="mt-10 flex flex-col justify-between gap-5 border-t border-white/10 py-7 text-sm text-white/50 sm:flex-row">
-          <span>Cybercab @ Autoshow Zürich · Marko Sarafijanovic</span>
+          <span>Cybercab @ Auto Zürich · Marko Sarafijanovic</span>
           <a href="https://www.tesla.com/fr_ch/event/cybercab-is-on-tour-in-europe-and-zurich-is-next" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#DCA842] hover:underline">Tesla event details <ArrowUpRight size={16} /></a>
         </footer>
       </div>

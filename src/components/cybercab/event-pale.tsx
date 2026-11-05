@@ -63,17 +63,17 @@ export default function RobotaxiPreview() {
       <div className="robotaxi-shell">
         <nav className="robotaxi-nav"><Link href="/"><ArrowLeft size={18}/>Back to home</Link><span>Marko Sarafijanovic</span></nav>
         <header className="robotaxi-hero">
-          <div><h1>Cybercab<span>@ Autoshow Zürich</span></h1></div>
+          <div><h1>Cybercab<span>@ Auto Zürich</span></h1></div>
           <div><img className="robotaxi-wordmark" src="/cybercab/artwork/robotaxi-gold-logo.png" alt="Robotaxi" width="348" height="123" /></div>
-        <p className="robotaxi-intro">Up close with Tesla’s Cybercab at Autoshow Zürich.</p>
+        <p className="robotaxi-intro">Up close with Tesla’s Cybercab at Auto Zürich.</p>
         <div className="robotaxi-details">
           <div className="robotaxi-detail"><CalendarDays size={22}/><div><small>Date</small><p>5–8 November 2026</p></div></div>
-          <div className="robotaxi-detail"><MapPin size={22}/><div><small>Event</small><p>Autoshow Zürich</p></div></div>
+          <div className="robotaxi-detail"><MapPin size={22}/><div><small>Event</small><p>Auto Zürich</p></div></div>
         </div>
         </header>
         <Gallery pale />
         <a className="robotaxi-event" href="https://www.tesla.com/fr_ch/event/cybercab-is-on-tour-in-europe-and-zurich-is-next" target="_blank" rel="noopener noreferrer"><ArrowUpRight size={22}/><span>Tesla event details</span><ChevronRight size={20}/></a>
-        <footer className="robotaxi-footer"><span>Cybercab @ Autoshow Zürich</span><span>Marko Sarafijanovic</span></footer>
+        <footer className="robotaxi-footer"><span>Cybercab @ Auto Zürich</span><span>Marko Sarafijanovic</span></footer>
       </div>
     </main>
   )
