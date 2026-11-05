@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import CybercabVehicleIcon from './vehicle-icon'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Car, 
@@ -127,7 +128,7 @@ const interests = [
     gradient: 'from-[#10B981] to-[#34D399]'
   },
   {
-    icon: Car,
+    icon: CybercabVehicleIcon,
     title: 'Tesla Vehicles',
     description: 'Passionate about Tesla\'s innovative electric vehicles.',
     gradient: 'from-[#E31937] to-[#FF6B6B]'
@@ -153,7 +154,7 @@ const interests = [
   {
     icon: Music,
     title: 'Music',
-    description: 'I enjoy listening and singing to popular music. Beyond that, I play guitar since childhood.',
+    description: "I’ve played guitar since childhood, and I enjoy listening to popular music and singing along.",
     gradient: 'from-[#06B6D4] to-[#22D3EE]'
   }
 ]
