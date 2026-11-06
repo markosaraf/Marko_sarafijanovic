@@ -30,7 +30,7 @@ const lightAssets: Record<string,string> = {
 }
 export default function Gallery({ pale = false, photos = false }: { pale?: boolean; photos?: boolean }) {
  const assetPath = photos ? '/cybercab/photos/' : '/cybercab/artwork/'
- const heading = photos ? 'Cybercab, my photo dump.' : 'Cybercab, every angle.'
+ const heading = photos ? 'Cybercab photo dump' : 'Cybercab, every angle.'
  const assets = photos ? photoAssets : baseAssets.map(([file,label],i)=>[i===0 && !pale?'refer_details_background_duo_landscape.jpg':pale?(lightAssets[file] || file):file,label])
  const rail = useRef<HTMLDivElement>(null)
  const [selected,setSelected] = useState(0)
