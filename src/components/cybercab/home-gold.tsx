@@ -402,26 +402,7 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        <a
-          href="/cybercab-autoshow-zurich"
-          className="cybercab-home-link group relative mb-8 flex flex-col gap-6 overflow-hidden rounded-3xl border border-[#DCA842]/50 bg-[#111111] p-7 text-white shadow-xl shadow-[#DCA842]/10 transition-shadow hover:shadow-[#DCA842]/25 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#DCA842] sm:flex-row sm:items-center sm:justify-between md:p-9"
-        >
-          <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-32 h-80 w-80 rounded-full bg-[#DCA842]/15 blur-3xl" />
-          <div className="relative">
-            <span className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#DCA842]">
-              <span aria-label="Robotaxi" role="img" className="mr-2 inline-block h-8 w-24 shrink-0 bg-[#DCA842]" style={{ maskImage: 'url(/cybercab/robotaxi-logo.png)', maskSize: 'contain', maskPosition: 'center', maskRepeat: 'no-repeat', WebkitMaskImage: 'url(/cybercab/robotaxi-logo.png)', WebkitMaskSize: 'contain', WebkitMaskPosition: 'center', WebkitMaskRepeat: 'no-repeat' }} />
-              CYBERCAB TOUR
-            </span>
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Cybercab <span className="text-[#DCA842]">@ Auto Zürich</span></h2>
-            <p className="mt-3 text-sm text-white/65">5–8 November 2026 · Auto Zürich</p>
-          </div>
-          <img src="/cybercab/artwork/CybercabSide.png" alt="Cybercab render from the Robotaxi app" className="gold-home-car" />
-          <style>{`.gold-home-car{width:200px;height:140px;object-fit:contain;flex-shrink:0}@media(max-width:1100px){.gold-home-car{width:150px;height:115px}}@media(max-width:640px){.gold-home-car{width:100%;height:190px}}`}</style>
-          <span className="relative flex shrink-0 items-center gap-3 self-start rounded-full bg-[#DCA842] px-5 py-3 font-semibold text-[#111111] sm:self-center">View Cybercab <ArrowUpRight size={20} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
-          <img className="mobile-title-car" src="/cybercab/artwork/CybercabSide.png" alt="" aria-hidden="true" />
-        </a>
-
-        <style>{`.mobile-title-car{display:none}@media(max-width:640px){.cybercab-home-link{padding:16px 20px;gap:10px;margin-bottom:20px}.cybercab-home-link h2{font-size:20px;line-height:1.35}.cybercab-home-link .mobile-title-car{display:block;position:absolute;right:20px;bottom:9px;width:110px;height:55px;object-fit:contain;margin:0}.cybercab-home-link .gold-home-car,.cybercab-home-link .pale-home-car{display:none}.cybercab-home-link>span{padding:8px 16px;font-size:14px}.cybercab-home-link p{font-size:12px;margin-top:8px}}`}</style>
+        <QuizletGravityCard design="gold" />
 
         {/* Hero Section - Bento Grid */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
@@ -492,7 +473,26 @@ export default function Home() {
           </motion.div>
         </section>
 
-        <QuizletGravityCard design="gold" />
+        <a
+          href="/cybercab-autoshow-zurich"
+          className="cybercab-home-link group relative mb-8 flex flex-col gap-6 overflow-hidden rounded-3xl border border-[#DCA842]/50 bg-[#111111] p-7 text-white shadow-xl shadow-[#DCA842]/10 transition-shadow hover:shadow-[#DCA842]/25 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#DCA842] sm:flex-row sm:items-center sm:justify-between md:p-9"
+        >
+          <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-32 h-80 w-80 rounded-full bg-[#DCA842]/15 blur-3xl" />
+          <div className="relative">
+            <span className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#DCA842]">
+              <span aria-label="Robotaxi" role="img" className="mr-2 inline-block h-8 w-24 shrink-0 bg-[#DCA842]" style={{ maskImage: 'url(/cybercab/robotaxi-logo.png)', maskSize: 'contain', maskPosition: 'center', maskRepeat: 'no-repeat', WebkitMaskImage: 'url(/cybercab/robotaxi-logo.png)', WebkitMaskSize: 'contain', WebkitMaskPosition: 'center', WebkitMaskRepeat: 'no-repeat' }} />
+              CYBERCAB TOUR
+            </span>
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Cybercab <span className="text-[#DCA842]">@ Auto Zürich</span></h2>
+            <p className="mt-3 text-sm text-white/65">5–8 November 2026 · Auto Zürich</p>
+          </div>
+          <img src="/cybercab/artwork/CybercabSide.png" alt="Cybercab render from the Robotaxi app" className="gold-home-car" />
+          <style>{`.gold-home-car{width:200px;height:140px;object-fit:contain;flex-shrink:0}@media(max-width:1100px){.gold-home-car{width:150px;height:115px}}@media(max-width:640px){.gold-home-car{width:100%;height:190px}}`}</style>
+          <span className="relative flex shrink-0 items-center gap-3 self-start rounded-full bg-[#DCA842] px-5 py-3 font-semibold text-[#111111] sm:self-center">View Cybercab <ArrowUpRight size={20} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
+          <img className="mobile-title-car" src="/cybercab/artwork/CybercabSide.png" alt="" aria-hidden="true" />
+        </a>
+
+        <style>{`.mobile-title-car{display:none}@media(max-width:640px){.cybercab-home-link{padding:16px 20px;gap:10px;margin-bottom:20px}.cybercab-home-link h2{font-size:20px;line-height:1.35}.cybercab-home-link .mobile-title-car{display:block;position:absolute;right:20px;bottom:9px;width:110px;height:55px;object-fit:contain;margin:0}.cybercab-home-link .gold-home-car,.cybercab-home-link .pale-home-car{display:none}.cybercab-home-link>span{padding:8px 16px;font-size:14px}.cybercab-home-link p{font-size:12px;margin-top:8px}}`}</style>
 
         {/* About & Socials Section - Bento Grid */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
