@@ -3,7 +3,7 @@ import Gold from '@/components/cybercab/home-gold'
 import Pale from '@/components/cybercab/home-pale'
 import Variant from '@/components/cybercab/variant'
 const title = 'Marko Sarafijanovic | Teaching, Tesla, Quizlet Gravity & Web Projects'
-const description = 'Substitute teacher in primary school and Full Self-Driving advocate. Passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast and creator of Quizlet Gravity.'
+const description = 'Substitute teacher in primary school and Full Self-Driving advocate. Passionate about teaching maths and languages. Studying at PHZH Zurich. Creator of Quizlet Gravity and Tesla enthusiast.'
 export const metadata: Metadata = {
   metadataBase: new URL('https://marko-sarafijanovic.com'),
   title, description,
