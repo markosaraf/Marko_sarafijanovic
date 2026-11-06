@@ -71,8 +71,8 @@ export default function Gallery({ pale = false, photos = false }: { pale?: boole
  .cybercab-gallery .gallery-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:12px}
  .cybercab-gallery .gallery-heading>span{white-space:nowrap;flex-shrink:0}
  .cybercab-gallery h2{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;margin:0}
- .cybercab-gallery .gallery-viewport{--card-radius:22px;border-radius:var(--card-radius);display:flex;position:relative;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 10% 56px;scrollbar-width:thin;scrollbar-color:#DCA842 transparent;perspective:1600px;overscroll-behavior-x:contain}
- .cybercab-gallery .gallery-slide{flex:0 0 100%;min-width:0;background:#fff;color:#171819;border-radius:var(--card-radius);isolation:isolate;margin:0;scroll-snap-align:center;box-shadow:0 18px 30px #0002;transition:transform .45s,opacity .45s;transform:scale(.92) rotateY(var(--angle));transform-origin:center;opacity:.65;overflow:hidden}
+ .cybercab-gallery .gallery-viewport{--card-radius:22px;--shadow-side:40px;border-radius:var(--card-radius);display:flex;position:relative;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 10% 56px;scrollbar-width:thin;scrollbar-color:#DCA842 transparent;perspective:1600px;overscroll-behavior-x:contain}
+ .cybercab-gallery .gallery-slide{flex:0 0 100%;min-width:0;background:#fff;color:#171819;border-radius:var(--card-radius);clip-path:inset(-10px calc(-1 * var(--shadow-side)) -48px round calc(var(--card-radius) + var(--shadow-side)));isolation:isolate;margin:0;scroll-snap-align:center;box-shadow:0 18px 30px #0002;transition:transform .45s,opacity .45s;transform:scale(.92) rotateY(var(--angle));transform-origin:center;opacity:.65;overflow:hidden}
  .cybercab-gallery .gallery-slide[data-active=true]{transform:scale(1) rotateY(0deg);opacity:1}
  .cybercab-gallery .gallery-slide img{width:100%;height:clamp(260px,calc(100svh - 440px),530px);object-fit:contain;display:block;user-select:none;padding:28px}
  .cybercab-gallery .gallery-slide img.night-art{padding:0;object-fit:cover;object-position:center}
@@ -90,7 +90,7 @@ export default function Gallery({ pale = false, photos = false }: { pale?: boole
  .cybercab-gallery .gallery-progress button:after{content:'';height:3px;position:absolute;top:10px;left:0;right:0;background:#8885;border-radius:3px}
  .cybercab-gallery .gallery-progress button[aria-current=true]:after{background:#DCA842;height:5px;top:9px}
  .cybercab-gallery .artwork-credit{font-size:12px;opacity:.65;margin-top:18px}
- @media(max-width:650px){.cybercab-gallery{margin-top:16px!important}.cybercab-gallery .gallery-viewport{--card-radius:16px;gap:12px;padding:20px 4% 56px}.cybercab-gallery .gallery-slide{border-radius:16px}.cybercab-gallery .gallery-slide img{height:clamp(160px,calc(100svh - 330px),530px);padding:16px}.cybercab-gallery figcaption{font-size:12px;padding:16px}.cybercab-gallery .gallery-controls{flex-wrap:wrap}.cybercab-gallery .gallery-progress{max-width:none}.cybercab-gallery .gallery-slide{transform:scale(.95);opacity:.8}}
+ @media(max-width:650px){.cybercab-gallery{margin-top:16px!important}.cybercab-gallery .gallery-viewport{--card-radius:16px;--shadow-side:12px;gap:12px;padding:20px 4% 56px}.cybercab-gallery .gallery-slide{border-radius:16px}.cybercab-gallery .gallery-slide img{height:clamp(160px,calc(100svh - 330px),530px);padding:16px}.cybercab-gallery figcaption{font-size:12px;padding:16px}.cybercab-gallery .gallery-controls{flex-wrap:wrap}.cybercab-gallery .gallery-progress{max-width:none}.cybercab-gallery .gallery-slide{transform:scale(.95);opacity:.8}}
  @media(max-width:340px){.cybercab-gallery .gallery-slide img{height:clamp(140px,calc(100svh - 380px),480px)}}
  @media(prefers-reduced-motion:reduce){.cybercab-gallery .gallery-slide{transition:none}}
  `}</style>
