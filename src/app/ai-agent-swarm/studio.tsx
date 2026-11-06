@@ -122,7 +122,7 @@ export default function SwarmStudio() {
 
   return <main ref={root} className={`${styles.studio} ${source ? styles.playing : ''} ${controlsOpen ? styles.controlsOpen : ''}`}>
     <header className={styles.header}>
-      <a href="/" className={styles.back}>← Marko Sarafijanovic</a>
+      <a href="/" className={styles.back}>Marko Sarafijanovic</a>
       <h1>Your sites, rebuilt by an AI agent swarm.</h1>
       {!source && <p>Pick a site. Set the pace. Watch it come together.</p>}
     </header>
@@ -130,7 +130,7 @@ export default function SwarmStudio() {
       <label className={styles.url}>Website URL<input type="text" inputMode="url" aria-label="Website URL" required value={url} onChange={e => setUrl(e.target.value)} placeholder="Paste a website URL" /></label>
       <label>Agents<input type="number" min="1" max="48" value={agents} onChange={e => { const n = Math.min(48, Math.max(1, Number(e.target.value))); setAgents(n); send({ agents: n }) }} /></label>
       <label>Speed ×<input type="number" min="0.05" max="10" step="0.05" value={speed} onChange={e => { const n = Math.min(10, Math.max(.05, Number(e.target.value))); setSpeed(n); send({ speed: n }) }} /></label>
-      <button className={styles.start} disabled={busy} type="submit">{busy ? 'Loading…' : source ? 'Load site' : 'Start swarm'} ↗</button>
+      <button className={styles.start} disabled={busy} type="submit">{busy ? 'Loading…' : source ? 'Load site' : 'Start swarm'}</button>
       {source && <>
         <button type="button" onClick={() => { setPaused(!paused); send({ paused: !paused }) }}>{paused ? 'Resume' : 'Pause'}</button>
         <button type="button" onClick={replay}>Replay</button>
@@ -141,8 +141,8 @@ export default function SwarmStudio() {
     </form>
     {error && <p className={styles.error} role="alert">{error}</p>}
     {!source && <>
-      <nav className={styles.presets} aria-label="Your websites">{presets.map(([name, link], i) => <button key={link} type="button" disabled={busy} onClick={() => void load(link)}><span className={styles.number}>0{i + 1}</span><strong>{name}</strong><span>{new URL(link).hostname} ↗</span></button>)}</nav>
-      <p className={styles.note}>A visual rebuild animation. Choose 1–48 cursors and 0.05–10× speed.<br />Public pages only. Sites requiring sign-in or JavaScript may appear incomplete. The three featured sites use prepared snapshots.</p>
+      <nav className={styles.presets} aria-label="Your websites">{presets.slice(0, 2).map(([name, link], i) => <button key={link} type="button" disabled={busy} onClick={() => void load(link)}><span className={styles.number}>0{i + 1}</span><strong>{name}</strong><span>{new URL(link).hostname}</span></button>)}</nav>
+      <p className={styles.note}>A visual rebuild animation. Choose 1–48 cursors and 0.05–10× speed.<br />Public pages only. Sites requiring sign-in or JavaScript may appear incomplete. The featured sites and swiss-fsd.ch use prepared snapshots.</p>
     </>}
     {source && <><button className={`${styles.toggle} ${quiet && !controlsOpen ? styles.quiet : ''}`} type="button" aria-expanded={controlsOpen} onClick={() => setControlsOpen(!controlsOpen)}>{controlsOpen ? 'Hide controls ×' : 'Controls ⚙'}</button><section className={styles.stage} aria-label="Website rebuild preview">
       <div className={styles.status} role="status">{status}<span>Visual preview</span></div>

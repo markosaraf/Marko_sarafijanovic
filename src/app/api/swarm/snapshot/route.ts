@@ -29,7 +29,7 @@ async function getDocument(url: URL, depth = 0): Promise<{ html: string; url: st
 
   const result = await new Promise<{ html: string; redirect?: string }>((resolve, reject) => {
     const req = httpsRequest(url, {
-      method: 'GET', agent: false, family: 4, autoSelectFamily: false,
+      method: 'GET', agent: false, family: 4, ...{ autoSelectFamily: false },
       headers: { 'User-Agent': 'SwarmVisualPreview/1.0', Accept: 'text/html', 'Accept-Encoding': 'identity' },
       lookup: (_hostname, _options, callback) => callback(null, addresses[0], 4),
     }, res => {
