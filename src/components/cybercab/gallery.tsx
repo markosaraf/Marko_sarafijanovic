@@ -73,7 +73,7 @@ export default function Gallery({ pale = false, photos = false }: { pale?: boole
  .cybercab-gallery h2{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;margin:0}
  .cybercab-gallery .gallery-viewport{--card-radius:22px;border-radius:var(--card-radius);display:flex;position:relative;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 10% 56px;scrollbar-width:thin;scrollbar-color:#DCA842 transparent;perspective:1600px;overscroll-behavior-x:contain}
  .cybercab-gallery .gallery-slide{flex:0 0 100%;min-width:0;background:#fff;color:#171819;border-radius:var(--card-radius);isolation:isolate;margin:0;scroll-snap-align:center;box-shadow:var(--card-shadow,0 18px 30px #0002);transition:transform .45s,opacity .45s;transform:scale(.92) rotateY(var(--angle));transform-origin:center;opacity:.65;overflow:hidden}
- .cybercab-gallery[data-design=gold]{--card-shadow:0 14px 30px rgba(255,255,255,.22),0 18px 38px rgba(220,168,66,.10)}
+ .cybercab-gallery[data-design=gold]{--card-shadow:0 14px 30px rgba(255,255,255,.22),0 18px 38px rgba(220,168,66,.33)}
  .cybercab-gallery .gallery-slide[data-active=true]{transform:scale(1) rotateY(0deg);opacity:1}
  .cybercab-gallery .gallery-slide img{width:100%;height:clamp(260px,calc(100svh - 440px),530px);object-fit:contain;display:block;user-select:none;padding:28px}
  .cybercab-gallery .gallery-slide img.night-art{padding:0;object-fit:cover;object-position:center}
