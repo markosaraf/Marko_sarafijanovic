@@ -11,3 +11,14 @@
 
 .interestHover{--glow:#DCA84240;transition:box-shadow .25s,translate .25s}.interestHover[data-design="pale"]{--glow:#e5d79e66}.interestHover:hover{box-shadow:0 0 28px var(--glow);translate:0 -2px}
 @media(prefers-reduced-motion:reduce){.interestHover{transition:none}.interestHover:hover{translate:none}}
+
+.quizletSymbol{--home-q-gold:#927123;animation:q-colours 20s ease-in-out infinite}
+.gravity[data-design='pale'] .quizletSymbol{--home-q-gold:#86713e}
+@keyframes q-colours{
+  0%,8%,25%,33%,50%,58%,75%,83%,100%{background-color:var(--home-q-gold)}
+  12.5%,20.5%{background-color:#ffffff}
+  37.5%,45.5%{background-color:#d4af37}
+  62.5%,70.5%{background-color:#4255ff}
+  87.5%,95.5%{background-color:#000000}
+}
+@media(prefers-reduced-motion:reduce){.quizletSymbol{animation:none}}
