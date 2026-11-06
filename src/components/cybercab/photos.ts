@@ -1,71 +1,20 @@
-// Download order, newest first.
+// Front view first, followed by the remaining Downloads order.
 export const photoAssets: [string, string][] = [
-  [
-    "01-img_20261105_190919.webp",
-    "Front lights"
-  ],
-  [
-    "02-img_20261105_190626.webp",
-    "Doors open"
-  ],
-  [
-    "03-img_20261105_191158.webp",
-    "Door lettering"
-  ],
-  [
-    "04-img_20261105_191029.webp",
-    "Roofline"
-  ],
-  [
-    "05-img_20261105_191622.webp",
-    "Boot"
-  ],
-  [
-    "06-img_20261105_183329.webp",
-    "Cabin"
-  ],
-  [
-    "07-img_20261105_183338.webp",
-    "Dashboard lights"
-  ],
-  [
-    "08-img_20261105_190515.webp",
-    "Side camera"
-  ],
-  [
-    "09-img_20261105_191637.webp",
-    "Rear camera"
-  ],
-  [
-    "10-img_20261105_190528.webp",
-    "Wheel"
-  ],
-  [
-    "11-img_20261105_204012.webp",
-    "Logo projection"
-  ],
-  [
-    "12-img_20261105_191212.webp",
-    "Seats"
-  ],
-  [
-    "13-img_20261105_190754.webp",
-    "Door hinge"
-  ],
-  [
-    "14-img_20261105_183342.webp",
-    "Center screen"
-  ],
-  [
-    "15-img_20261105_181502.webp",
-    "Inner door"
-  ],
-  [
-    "16-img_20261105_190308.webp",
-    "Front view"
-  ],
-  [
-    "17-img_20261105_153042.webp",
-    "Door"
-  ]
+  ["16-img_20261105_190308.webp", "Making Roads Safer for All"],
+  ["01-img_20261105_190919.webp", "Front lights"],
+  ["02-img_20261105_190626.webp", "Doors open"],
+  ["03-img_20261105_191158.webp", "Door lettering"],
+  ["04-img_20261105_191029.webp", "Roofline"],
+  ["05-img_20261105_191622.webp", "Boot"],
+  ["06-img_20261105_183329.webp", "Cabin"],
+  ["07-img_20261105_183338.webp", "Dashboard lights"],
+  ["08-img_20261105_190515.webp", "Side camera"],
+  ["09-img_20261105_191637.webp", "Rear camera"],
+  ["10-img_20261105_190528.webp", "Wheel"],
+  ["11-img_20261105_204012.webp", "Logo projection"],
+  ["12-img_20261105_191212.webp", "Seats"],
+  ["13-img_20261105_190754.webp", "Door hinge"],
+  ["14-img_20261105_183342.webp", "Center screen"],
+  ["15-img_20261105_181502.webp", "Inner door"],
+  ["17-img_20261105_153042.webp", "Door"],
 ]
