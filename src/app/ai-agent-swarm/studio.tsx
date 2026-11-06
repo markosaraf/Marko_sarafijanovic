@@ -49,7 +49,7 @@ function makePreview(html: string, url: string, agents: number, speed: number, f
 
 export default function SwarmStudio() {
   const [url, setUrl] = useState('https://marko-sarafijanovic.com')
-  const [agents, setAgents] = useState(4)
+  const [agents, setAgents] = useState(7)
   const [speed, setSpeed] = useState(1)
   const [follow, setFollow] = useState(true)
   const [paused, setPaused] = useState(false)
