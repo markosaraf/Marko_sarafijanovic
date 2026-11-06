@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
-  title: "Marko Sarafijanovic | Primary Teacher & Tesla (FSD) Advocate",
-  description: "Substitute teacher in primary school passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast and Full Self-Driving advocate.",
+  title: "Marko Sarafijanovic | Teaching, Tesla, Quizlet Gravity & Web Projects",
+  description: "Substitute teacher in primary school and Full Self-Driving advocate. Passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast.",
   keywords: ["Marko Sarafijanovic", "Marko Adliswil", "Marko Zurich", "Marko Zürich", "Marko PHZH", "Marko Pädagogische Hochschule Zürich", "Marko Tesla", "Marko Tennis", "Marko TCA", "Marko Tennis Club Adliswil", "Primary School Teacher", "Substitute Teacher", "Tesla", "FSD", "Full Self-Driving", "Electric Vehicles", "Technology", "Innovation", "Zurich", "Adliswil", "PHZH"],
   authors: [{ name: "Marko Sarafijanovic" }],
   verification: {
@@ -37,8 +37,8 @@ icons: {
   apple: "/favicon.ico",
 },
   openGraph: {
-    title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
-    description: "Substitute teacher in primary school passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast and Full Self-Driving advocate.",
+    title: "Marko Sarafijanovic | Teaching, Tesla, Quizlet Gravity & Web Projects",
+    description: "Substitute teacher in primary school and Full Self-Driving advocate. Passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast.",
     // FIXED: Now points to your actual website
     url: SITE_URL,
     siteName: "Marko Sarafijanovic",
@@ -47,8 +47,8 @@ icons: {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Marko Sarafijanovic - Primary School Teacher | Tesla Enthusiast | FSD Advocate",
-    description: "Substitute teacher in primary school passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast and Full Self-Driving advocate.",
+    title: "Marko Sarafijanovic | Teaching, Tesla, Quizlet Gravity & Web Projects",
+    description: "Substitute teacher in primary school and Full Self-Driving advocate. Passionate about teaching maths and languages. Studying at PHZH Zurich. Tesla enthusiast.",
     creator: "@MarkoSaraf2004",
     images: ["/opengraph-image-homepage.png"],
   },

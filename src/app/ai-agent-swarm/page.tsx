@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import SwarmStudio from './studio'
 
-const title = 'AI Agent Swarm – Website Rebuild Animation | Marko Sarafijanovic'
+const title = 'Marko Sarafijanovic | AI Agent Swarm – Website Rebuild Animation'
 const description = 'Watch websites come together in a swarm of animated cursors. Paste a URL, choose your swarm size and speed, and enjoy a full-screen website rebuild animation.'
 export const metadata: Metadata = {
   metadataBase: new URL('https://marko-sarafijanovic.com'),
