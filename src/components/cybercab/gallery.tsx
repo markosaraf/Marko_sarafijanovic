@@ -3,20 +3,20 @@ import { useState, useRef, useEffect } from 'react'
 import { photoAssets } from './photos'
 const baseAssets = [
  ['refer_details_background_landscape.jpg','Into the night'],
- ['CybercabTop.png','Cybercab from above'],
+ ['CybercabTop.png','From above'],
  ['cybercab_and_my.png','Cybercab and Model Y'],
  ['CybercabSide.png','Cybercab'],
- ['accessibility_vehicle.png','Robovan – accessibility vehicle'],
- ['CybercabSideNoGlow.png','Cybercab — clean silhouette'],
- ['CybercabHeadlights.png','Signature headlights'],
+ ['accessibility_vehicle.png','Robovan'],
+ ['CybercabSideNoGlow.png','Silhouette'],
+ ['CybercabHeadlights.png','Headlights'],
  ['cybercab_back.png','Rear view'],
  ['cybercab_back_both_doors_open.png','Doors open'],
  ['coin_spritesheet.png','Robotaxi coins'],
  ['robotaxi_logo.png','Robotaxi — white'],
  ['robotaxi-gold-logo.png','Robotaxi — champagne'],
- ['tips_cybercab_door.png','The door detail'],
- ['cybercab_obstruction_left_door.svg','Left-door clearance'],
- ['tips_trunk_storage_cybercab.png','Room for the ride'],
+ ['tips_cybercab_door.png','Door detail'],
+ ['cybercab_obstruction_left_door.svg','Door clearance'],
+ ['tips_trunk_storage_cybercab.png','Boot space'],
  ['tips_arrival_lights_cybercab.png','Arrival lights'],
 ]
 const lightAssets: Record<string,string> = {
