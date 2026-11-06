@@ -69,6 +69,7 @@ export default function Gallery({ pale = false, photos = false }: { pale?: boole
  return <section className="cybercab-gallery" style={{marginTop:24,color:pale?'#171819':'#f7f3e9'}} aria-label={photos ? "Cybercab photos by Marko Sarafijanovic" : "Robotaxi artwork collection"} aria-roledescription="carousel">
  <style>{`
  .cybercab-gallery .gallery-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:12px}
+ .cybercab-gallery .gallery-heading>span{white-space:nowrap;flex-shrink:0}
  .cybercab-gallery h2{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;margin:0}
  .cybercab-gallery .gallery-viewport{display:flex;position:relative;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 10% 28px;scrollbar-width:thin;scrollbar-color:#DCA842 transparent;perspective:1600px;overscroll-behavior-x:contain}
  .cybercab-gallery .gallery-slide{flex:0 0 100%;min-width:0;background:#fff;color:#171819;border-radius:22px;margin:0;scroll-snap-align:center;box-shadow:0 18px 30px #0002;transition:transform .45s,opacity .45s;transform:scale(.92) rotateY(var(--angle));transform-origin:center;opacity:.65;overflow:hidden}
