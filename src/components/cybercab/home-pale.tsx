@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import CybercabVehicleIcon from './vehicle-icon'
+import { QuizletGravityCard, SwarmInterestCard } from './project-cards'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Car, 
@@ -507,6 +508,8 @@ export default function Home() {
           </motion.div>
         </section>
 
+        <QuizletGravityCard design="pale" />
+
         {/* About & Socials Section - Bento Grid */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
           
@@ -594,6 +597,7 @@ export default function Home() {
             variants={stagger}
             className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
           >
+            <SwarmInterestCard design="pale" />
             {interests.map((interest, index) => (
               <motion.div
                 key={interest.title}
