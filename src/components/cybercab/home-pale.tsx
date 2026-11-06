@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import CybercabVehicleIcon from './vehicle-icon'
 import { QuizletGravityCard, SwarmInterestCard } from './project-cards'
+import projectStyles from './project-cards.module.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Car, 
@@ -602,13 +603,13 @@ export default function Home() {
               <motion.div
                 key={interest.title}
                 variants={fadeInUp}
-                whileHover={{ scale: 1.02, y: -5 }}
+                data-design="pale"
                 transition={{ type: "spring", stiffness: 300 }}
-                className={`relative rounded-2xl overflow-hidden bg-white/80 border border-slate-200/80 shadow-lg shadow-slate-200/50 p-5 md:p-6 cursor-pointer group hover:shadow-xl transition-all ${
+                className={`${projectStyles.interestHover} relative rounded-2xl overflow-hidden bg-white/80 border border-slate-200/80 shadow-lg shadow-slate-200/50 p-5 md:p-6 cursor-pointer group ${
                   index === 0 ? 'md:col-span-2 md:row-span-1' : ''
                 }`}
               >
-                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br ${interest.gradient} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br ${interest.gradient} flex items-center justify-center mb-3 shadow-lg`}>
                   <interest.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 <h3 className="text-base md:text-lg font-bold text-slate-800 mb-1 md:mb-2">{interest.title}</h3>
