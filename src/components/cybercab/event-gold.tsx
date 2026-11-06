@@ -40,6 +40,7 @@ export default function CybercabPage() {
             <span className="flex items-center gap-2"><MapPin size={17} className="text-[#DCA842]" />Auto Zürich</span>
           </div>
         </header>
+        <Gallery photos />
         <Gallery />
         <footer className="mt-10 flex flex-col justify-between gap-5 border-t border-white/10 py-7 text-sm text-white/50 sm:flex-row">
           <span>Cybercab @ Auto Zürich · Marko Sarafijanovic</span>

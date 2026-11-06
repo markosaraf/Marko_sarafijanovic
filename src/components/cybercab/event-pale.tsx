@@ -71,6 +71,7 @@ export default function RobotaxiPreview() {
           <div className="robotaxi-detail"><MapPin size={22}/><div><small>Event</small><p>Auto Zürich</p></div></div>
         </div>
         </header>
+        <Gallery pale photos />
         <Gallery pale />
         <a className="robotaxi-event" href="https://www.tesla.com/fr_ch/event/cybercab-is-on-tour-in-europe-and-zurich-is-next" target="_blank" rel="noopener noreferrer"><ArrowUpRight size={22}/><span>Tesla event details</span><ChevronRight size={20}/></a>
         <footer className="robotaxi-footer"><span>Cybercab @ Auto Zürich</span><span>Marko Sarafijanovic</span></footer>

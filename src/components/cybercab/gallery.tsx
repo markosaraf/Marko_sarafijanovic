@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
+import { photoAssets } from './photos'
 const baseAssets = [
  ['refer_details_background_landscape.jpg','Into the night'],
  ['CybercabTop.png','Cybercab from above'],
@@ -27,8 +28,10 @@ const lightAssets: Record<string,string> = {
  'tips_trunk_storage_cybercab.png':'tips_trunk_storage_cybercab_light.png',
  'tips_arrival_lights_cybercab.png':'tips_arrival_lights_cybercab_light.png',
 }
-export default function Gallery({ pale = false }: { pale?: boolean }) {
- const assets = baseAssets.map(([file,label],i)=>[i===0 && !pale?'refer_details_background_duo_landscape.jpg':pale?(lightAssets[file] || file):file,label])
+export default function Gallery({ pale = false, photos = false }: { pale?: boolean; photos?: boolean }) {
+ const assetPath = photos ? '/cybercab/photos/' : '/cybercab/artwork/'
+ const heading = photos ? 'Cybercab, my photo dump.' : 'Cybercab, every angle.'
+ const assets = photos ? photoAssets : baseAssets.map(([file,label],i)=>[i===0 && !pale?'refer_details_background_duo_landscape.jpg':pale?(lightAssets[file] || file):file,label])
  const rail = useRef<HTMLDivElement>(null)
  const [selected,setSelected] = useState(0)
  const animation = useRef<number | null>(null)
@@ -63,7 +66,7 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
    animation.current=requestAnimationFrame(frame)
  }
 
- return <section className="cybercab-gallery" style={{marginTop:24,color:pale?'#171819':'#f7f3e9'}} aria-label="Robotaxi artwork collection" aria-roledescription="carousel">
+ return <section className="cybercab-gallery" style={{marginTop:24,color:pale?'#171819':'#f7f3e9'}} aria-label={photos ? "Cybercab photos by Marko Sarafijanovic" : "Robotaxi artwork collection"} aria-roledescription="carousel">
  <style>{`
  .cybercab-gallery .gallery-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:12px}
  .cybercab-gallery h2{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;margin:0}
@@ -72,6 +75,7 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
  .cybercab-gallery .gallery-slide[data-active=true]{transform:scale(1) rotateY(0deg);opacity:1}
  .cybercab-gallery .gallery-slide img{width:100%;height:clamp(260px,calc(100svh - 440px),530px);object-fit:contain;display:block;user-select:none;padding:28px}
  .cybercab-gallery .gallery-slide img.night-art{padding:0;object-fit:cover;object-position:center}
+ .cybercab-gallery .gallery-slide img.photo-art{padding:0;object-fit:contain}
  .cybercab-gallery .contrast-art{filter:brightness(0) opacity(.8)}
  .cybercab-gallery figcaption{border-top:1px solid #eee;padding:20px 26px;display:flex;justify-content:space-between;gap:16px;font-size:15px}
  .cybercab-gallery .gallery-controls{display:flex;align-items:center;justify-content:space-between;margin:22px 0;gap:16px}
@@ -89,11 +93,11 @@ export default function Gallery({ pale = false }: { pale?: boolean }) {
  @media(max-width:340px){.cybercab-gallery .gallery-slide img{height:clamp(140px,calc(100svh - 380px),480px)}}
  @media(prefers-reduced-motion:reduce){.cybercab-gallery .gallery-slide{transition:none}}
  `}</style>
- <div className="gallery-heading"><h2>Cybercab, every angle.</h2><span aria-live="polite">{String(selected+1).padStart(2,'0')} / {assets.length}</span></div>
+ <div className="gallery-heading"><h2>{heading}</h2><span aria-live="polite">{String(selected+1).padStart(2,'0')} / {assets.length}</span></div>
  <div className="gallery-viewport" ref={rail} onWheel={cancelMotion} onPointerDown={cancelMotion} tabIndex={0} aria-label="Scroll sideways or use arrow keys to browse" onScroll={()=>{if(!rail.current)return;const el=rail.current;const center=el.scrollLeft+el.clientWidth/2;let closest=0;let distance=Infinity;Array.from(el.children).forEach((child,i)=>{const c=child as HTMLElement;const d=Math.abs(c.offsetLeft+c.clientWidth/2-center);if(d<distance){distance=d;closest=i}});setSelected(closest)}} onKeyDown={e=>{if(e.key==='ArrowRight'){e.preventDefault();go((targetIndex.current ?? selected)+1)}if(e.key==='ArrowLeft'){e.preventDefault();go((targetIndex.current ?? selected)-1)}}}>
- {assets.map(([file,label],i)=><figure className="gallery-slide" style={{'--angle':i<selected?'12deg':'-12deg',background:file==='CybercabHeadlights.png'?'#000000':!pale?'#DCA842':undefined,color:file==='CybercabHeadlights.png'?'#f7f3e9':undefined} as React.CSSProperties} data-active={i===selected} key={label} role="group" aria-roledescription="slide" aria-label={`${i+1} of ${assets.length}`}><img className={file==='robotaxi_logo.png'?'contrast-art':(file.startsWith('refer_details_background') || file==='accessibility_vehicle.png')?'night-art':undefined} src={'/cybercab/artwork/'+file} alt={label} draggable={false} loading={i<2?'eager':'lazy'}/><figcaption style={{borderTopColor:pale?undefined:'#111111'}}><span>{label}</span><a href={'/cybercab/artwork/'+file} target="_blank" rel="noopener noreferrer">Full size ↗</a></figcaption></figure>)}
+ {assets.map(([file,label],i)=><figure className="gallery-slide" style={{'--angle':i<selected?'12deg':'-12deg',background:file==='CybercabHeadlights.png'?'#000000':!pale?'#DCA842':undefined,color:file==='CybercabHeadlights.png'?'#f7f3e9':undefined} as React.CSSProperties} data-active={i===selected} key={label} role="group" aria-roledescription="slide" aria-label={`${i+1} of ${assets.length}`}><img className={photos?'photo-art':file==='robotaxi_logo.png'?'contrast-art':(file.startsWith('refer_details_background') || file==='accessibility_vehicle.png')?'night-art':undefined} src={assetPath+file} srcSet={photos ? `${assetPath+file.replace('.webp','-small.webp')} 800w, ${assetPath+file} 1600w` : undefined} sizes={photos ? '(max-width:650px) 90vw, 900px' : undefined} alt={label} draggable={false} loading={i<2?'eager':'lazy'}/><figcaption style={{borderTopColor:pale?undefined:'#111111'}}><span>{label}</span><a href={assetPath+(photos ? file.replace('.webp','.jpg') : file)} target="_blank" rel="noopener noreferrer">Full size ↗</a></figcaption></figure>)}
  </div>
  <div className="gallery-controls"><div className="gallery-progress">{assets.map(([,label],i)=><button key={label} aria-label={'Show '+label} aria-current={selected===i} onClick={()=>go(i)}/>)}</div><div className="gallery-arrows"><button aria-label="Previous image" disabled={selected===0} onClick={()=>go((targetIndex.current ?? selected)-1)}>←</button><button aria-label="Next image" disabled={selected===assets.length-1} onClick={()=>go((targetIndex.current ?? selected)+1)}>→</button></div></div>
- <p className="artwork-credit">Tesla Robotaxi app artwork</p>
+ <p className="artwork-credit">{photos ? 'Photos by Marko Sarafijanovic · Auto Zürich, 5 November 2026' : 'Tesla Robotaxi app artwork'}</p>
  </section>
 }
