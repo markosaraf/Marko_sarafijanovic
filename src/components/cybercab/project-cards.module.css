@@ -5,6 +5,7 @@
 .action{display:inline-flex;align-items:center;justify-content:center;border-radius:24px;padding:11px 20px;background:#171819;color:var(--accent);font-size:14px;font-weight:600;white-space:nowrap}
 .swarm{flex-direction:column;align-items:flex-start;padding:24px;gap:10px;height:100%}.swarm .symbol{width:70px;color:#927123}.swarm[data-design='pale'] .symbol{color:#86713e}.swarm p{margin:0}.swarm .action{margin-top:auto}
 .gravity{align-items:center;padding:26px 30px;margin-bottom:48px}.copy{flex:1}.quizletSymbol{display:block;width:58px;height:58px;flex-shrink:0;background:#927123;mask:url('/swarm/quizlet-q.svg') center/contain no-repeat}.gravity[data-design='pale'] .quizletSymbol{background:#86713e}
+.gravity p{color:#4255ff;font-weight:700}
 @media(max-width:767px){.gravity{margin-bottom:10.72px}}
 @media(max-width:640px){.gravity{padding:22px;gap:16px;flex-wrap:wrap}.gravity h2{font-size:23px}.gravity .copy{flex-basis:calc(100% - 70px)}.gravity .quizletSymbol{width:48px;height:48px}.gravity p{font-size:13px}.gravity .action{margin-left:64px}.swarm{padding:20px;gap:10px}.swarm h3{font-size:18px}.swarm p{font-size:13px}.swarm .action{font-size:12px;padding:9px 14px}.swarm .symbol{width:56px}}
 @media(prefers-reduced-motion:reduce){.card{transition:none}.card:hover{translate:none}}
