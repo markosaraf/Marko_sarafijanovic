@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://marko-sarafijanovic.com'),
   title, description,
   alternates: { canonical: '/' },
-  openGraph: { title, description, url: '/', type: 'website', images: ['/opengraph-image-homepage.png'] },
-  twitter: { card: 'summary_large_image', title, description, images: ['/opengraph-image-homepage.png'] },
+  openGraph: { title, description, url: '/', type: 'website', images: ['/opengraph-image-homepage.png?v=20261107'] },
+  twitter: { card: 'summary_large_image', title, description, images: ['/opengraph-image-homepage.png?v=20261107'] },
 }
 export default function Home(){return <Variant gold={<Gold/>} pale={<Pale/>}/> }

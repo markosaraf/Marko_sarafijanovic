@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  images: {
+    localPatterns: [
+      { pathname: "/**", search: "" },
+      { pathname: "/marko-profile.png", search: "?v=20261107" },
+    ],
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

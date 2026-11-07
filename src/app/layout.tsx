@@ -43,14 +43,14 @@ icons: {
     url: SITE_URL,
     siteName: "Marko Sarafijanovic",
     type: "website",
-    images: ["/opengraph-image-homepage.png"],
+    images: ["/opengraph-image-homepage.png?v=20261107"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Marko Sarafijanovic | Teaching, Tesla, Quizlet Gravity & Web Projects",
     description: "Substitute teacher in primary school and Full Self-Driving advocate. Passionate about teaching maths and languages. Studying at PHZH Zurich. Creator of Quizlet Gravity and Tesla enthusiast.",
     creator: "@MarkoSaraf2004",
-    images: ["/opengraph-image-homepage.png"],
+    images: ["/opengraph-image-homepage.png?v=20261107"],
   },
   // ADDED: Tell robots to index this page
   robots: {

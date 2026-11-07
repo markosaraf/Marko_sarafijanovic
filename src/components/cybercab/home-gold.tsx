@@ -222,7 +222,7 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Marko Sarafijanovic",
-            "image": "https://marko-sarafijanovic.com/marko-profile.png",
+            "image": "https://marko-sarafijanovic.com/marko-profile.png?v=20261107",
             "jobTitle": "Primary School Teacher",
             "worksFor": {
               "@type": "EducationalOrganization",
@@ -282,7 +282,7 @@ export default function Home() {
             >
               <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-2xl shadow-slate-300/50 mb-5">
                 <Image
-                  src="/marko-profile.png"
+                  src="/marko-profile.png?v=20261107"
                   alt="Marko Sarafijanovic"
                   width={112}
                   height={112}
@@ -420,7 +420,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-[#E31937] to-[#FF6B6B] rounded-2xl blur-xl opacity-30" />
                 <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-4 border-white shadow-xl shadow-[#E31937]/20">
                   <Image
-                    src="/marko-profile.png"
+                    src="/marko-profile.png?v=20261107"
                     alt="Marko Sarafijanovic"
                     fill
                     sizes="(max-width: 768px) 128px, 160px"
