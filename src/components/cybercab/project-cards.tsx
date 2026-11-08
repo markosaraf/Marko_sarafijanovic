@@ -22,7 +22,7 @@ export function SwarmInterestCard({ design }: { design: Design }) {
 export function QuizletGravityCard({ design }: { design: Design }) {
   return <a href="https://www.quizletgravity.com/" data-design={design} className={`${styles.card} ${styles.gravity}`}>
     <span className={styles.quizletSymbol} aria-hidden="true" />
-    <div className={styles.copy}><h2>Play Quizlet Gravity</h2><p>Learn by playing games. Challenge friends on the leaderboard.</p></div>
+    <div className={styles.copy}><h2>I made Quizlet Gravity</h2><p>Learn by playing games. Challenge friends on the leaderboard.</p></div>
     <UserCounter />
   </a>
 }
