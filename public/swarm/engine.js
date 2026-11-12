@@ -14,6 +14,17 @@
   for (const el of document.querySelectorAll('[style]')) {
     if (el.style.opacity === '0' && el.style.transform) { el.style.opacity = '1'; el.style.transform = 'none'; }
   }
+  // Give direct text its own measurable node without reusing tags such as span
+  // that source styles may reposition (e.g. Cybercab's mobile subtitle).
+  for (const el of [...document.body.querySelectorAll('*')]) {
+    if (el.namespaceURI !== 'http://www.w3.org/1999/xhtml' || !el.children.length ||
+        ['SCRIPT', 'STYLE', 'TEXTAREA', 'SELECT', 'NOSCRIPT'].includes(el.tagName)) continue;
+    for (const child of [...el.childNodes]) {
+      if (child.nodeType !== 3 || !child.textContent.trim()) continue;
+      const text = document.createElement('swarm-text');
+      child.replaceWith(text); text.append(child);
+    }
+  }
   scrollTo(0, 0);
   const vw = innerWidth, vh = innerHeight;
   const height = Math.min(24000, Math.max(vh, docHeight()));
@@ -52,10 +63,7 @@
     const text = (el.textContent || '').trim();
     const directText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
     const blockChild = [...el.children].some(child => !['inline', 'inline-block', 'contents'].includes(getComputedStyle(child).display));
-    // Keep mixed text/icon buttons and headings together. Traversing only their
-    // element children drops direct text such as "Cybercab" or "Try Example Game".
-    const leaf = !media && text && ((textTags.has(el.tagName) && directText) ||
-      (!blockChild && (textTags.has(el.tagName) || !el.children.length || directText)));
+    const leaf = !media && text && !blockChild && (textTags.has(el.tagName) || !el.children.length || directText);
     const hasBox = css.backgroundColor !== 'rgba(0, 0, 0, 0)' || css.backgroundImage !== 'none' || css.boxShadow !== 'none' || ['Top', 'Right', 'Bottom', 'Left'].some(side => parseFloat(css['border' + side + 'Width']) > 0 && css['border' + side + 'Style'] !== 'none');
     if (r.width > 1 && r.height > 1 && (media || leaf || field || hasBox)) {
       // Flattening must preserve scroll-container clipping (game/photo carousels).
