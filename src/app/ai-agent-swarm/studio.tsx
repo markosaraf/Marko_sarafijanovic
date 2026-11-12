@@ -7,6 +7,7 @@ const presets = [
   ['Marko Sarafijanovic', 'https://marko-sarafijanovic.com', 'marko'],
   ['Quizlet Gravity', 'https://quizletgravity.com', 'gravity'],
   ['Swiss FSD', 'https://swiss-fsd.ch', 'swiss-fsd'],
+  ['Cybercab Auto Zürich', 'https://marko-sarafijanovic.com/cybercab-autoshow-zurich', 'cybercab'],
 ]
 
 // Remote markup never joins the application's DOM. The sandbox has an opaque
@@ -23,7 +24,8 @@ function makePreview(html: string, url: string, agents: number, speed: number, f
       if (!value) continue
       try {
         const dest = new URL(value, url)
-        if (dest.protocol !== 'https:' && !(key === 'src' && /^data:image\/(png|jpeg|webp|gif);base64,/i.test(value))) el.removeAttribute(key)
+        const bundled = dest.origin === location.origin && dest.pathname.startsWith('/swarm/assets/')
+        if (!bundled && dest.protocol !== 'https:' && !(key === 'src' && /^data:image\/(png|jpeg|webp|gif);base64,/i.test(value))) el.removeAttribute(key)
         else el.setAttribute(key, dest.href)
       } catch { el.removeAttribute(key) }
     }
@@ -34,7 +36,7 @@ function makePreview(html: string, url: string, agents: number, speed: number, f
   const base = doc.createElement('base'); base.href = url; doc.head.prepend(base)
   const nonce = crypto.randomUUID().replaceAll('-', '')
   const policy = doc.createElement('meta'); policy.httpEquiv = 'Content-Security-Policy'
-  policy.content = `default-src 'none'; script-src 'nonce-${nonce}'; style-src https: 'unsafe-inline'; img-src https: data:; font-src https: data:; media-src 'none'; connect-src 'none'; form-action 'none'; base-uri https:;`
+  policy.content = `default-src 'none'; script-src 'nonce-${nonce}'; style-src https: 'unsafe-inline'; img-src ${location.origin} https: data:; font-src ${location.origin} https: data:; media-src 'none'; connect-src 'none'; form-action 'none'; base-uri ${location.origin} https:;`
   doc.head.prepend(policy)
   const meta = doc.createElement('meta'); meta.name = 'referrer'; meta.content = 'no-referrer'; doc.head.prepend(meta)
   const style = doc.createElement('style')
@@ -95,12 +97,17 @@ export default function SwarmStudio() {
     try {
       const parsed = new URL(value.includes('://') ? value : `https://${value}`)
       if (parsed.protocol !== 'https:') throw new Error('Please use an HTTPS website URL.')
-      const preset = presets.find(p => new URL(p[1]).hostname === parsed.hostname.replace(/^www\./, '') && parsed.pathname === '/')
+      const preset = presets.find(p => {
+        const target = new URL(p[1])
+        return target.hostname === parsed.hostname.replace(/^www\./, '') &&
+          target.pathname.replace(/\/$/, '') === parsed.pathname.replace(/\/$/, '')
+      })
       let result: { html: string; url: string }
       if (preset) {
         const response = await fetch(`/swarm/snapshots/${preset[2]}.html`, { signal: controller.signal })
         if (!response.ok) throw new Error('Could not load this preview.')
-        result = { html: await response.text(), url: preset[1] }
+        // Bundled assets belong to this deployment, not the source website.
+        result = { html: await response.text(), url: preset[2] === 'swiss-fsd' ? preset[1] : location.origin + '/' }
       } else {
         const response = await fetch(`/api/swarm/snapshot?url=${encodeURIComponent(parsed.href)}`, { signal: controller.signal })
         const data = await response.json()

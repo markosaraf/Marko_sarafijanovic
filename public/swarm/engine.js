@@ -50,15 +50,31 @@
     const media = ['IMG', 'svg', 'SVG', 'VIDEO', 'CANVAS'].includes(el.tagName);
     const field = ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName);
     const text = (el.textContent || '').trim();
+    const directText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
     const blockChild = [...el.children].some(child => !['inline', 'inline-block', 'contents'].includes(getComputedStyle(child).display));
-    const leaf = !media && text && !blockChild && (textTags.has(el.tagName) || !el.children.length || [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()));
+    // Keep mixed text/icon buttons and headings together. Traversing only their
+    // element children drops direct text such as "Cybercab" or "Try Example Game".
+    const leaf = !media && text && ((textTags.has(el.tagName) && directText) ||
+      (!blockChild && (textTags.has(el.tagName) || !el.children.length || directText)));
     const hasBox = css.backgroundColor !== 'rgba(0, 0, 0, 0)' || css.backgroundImage !== 'none' || css.boxShadow !== 'none' || ['Top', 'Right', 'Bottom', 'Left'].some(side => parseFloat(css['border' + side + 'Width']) > 0 && css['border' + side + 'Style'] !== 'none');
     if (r.width > 1 && r.height > 1 && (media || leaf || field || hasBox)) {
+      // Flattening must preserve scroll-container clipping (game/photo carousels).
+      let left = Math.max(0, r.left), right = Math.min(vw, r.right);
+      let top = Math.max(0, r.top), bottom = Math.min(height, r.bottom);
+      for (let parent = el.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
+        const style = getComputedStyle(parent), bounds = parent.getBoundingClientRect();
+        if (/hidden|clip|auto|scroll/.test(style.overflowX)) { left = Math.max(left, bounds.left); right = Math.min(right, bounds.right); }
+        if (/hidden|clip|auto|scroll/.test(style.overflowY)) { top = Math.max(top, bounds.top); bottom = Math.min(bottom, bounds.bottom); }
+      }
+      if (right <= left || bottom <= top) return;
       const node = media || leaf || field ? cloneStyled(el) : document.createElement('div');
       if (!media && !leaf && !field) for (const key of decorative) node.style[key] = css[key];
       Object.assign(node.style, { position: 'absolute', left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', minWidth: '0', maxWidth: 'none', minHeight: '0', maxHeight: 'none', margin: '0', transform: 'none', boxSizing: 'border-box', opacity: '0', visibility: 'visible', pointerEvents: 'none', overflow: 'hidden' });
       if (!media && !leaf && !field) node.style.padding = '0';
-      canvas.append(node);
+      const clip = document.createElement('div');
+      Object.assign(clip.style, { position: 'absolute', left: left + 'px', top: top + 'px', width: (right - left) + 'px', height: (bottom - top) + 'px', overflow: 'hidden', pointerEvents: 'none' });
+      node.style.left = (r.left - left) + 'px'; node.style.top = (r.top - top) + 'px';
+      clip.append(node); canvas.append(clip);
       const fontSize = parseFloat(css.fontSize) || 16;
       const lineHeight = parseFloat(css.lineHeight) || fontSize * 1.25;
       const kind = media ? 'image' : leaf ? 'text' : 'box';
